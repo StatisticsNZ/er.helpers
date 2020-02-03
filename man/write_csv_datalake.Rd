@@ -4,7 +4,7 @@
 \alias{write_csv_datalake}
 \title{Write a CSV file stored in an AWS S3 bucket.}
 \usage{
-write_csv_datalake(x, s3_path, bucket_name = "mfedlkinput", ...)
+write_csv_datalake(x, s3_path, bucket_name = mfe_datalake_bucket, ...)
 }
 \arguments{
 \item{x}{A data frame to write to the bucket}

@@ -1,3 +1,6 @@
+#' @export
+mfe_datalake_bucket <- "mfedlkinput"
+
 #' Set up access to the data lake programatically.
 #'
 #' This function set ups the credentials required to access an AWS S3 bucket
@@ -18,7 +21,7 @@
 #'
 #' setup_datalake_access(cred_csv = "~/credentials.csv", bucket_name = "mfedlkinput")
 setup_datalake_access <- function(cred_csv = "~/credentials.csv",
-                                  bucket_name = "mfedlkinput"){
+                                  bucket_name = mfe_datalake_bucket){
 
   creds <- readr::read_csv(cred_csv, col_types = "ccccc")
   Sys.setenv(AWS_ACCESS_KEY_ID = creds["Access key ID"],
@@ -48,7 +51,7 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
 #' read_csv_datalake(csv_object_path)
 read_csv_datalake <- function(s3_path,
-                              bucket_name = "mfedlkinput",
+                              bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
 
   check_aws_access()
@@ -86,7 +89,7 @@ read_csv_datalake <- function(s3_path,
 #' write_csv_datalake(iris, csv_object_path)
 write_csv_datalake <- function(x,
                                s3_path,
-                               bucket_name = "mfedlkinput",
+                               bucket_name = mfe_datalake_bucket,
                                ...){
 
   check_aws_access()
