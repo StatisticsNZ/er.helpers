@@ -12,6 +12,7 @@
 #'   Ministry for the Environment data lake for environmental reporting
 #'   "mfedlkinput".
 #'
+#' @export
 #'
 #' @examples
 #'
@@ -38,6 +39,8 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' @param ... Other arguments passed to the reading_function
 #'
 #' @return A `\code{tibble()}
+#'
+#' @export
 #'
 #' @examples
 #'
@@ -72,6 +75,8 @@ read_csv_datalake <- function(s3_path,
 #' @inheritParams read_csv_datalake
 #'
 #' @return
+#'
+#' @export
 #'
 #' @examples
 #' setup_datalake_access()
