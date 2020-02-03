@@ -51,6 +51,8 @@ read_csv_datalake <- function(s3_path,
                               bucket_name = "mfedlkinput",
                               version = NULL, ...){
 
+  check_aws_access()
+
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
                               bucket = bucket_name)
@@ -87,6 +89,8 @@ write_csv_datalake <- function(x,
                                bucket_name = "mfedlkinput",
                                ...){
 
+  check_aws_access()
+
   # Make sure the connection is clossed on exit
   connection <- rawConnection(raw(0), "w")
   on.exit(unlink(connection))
@@ -118,3 +122,21 @@ all_columns_to_snakecase <- function(x){
   magrittr::set_colnames(x, new_names)
 }
 
+
+#' Check if aws credentials have been configured and attempt default configuration otherwise
+#'
+#' @return
+#'
+check_aws_access <- function() {
+  aws_credentials_configured <- c("AWS_ACCESS_KEY_ID",
+                                  "AWS_SECRET_ACCESS_KEY",
+                                  "AWS_DEFAULT_REGION") %>%
+    Sys.getenv() %>%
+    magrittr::equals("") %>%
+    any()
+
+  if (!aws_credentials_configured) {
+    warning("AWS credentials not configured, attempting setup with `setup_datalake_access()` using default settings. Setup access manually if requested action fails.")
+    setup_datalake_access()
+  }
+}
