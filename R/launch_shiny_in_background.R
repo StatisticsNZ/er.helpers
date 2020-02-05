@@ -2,7 +2,7 @@
 #'
 #' @param path Path of the shiny app, defaults to working directory
 #' @param port Port to be used for the connection. If NULL uses a randomly
-#'   generated port between 1000 and 9999
+#'   generated port between 1024 and 9999
 #'
 #' @return
 #'
@@ -17,7 +17,7 @@
 launch_shiny_in_background <- function(path = ".", port = NULL){
 
   if (is.null(port)) {
-    port <- runif(1, min = 1000, max = 9999) %>%
+    port <- runif(1, min = 1024, max = 9999) %>%
       round()
   }
 
