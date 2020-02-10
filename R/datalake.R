@@ -163,6 +163,7 @@ You need to setup access manually if this function fails.")
 #' @export
 #'
 #' @examples
+#' get_bucket_version_df()
 get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
 
   check_aws_access()

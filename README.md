@@ -33,7 +33,11 @@ library(er.helpers)
 foo <- read_csv_datalake("path_of_file_in_data_lake.csv")
 ```
 
-Credentials must be saved in "~/credentials.csv" for this to work. If you have them saved somewhere else use the function `er.helpers::setup_datalake_access`. 
+Credentials must be saved in "~/credentials.csv" for this to work. If you have them saved somewhere else use the function 
+
+```
+er.helpers::setup_datalake_access(cred_csv = "custom_path_to/credentials.csv")
+``` 
 
 To write a csv file to the data lake use:
 
@@ -48,4 +52,3 @@ When running an app is often not possible to run code in the console. To launch 
 ```
 launch_shiny_in_background(path = "app")
 ```
-

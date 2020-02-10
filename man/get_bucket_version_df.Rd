@@ -22,3 +22,6 @@ objects. Even if the objects have been previously deleted. If there are more
 than 1000 object versions, it makes iterative calls to the AWS S3 API to
 retrieve the metadata for all versions
 }
+\examples{
+get_bucket_version_df()
+}
