@@ -140,7 +140,9 @@ check_aws_access <- function() {
     any()
 
   if (!aws_credentials_configured) {
-    warning("AWS credentials not configured, attempting setup with `setup_datalake_access()` using default settings. Setup access manually if requested action fails.")
+    warning("AWS credentials not configured
+Attempting setup with `setup_datalake_access()` and default settings
+You need to setup access manually if this function fails.")
     setup_datalake_access()
   }
 }
