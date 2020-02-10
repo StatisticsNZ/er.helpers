@@ -16,5 +16,9 @@ A data frame with metadata about all of the versions of objects in a
   bucket.
 }
 \description{
-Returns metadata about all of the versions of objects in a bucket.
+Returns metadata about all of the versions of objects in a bucket. This
+function is similar to `aws.s3::get_bucket_df` but lists all versions of the
+objects. Even if the objects have been previously deleted. If there are more
+than 1000 object versions, it makes iterative calls to the AWS S3 API to
+retrieve the metadata for all versions
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/datalake.R
 \name{write_csv_datalake}
 \alias{write_csv_datalake}
-\title{Write a CSV file stored in an AWS S3 bucket.}
+\title{Write a CSV file as an object in an AWS S3 bucket.}
 \usage{
 write_csv_datalake(x, s3_path, bucket_name = mfe_datalake_bucket, ...)
 }
@@ -22,7 +22,7 @@ Ministry for the Environment data lake for environmental reporting
 
 }
 \description{
-Write a CSV file stored in an AWS S3 bucket.
+Write a CSV file as an object in an AWS S3 bucket.
 }
 \examples{
 setup_datalake_access()
