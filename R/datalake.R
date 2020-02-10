@@ -136,6 +136,7 @@ check_aws_access <- function() {
                                   "AWS_DEFAULT_REGION") %>%
     Sys.getenv() %>%
     magrittr::equals("") %>%
+    magrittr::not() %>%
     any()
 
   if (!aws_credentials_configured) {
