@@ -74,7 +74,7 @@ read_csv_datalake <- function(s3_path,
 
 
 
-#' Write a CSV file stored in an AWS S3 bucket.
+#' Write a CSV file as an object in an AWS S3 bucket.
 #'
 #' @param x A data frame to write to the bucket
 #' @inheritParams read_csv_datalake
@@ -170,13 +170,13 @@ get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
     purrr::map(version_list_as_df)
 }
 
-version_list_as_df <- function(versions){
-  versions %>%
-    purrr::keep(function(x) length(x) > 1) %>%
-    purrr::imap(function(x, i) dplyr::mutate(as.data.frame(x), marker = i)) %>%
-    dplyr::rbind_list()
-}
-
+#' Get object versions from an aws s3 bucket recursively
+#'
+#' @inheritParams setup_datalake_access
+#' @param key_marker The key marker from which to download the object metadata.
+#'   Empty string download all metadata
+#'
+#' @return a list with metadata
 get_versions_list <- function(bucket_name, key_marker = ""){
   versions <- aws.s3::s3HTTP(verb = "GET",
                              bucket = bucket_name,
@@ -193,3 +193,18 @@ get_versions_list <- function(bucket_name, key_marker = ""){
     return(out)
   }
 }
+
+
+#' Coverts list with object version metadata to a data frame
+#'
+#' @param versions list item as returned by `get_versions_list`
+#'
+#' @return A data frame
+version_list_as_df <- function(versions){
+  versions %>%
+    purrr::keep(function(x) length(x) > 1) %>%
+    purrr::imap(function(x, i) dplyr::mutate(as.data.frame(x), marker = i)) %>%
+    dplyr::rbind_list()
+}
+
+
