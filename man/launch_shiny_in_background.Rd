@@ -10,7 +10,7 @@ launch_shiny_in_background(path = ".", port = NULL)
 \item{path}{Path of the shiny app, defaults to working directory}
 
 \item{port}{Port to be used for the connection. If NULL uses a randomly
-generated port between 1000 and 9999}
+generated port between 1024 and 9999}
 }
 \value{
 The URL of the running app

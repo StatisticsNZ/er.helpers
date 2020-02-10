@@ -146,3 +146,50 @@ You need to setup access manually if this function fails.")
     setup_datalake_access()
   }
 }
+
+
+#' List bucket contents with versions
+#'
+#' Returns metadata about all of the versions of objects in a bucket. This
+#' function is similar to `aws.s3::get_bucket_df` but lists all versions of the
+#' objects. Even if the objects have been previously deleted. If there are more
+#' than 1000 object versions, it makes iterative calls to the AWS S3 API to
+#' retrieve the metadata for all versions
+#'
+#' @inheritParams setup_datalake_access
+#'
+#' @return A data frame with metadata about all of the versions of objects in a
+#'   bucket.
+#' @export
+#'
+#' @examples
+get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
+
+  check_aws_access()
+  get_versions_list(bucket_name) %>%
+    purrr::map(version_list_as_df)
+}
+
+version_list_as_df <- function(versions){
+  versions %>%
+    purrr::keep(function(x) length(x) > 1) %>%
+    purrr::imap(function(x, i) dplyr::mutate(as.data.frame(x), marker = i)) %>%
+    dplyr::rbind_list()
+}
+
+get_versions_list <- function(bucket_name, key_marker = ""){
+  versions <- aws.s3::s3HTTP(verb = "GET",
+                             bucket = bucket_name,
+                             query = list(versions = "",
+                                          "key-marker" = key_marker))
+
+  out <- list()
+  out[[1]] <- versions
+
+  if (versions$IsTruncated) {
+    more_versions <- get_versions(bucket_name, versions$NextKeyMarker)
+    return(c(out, more_versions))
+  } else {
+    return(out)
+  }
+}
