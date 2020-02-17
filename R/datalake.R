@@ -188,7 +188,7 @@ get_versions_list <- function(bucket_name, key_marker = ""){
   out[[1]] <- versions
 
   if (versions$IsTruncated) {
-    more_versions <- get_versions(bucket_name, versions$NextKeyMarker)
+    more_versions <- get_versions_list(bucket_name, versions$NextKeyMarker)
     return(c(out, more_versions))
   } else {
     return(out)
