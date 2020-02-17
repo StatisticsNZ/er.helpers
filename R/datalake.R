@@ -202,10 +202,11 @@ get_versions_list <- function(bucket_name, key_marker = ""){
 #'
 #' @return A data frame
 version_list_as_df <- function(versions){
-  versions %>%
-    purrr::keep(function(x) length(x) > 1) %>%
-    purrr::imap(function(x, i) dplyr::mutate(as.data.frame(x), marker = i)) %>%
-    dplyr::rbind_list()
+
+  suppressWarnings({
+    versions %>%
+      purrr::keep(function(x) length(x) > 1) %>%
+      purrr::imap(function(x, i) dplyr::mutate(as.data.frame(x), marker = i)) %>%
+      dplyr::bind_rows()
+  })
 }
-
-
