@@ -168,7 +168,8 @@ get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
 
   check_aws_access()
   get_versions_list(bucket_name) %>%
-    purrr::map(version_list_as_df)
+    purrr::map(version_list_as_df) %>%
+    dplyr::bind_rows()
 }
 
 #' Get object versions from an aws s3 bucket recursively
