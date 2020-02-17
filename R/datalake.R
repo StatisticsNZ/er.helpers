@@ -62,9 +62,8 @@ read_csv_datalake <- function(s3_path,
   } else {
     obj <- aws.s3::get_object(object = s3_path,
                               bucket = bucket_name,
-                              headers = list(`versionId` = version))
+                              query = list(`versionId` = version))
   }
-
 
   connection <- rawConnection(obj)
   # Make sure the connection is clossed on exit
