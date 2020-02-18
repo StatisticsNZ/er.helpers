@@ -44,6 +44,12 @@ If you want a specific version of the file (go back in time) you can specify it 
 foo <- read_csv_datalake("path_of_file_in_data_lake.csv", version = "VersionId_of_the_aws_key")
 ```
 
+To look at all available versions of a file in the data lake you can use
+
+```
+View(er.helpers::get_bucket_version_df())
+```
+
 To write a csv file to the data lake use:
 
 ```
