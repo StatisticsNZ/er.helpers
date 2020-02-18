@@ -16,7 +16,7 @@ At the moment, to install this package, you need to configure your [ssh access c
 
 ```r
 # install.packages("remotes")
-remotes::install_local("~/Network-Shares/U-Drive-SAS-03BAU/MEES/National Accounts/EnvReporting_Secure/r-packages/er.helpers/")
+remotes::install_local("~/Network-Shares/U-Drive-SAS-03BAU/MEES/National Accounts/EnvReporting_Secure/rpackages/er.helpers/")
 ```
 
 ## Usage
