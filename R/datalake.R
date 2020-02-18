@@ -20,8 +20,9 @@ mfe_datalake_bucket <- "mfedlkinput"
 #' @export
 #'
 #' @examples
-#'
+#' \dontrun{
 #' setup_datalake_access(cred_csv = "~/credentials.csv", bucket_name = "mfedlkinput")
+#' }
 setup_datalake_access <- function(cred_csv = "~/credentials.csv",
                                   bucket_name = mfe_datalake_bucket){
 
@@ -50,10 +51,11 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' @export
 #'
 #' @examples
-#'
+#' \dontrun{
 #' setup_datalake_access()
 #' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
 #' read_csv_datalake(csv_object_path)
+#' }
 read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
@@ -87,9 +89,11 @@ read_csv_datalake <- function(s3_path,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' setup_datalake_access()
 #' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
 #' write_csv_datalake(iris, csv_object_path)
+#' }
 write_csv_datalake <- function(x,
                                s3_path,
                                bucket_name = mfe_datalake_bucket,
@@ -123,8 +127,7 @@ write_csv_datalake <- function(x,
 #' x <- data.frame(notSnakecase = 1:10)
 #' all_columns_to_snakecase(x)
 all_columns_to_snakecase <- function(x){
-  new_names <- names(x) %>%
-    snakecase::to_snake_case(string = data.)
+  new_names <-  snakecase::to_snake_case(names(x))
   magrittr::set_colnames(x, new_names)
 }
 
@@ -164,7 +167,10 @@ You need to setup access manually if this function fails.")
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' get_bucket_version_df()
+#' }
+#'
 get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
 
   check_aws_access()

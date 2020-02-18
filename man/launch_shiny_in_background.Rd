@@ -19,7 +19,8 @@ The URL of the running app
 Launch a shiny app in the background
 }
 \examples{
-
+\dontrun{
 launch_shiny_in_backrgound("app/", port = 6589)
+}
 
 }

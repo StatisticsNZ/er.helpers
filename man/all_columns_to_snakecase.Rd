@@ -15,6 +15,6 @@ column are in snake case. Internally, it uses the
 \code{snakecase::to_snake_case}.
 }
 \examples{
-x <- tibble::tible(notSnakecase = 1:10)
+x <- data.frame(notSnakecase = 1:10)
 all_columns_to_snakecase(x)
 }

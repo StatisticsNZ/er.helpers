@@ -11,8 +11,9 @@
 #' @export
 #'
 #' @examples
-#'
+#' \dontrun{
 #' launch_shiny_in_backrgound("app/", port = 6589)
+#' }
 #'
 launch_shiny_in_background <- function(path = ".", port = NULL){
 

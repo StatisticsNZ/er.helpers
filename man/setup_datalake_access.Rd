@@ -23,6 +23,7 @@ programatically. By default it connects to the Environmental Reporting Data
 Lake.
 }
 \examples{
-
+\dontrun{
 setup_datalake_access(cred_csv = "~/credentials.csv", bucket_name = "mfedlkinput")
+}
 }

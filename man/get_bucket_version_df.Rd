@@ -23,5 +23,8 @@ than 1000 object versions, it makes iterative calls to the AWS S3 API to
 retrieve the metadata for all versions
 }
 \examples{
+\dontrun{
 get_bucket_version_df()
+}
+
 }

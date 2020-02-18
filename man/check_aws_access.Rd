@@ -6,9 +6,6 @@
 \usage{
 check_aws_access()
 }
-\value{
-
-}
 \description{
 Check if aws credentials have been configured and attempt default configuration otherwise
 }

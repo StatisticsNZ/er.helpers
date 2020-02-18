@@ -9,8 +9,8 @@ write_csv_datalake(x, s3_path, bucket_name = mfe_datalake_bucket, ...)
 \arguments{
 \item{x}{A data frame to write to the bucket}
 
-\item{s3_path}{The filename of the desired CSV in the S3 bucket including
-the full path}
+\item{s3_path}{The filename of the desired CSV in the S3 bucket including the
+full path}
 
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the
 Ministry for the Environment data lake for environmental reporting
@@ -19,13 +19,15 @@ Ministry for the Environment data lake for environmental reporting
 \item{...}{Other arguments passed to the reading_function}
 }
 \value{
-
+TRUE if it succeeded and FALSE if it failed
 }
 \description{
 Write a CSV file as an object in an AWS S3 bucket.
 }
 \examples{
+\dontrun{
 setup_datalake_access()
 csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
 write_csv_datalake(iris, csv_object_path)
+}
 }

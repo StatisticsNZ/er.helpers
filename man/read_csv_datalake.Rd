@@ -8,12 +8,15 @@ read_csv_datalake(s3_path, bucket_name = mfe_datalake_bucket,
   version = NULL, ...)
 }
 \arguments{
-\item{s3_path}{The filename of the desired CSV in the S3 bucket including
-the full path}
+\item{s3_path}{The filename of the desired CSV in the S3 bucket including the
+full path}
 
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the
 Ministry for the Environment data lake for environmental reporting
 "mfedlkinput".}
+
+\item{version}{VersionId of the object key desired. Can be retrieved using
+\code{\link{get_bucket_version_df}}}
 
 \item{...}{Other arguments passed to the reading_function}
 }
@@ -26,8 +29,9 @@ using \code{readr::read_csv()}. It keeps the CSV in memory and, therefore, it
 avoids the unintended consequences of saving the file in the disk.
 }
 \examples{
-
+\dontrun{
 setup_datalake_access()
 csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
 read_csv_datalake(csv_object_path)
+}
 }
