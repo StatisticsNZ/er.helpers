@@ -16,8 +16,7 @@ At the moment, to install this package, you need to configure your [ssh access c
 
 ```r
 # install.packages("remotes")
-remotes::install_git("ssh://git@gitlabstats-prd/environmental-reporting/er.helpers.git", 
-                     credentials = git2r::cred_ssh_key())
+remotes::install_local("~/Network-Shares/U-Drive-SAS-03BAU/MEES/National Accounts/EnvReporting_Secure/r-packages/er.helpers/")
 ```
 
 ## Usage
