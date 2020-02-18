@@ -1,3 +1,5 @@
+#' MfE Default bucket
+#'
 #' @export
 mfe_datalake_bucket <- "mfedlkinput"
 
@@ -36,9 +38,11 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' using \code{readr::read_csv()}. It keeps the CSV in memory and, therefore, it
 #' avoids the unintended consequences of saving the file in the disk.
 #'
-#' @param s3_path The filename of the desired CSV in the S3 bucket including
-#'   the full path
+#' @param s3_path The filename of the desired CSV in the S3 bucket including the
+#'   full path
 #' @inheritParams setup_datalake_access
+#' @param version VersionId of the object key desired. Can be retrieved using
+#'   \code{\link{get_bucket_version_df}}
 #' @param ... Other arguments passed to the reading_function
 #'
 #' @return A `\code{tibble()}
@@ -78,7 +82,7 @@ read_csv_datalake <- function(s3_path,
 #' @param x A data frame to write to the bucket
 #' @inheritParams read_csv_datalake
 #'
-#' @return
+#' @return TRUE if it succeeded and FALSE if it failed
 #'
 #' @export
 #'
@@ -116,18 +120,16 @@ write_csv_datalake <- function(x,
 #' @export
 #'
 #' @examples
-#' x <- tibble::tible(notSnakecase = 1:10)
+#' x <- data.frame(notSnakecase = 1:10)
 #' all_columns_to_snakecase(x)
 all_columns_to_snakecase <- function(x){
   new_names <- names(x) %>%
-    snakecase::to_snake_case(string = .)
+    snakecase::to_snake_case(string = data.)
   magrittr::set_colnames(x, new_names)
 }
 
 
 #' Check if aws credentials have been configured and attempt default configuration otherwise
-#'
-#' @return
 #'
 check_aws_access <- function() {
   aws_credentials_configured <- c("AWS_ACCESS_KEY_ID",
