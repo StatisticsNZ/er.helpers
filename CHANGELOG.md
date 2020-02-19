@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.2.1
+
+Improvements:
+
+* Added contribution section to README
+* Improved documentation
+* Added CHANGELOG 
+
 ## Version 0.2.0
 
 New features:
