@@ -63,3 +63,6 @@ When running an app is often not possible to run code in the console. To launch 
 ```
 launch_shiny_in_background(path = "app")
 ```
+## Contributing 
+
+Development of this package should take place in the `dev` branch. The master branch contains only stable code. 
