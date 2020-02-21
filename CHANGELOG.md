@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.3.0
+
+New features:
+
+* Added function to calculate the season of a date-time
+
 ## Version 0.2.1
 
 Improvements:
