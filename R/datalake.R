@@ -81,7 +81,6 @@ read_csv_datalake <- function(s3_path,
 }
 
 
-
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
 #' @param x A data frame to write to the bucket
