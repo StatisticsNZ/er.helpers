@@ -58,7 +58,7 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' }
 read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
-                              version = NULL, col_types = cols(X1 = col_skip()), ...){
+                              version = NULL, ...){
 
   check_aws_access()
 
