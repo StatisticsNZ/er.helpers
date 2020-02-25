@@ -74,10 +74,15 @@ read_csv_datalake <- function(s3_path,
   connection <- rawConnection(obj)
   # Make sure the connection is clossed on exit
   on.exit(close(connection))
-  suppressWarnings({
-    readr::read_csv(file = connection, col_types = col_types, ...)
-   }
- )
+
+  data <- readr::read_csv(file = connection, col_types = col_types, ...)
+
+  if (names(data)[1] == "X1") {
+    data %>%
+      dplyr::select(-"X1")
+  } else {
+    data
+  }
 }
 
 
