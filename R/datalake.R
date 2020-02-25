@@ -58,7 +58,7 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' }
 read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
-                              version = NULL, ...){
+                              version = NULL, col_types = cols(X1 = col_skip()), ...){
 
   check_aws_access()
 
@@ -74,7 +74,10 @@ read_csv_datalake <- function(s3_path,
   connection <- rawConnection(obj)
   # Make sure the connection is clossed on exit
   on.exit(close(connection))
-  readr::read_csv(file = connection, ...)
+  suppressWarnings({
+    readr::read_csv(file = connection, col_types = col_types, ...)
+   }
+ )
 }
 
 
