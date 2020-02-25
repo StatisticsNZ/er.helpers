@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.4.1
+
+Bug fixes:
+
+* Reading data frames with a rowname X1 column doesn't fail anymore
+
 ## Version 0.4.0
 
 New features:
