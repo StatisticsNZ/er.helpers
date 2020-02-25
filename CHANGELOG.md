@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Version 0.4.0
+
+New features:
+
+* Added function to calculate trends using Sen's slope and Mann-Kendall test
+
+Improvements:
+
+* When downloading a csv from the data lake remove the X1 column
+
 ## Version 0.3.0
 
 New features:

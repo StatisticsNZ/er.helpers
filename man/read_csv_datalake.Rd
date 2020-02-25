@@ -5,7 +5,7 @@
 \title{Read a CSV file stored in an AWS S3 bucket.}
 \usage{
 read_csv_datalake(s3_path, bucket_name = mfe_datalake_bucket,
-  version = NULL, ...)
+  version = NULL, col_types = cols(X1 = col_skip()), ...)
 }
 \arguments{
 \item{s3_path}{The filename of the desired CSV in the S3 bucket including the

@@ -12,8 +12,6 @@ This package contains functions that help carry out common tasks in an easy way.
 
 ## Installation
 
-At the moment, to install this package, you need to configure your [ssh access credentials](https://docs.gitlab.com/ee/ssh/) on [gitlabstats-prd](https://gitlabstats-prd). 
-
 ```r
 # install.packages("remotes")
 remotes::install_local("~/Network-Shares/U-Drive-SAS-03BAU/MEES/National Accounts/EnvReporting_Secure/rpackages/er.helpers/")
