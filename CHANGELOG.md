@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.5.0
+
+New features:
+
+* Added function search for object keys in a data lake
+
 ## Version 0.4.1
 
 Bug fixes:
