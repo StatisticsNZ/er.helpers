@@ -225,3 +225,36 @@ version_list_as_df <- function(versions){
       dplyr::bind_rows()
   })
 }
+
+
+#' Search for keys in the data lake
+#'
+#' Returns metadata about objects in a bucket. This function is a wrapper to
+#' `aws.s3::get_bucket_df` but filters out the desired Keys. If there are more
+#' than 1000 objects, it makes iterative calls to the AWS S3 API to retrieve the
+#' metadata for all versions. If pattern is a character string, it ignores
+#' wether is lower or upper case
+#'
+#' @inheritParams setup_datalake_access
+#' @inheritParams stringr::str_detect
+#'
+#' @return a data frame with metadata for selected objects
+#' @export
+#'
+#' @examples
+#'  \dontrun{
+#' search_data_lake("temperature")
+#' }
+search_data_lake <- function(pattern = "", bucket_name = mfe_datalake_bucket){
+
+  # If the pattern is a plain character then ignore case as this is ussually
+  # what we want
+  if (is.null(attr(pattern, "class"))) {
+    pattern <- stringr::fixed(pattern, ignore_case = TRUE)
+  }
+
+  check_aws_access()
+
+  aws.s3::get_bucket_df(bucket = bucket_name) %>%
+    dplyr::filter(stringr::str_detect(Key, pattern))
+}
