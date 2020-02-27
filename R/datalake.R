@@ -244,17 +244,27 @@ version_list_as_df <- function(versions){
 #' @examples
 #'  \dontrun{
 #' search_data_lake("temperature")
+#' # search matches for temperature OR lake
+#' search_data_lake(c("temperature", "lake"))
+#' # search using regex
+#' search_data_lake(stringr::regex("^a"))
 #' }
 search_data_lake <- function(pattern = "", bucket_name = mfe_datalake_bucket){
+
+  check_aws_access()
+  all_keys <- aws.s3::get_bucket_df(bucket = bucket_name)
 
   # If the pattern is a plain character then ignore case as this is ussually
   # what we want
   if (is.null(attr(pattern, "class"))) {
-    pattern <- stringr::fixed(pattern, ignore_case = TRUE)
+    pattern <- pattern %>%
+      purrr::map(stringr::coll, ignore_case = TRUE)
   }
 
-  check_aws_access()
+  if (any(pattern == "")) {
+    return(all_keys)
+  }
 
-  aws.s3::get_bucket_df(bucket = bucket_name) %>%
-    dplyr::filter(stringr::str_detect(Key, pattern))
+  pattern %>%
+    purrr::map_dfr(~ dplyr::filter(all_keys, stringr::str_detect(Key, .)))
 }
