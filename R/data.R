@@ -35,5 +35,5 @@
 #'   \item{right_open}{whether the upper limit is an open interval}
 #' }
 #'
-#' @source
+#' @source http://archive.stats.govt.nz/browse_for_stats/environment/environmental-reporting-series/environmental-indicators/Home/About/trend-assessment-technical-information.aspx
 "statsnz_likelihood_scale"

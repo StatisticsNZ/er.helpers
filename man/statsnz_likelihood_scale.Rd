@@ -12,6 +12,9 @@
   \item{left_open}{whether the lower limit is an open interval}
   \item{right_open}{whether the upper limit is an open interval}
 }}
+\source{
+http://archive.stats.govt.nz/browse_for_stats/environment/environmental-reporting-series/environmental-indicators/Home/About/trend-assessment-technical-information.aspx
+}
 \usage{
 statsnz_likelihood_scale
 }
