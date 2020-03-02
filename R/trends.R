@@ -1,6 +1,11 @@
 #' Sen's slope
 #'
+#' #' Performs the Sen's slope trend test. This function is a wrapper around
+#' \code{\link[trend]{sens.slope}}. See documentation there for more details about
+#' the calculation
+#'
 #' @inheritParams trend::sens.slope
+#' @param conf_level confidence level of the test
 #'
 #' @return a tidy data frame with the test results
 #' @importFrom stats runif
@@ -26,7 +31,7 @@ sen_slope <- function(x, conf_level = 0.95){
 #' Mann-Kendall Trend Test
 #'
 #' Performs the Mann-Kendall trend test. This function is a wrapper around
-#' \code{\link{trend::mk.test}}. See documentation there for more details about
+#' \code{\link[trend]{mk.test}}. See documentation there for more details about
 #' the calculation
 #'
 #' @inheritParams trend::mk.test

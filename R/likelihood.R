@@ -40,7 +40,7 @@
 #' get_likelihood_category(p, term_type = "increasing-decreasing")
 #'
 #' # Also works when p is a percentages
-#' get_likelihood_category(p*100, p_is = "percetage")
+#' get_likelihood_category(p*100, p_is = "percentage")
 #'
 #' # We can also get terms used by ipcc if desired
 #' get_likelihood_category(p, scale = "ipcc")
@@ -82,17 +82,19 @@ get_likelihood_category <- function(p,
   if (!(min(range_p) >= 0 & max(range_p) <= 1))
     stop("p should be between 0 and 1 if is a probabiliy or between 0 and 100 if it's a percentage")
 
-  scale_frame %>%
-    split(.$term) %>%
-    purrr::map_dfr(~ in_interval(p,
-                                 .$left_break, .$right_break,
-                                 .$left_open, .$right_open)) %>%
+  terms_index <- scale_frame %>%
+    split(scale_frame$term) %>%
+    purrr::map_dfr(function(x) {
+      in_interval(p,
+                  x$left_break, x$right_break,
+                  x$left_open, x$right_open)})%>%
     as.matrix() %>%
     apply(1, which) %>%
     # Recover if p is NA
-    purrr::modify_if(~ length(.) == 0, function(p) NA) %>%
-    unlist() %>%
-    magrittr::extract(terms, .)
+    purrr::modify_if(function(x) length(x) == 0, function(p) NA) %>%
+    unlist()
+
+  terms[terms_index]
 
 }
 
@@ -156,8 +158,10 @@ get_likelihood_terms <- function(terms,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
-#' trends <- tibble::tribble(
+#' library(tibble)
+#' trends <- tribble(
 #'   ~ trend, ~n,
 #'   "Indeterminate", 2,
 #'   "Very likely worsening", 3,
@@ -168,7 +172,8 @@ get_likelihood_terms <- function(terms,
 #' ordered_trends <- dplyr::mutate(trends,
 #'                                 trend = order_likelihood_levels(trend))
 #' # nice ordered plot
-#' qplot(trend, n, fill = trend,  data = ordered_trends, geom = "col")#'
+#' qplot(trend, n, fill = trend,  data = ordered_trends, geom = "col")
+#' }
 order_likelihood_levels <- function(x) {
 
   # If it's not a factor make it one

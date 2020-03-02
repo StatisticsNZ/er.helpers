@@ -17,8 +17,10 @@ a factor with ordered levels
 Orders the levels of a likelihood category factor
 }
 \examples{
+\dontrun{
 library(ggplot2)
-trends <- tibble::tribble(
+library(tibble)
+trends <- tribble(
   ~ trend, ~n,
   "Indeterminate", 2,
   "Very likely worsening", 3,
@@ -29,7 +31,8 @@ qplot(trend, n, fill = trend, data = trends, geom = "col")
 ordered_trends <- dplyr::mutate(trends,
                                 trend = order_likelihood_levels(trend))
 # nice ordered plot
-qplot(trend, n, fill = trend,  data = ordered_trends, geom = "col")#'
+qplot(trend, n, fill = trend,  data = ordered_trends, geom = "col")
+}
 }
 \seealso{
 Other likelihood functions: \code{\link{get_likelihood_category}}

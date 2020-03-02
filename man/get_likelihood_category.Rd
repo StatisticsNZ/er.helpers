@@ -54,7 +54,7 @@ get_likelihood_category(p, term_type = "worsening-improving")
 get_likelihood_category(p, term_type = "increasing-decreasing")
 
 # Also works when p is a percentages
-get_likelihood_category(p*100, p_is = "percetage")
+get_likelihood_category(p*100, p_is = "percentage")
 
 # We can also get terms used by ipcc if desired
 get_likelihood_category(p, scale = "ipcc")

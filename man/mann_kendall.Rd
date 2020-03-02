@@ -20,7 +20,7 @@ a tidy data frame with the test results
 }
 \description{
 Performs the Mann-Kendall trend test. This function is a wrapper around
-\code{\link{trend::mk.test}}. See documentation there for more details about
+\code{\link[trend]{mk.test}}. See documentation there for more details about
 the calculation
 }
 \examples{

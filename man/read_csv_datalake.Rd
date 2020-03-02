@@ -21,12 +21,10 @@ Ministry for the Environment data lake for environmental reporting
 \item{...}{Other arguments passed to the reading_function}
 }
 \value{
-A `\code{tibble()}
+A `\code{\link[tibble]{tibble}}
 }
 \description{
-This function get the specified object from an AWS S3 bucket and reads it
-using \code{readr::read_csv()}. It keeps the CSV in memory and, therefore, it
-avoids the unintended consequences of saving the file in the disk.
+Read a CSV file stored in an AWS S3 bucket.
 }
 \examples{
 \dontrun{
