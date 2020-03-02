@@ -1,6 +1,6 @@
 #' Get likelihood category for a p-value
 #'
-#' Given a probabiliy x it returns the term used to describe the category this
+#' Given a probabiliy p it returns the term used to describe the category this
 #' probability belongs to. It ensures the levels of the output are ordered
 #' appropietly.
 #'

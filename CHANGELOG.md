@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Version 0.6.0
+
+New features:
+
+* Added `get_likelihood_category()` which given a probabiliy p it returns the term used to describe the category this probability belongs to. It also ensures the levels of the output are ordered appropietly.
+* Added `order_likelihood_levels()` which orders the levels of a likelihood category factor
+* Added the datasets `ipcc_likelihood_scale` and `statsnz_likelihood_scale` which contain the Intergovernmental Panel on Climate Change (IPCC) and the Stats NZ likelihood scales respectively
+
+Improvements:
+
+* Started using automatic package testing before things get out of hand
+
 ## Version 0.5.0
 
 New features:
