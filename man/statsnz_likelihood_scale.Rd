@@ -8,9 +8,9 @@
 \describe{
   \item{term}{likelihood term}
   \item{left_break}{lower probability limit for the term}
-  \item{right_break}upper probability limit for the term
-  \item{left_open}{wether the lower limit is an open interval}
-  \item{right_open}{wether the upper limit is an open interval}
+  \item{right_break}{upper probability limit for the term}
+  \item{left_open}{whether the lower limit is an open interval}
+  \item{right_open}{whether the upper limit is an open interval}
 }}
 \usage{
 statsnz_likelihood_scale

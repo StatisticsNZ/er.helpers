@@ -2,16 +2,64 @@
 % Please edit documentation in R/likelihood.R
 \name{get_likelihood_category}
 \alias{get_likelihood_category}
-\title{Title}
+\title{Get likelihood category for a p-value}
 \usage{
-get_likelihood_category(x, scale = c("statsnz", "ipcc"),
+get_likelihood_category(p, scale = c("statsnz", "ipcc"),
   term_type = c("worsening-improving", "improving-worsening",
-  "increasing-decreasing", "likely-unlikely"), x_is = c("probability",
+  "increasing-decreasing", "likely-unlikely"), p_is = c("probability",
   "percentage"))
 }
 \arguments{
-\item{x_is}{}
+\item{p}{the probability (or percentage) used to caclulate the category}
+
+\item{scale}{whether to base the categories using the Statistics New Zealand
+likelihood scale ("statsnz") or the IPCC scale ("ipcc")}
+
+\item{term_type}{when \code{scale = "statsnz"} it allows to modify the terms
+depending on what the probability \code{p} indicates. \code{term_type =
+"worsening-improving"} indicates that a large \code{p} corresponds to a
+worsening trend; this is the default. \code{term_type =
+"improving-worsening"} indicates that a large \code{p} corresponds to an
+improving trend. \code{term_type = "increasing-decreasing"} indicates that
+the output should range from "Very likely increasing" to "Very likely
+decreasing". \code{term_type = "likely-unlikely"} indicates that the output
+should range from "Very likely" to "Very unlikely".}
+
+\item{p_is}{whether \code{p} is a probability (from 0 to 1) or a percentage
+(from 0 to 100)}
+}
+\value{
+a factor
 }
 \description{
-Title
+Given a probabiliy x it returns the term used to describe the category this
+probability belongs to. It ensures the levels of the output are ordered
+appropietly.
 }
+\details{
+This function uses the data contained in the \link{statsnz_likelihood_scale}
+and \link{ipcc_likelihood_scale} tables to determine the category of a given
+probability (usually a p-value). It uses
+\code{\link{order_likelihood_levels}} to ensure that levels of the output are
+ordered correctly.
+}
+\examples{
+p <- seq(0, 1, length.out = 11)
+
+# In most water quality metrics an increasing trend (large p) corresponds to
+# a worsening trend
+get_likelihood_category(p, term_type = "worsening-improving")
+
+# In climate metrics we usually prefer an increasing-decreasing scale
+get_likelihood_category(p, term_type = "increasing-decreasing")
+
+# Also works when p is a percentages
+get_likelihood_category(p*100, p_is = "percetage")
+
+# We can also get terms used by ipcc if desired
+get_likelihood_category(p, scale = "ipcc")
+}
+\seealso{
+Other likelihood functions: \code{\link{order_likelihood_levels}}
+}
+\concept{likelihood functions}
