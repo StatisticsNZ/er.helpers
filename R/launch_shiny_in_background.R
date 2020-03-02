@@ -8,6 +8,7 @@
 #'
 #' The URL of the running app
 #'
+#' @importFrom stats runif
 #' @export
 #'
 #' @examples

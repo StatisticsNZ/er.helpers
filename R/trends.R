@@ -3,6 +3,7 @@
 #' @inheritParams trend::sens.slope
 #'
 #' @return a tidy data frame with the test results
+#' @importFrom stats runif
 #' @export
 #'
 #' @examples
@@ -31,6 +32,7 @@ sen_slope <- function(x, conf_level = 0.95){
 #' @inheritParams trend::mk.test
 #'
 #' @return a tidy data frame with the test results
+#' @importFrom stats runif
 #' @export
 #'
 #' @examples
