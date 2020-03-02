@@ -37,19 +37,19 @@ test_that("Likelihood categories work", {
   expect_identical(ipcc_1, ipcc_2)
 
   # probability and percentage should be identical
-  expect_identical(get_likelihood_category(x, x_is = "probability"),
-                   get_likelihood_category(x * 100, x_is = "percentage"))
+  expect_identical(get_likelihood_category(x, p_is = "probability"),
+                   get_likelihood_category(x * 100, p_is = "percentage"))
 
   # error when x is weird
   expect_error(get_likelihood_category(x * 2))
-  expect_error(get_likelihood_category(x * 200, x_is = "percentage"))
+  expect_error(get_likelihood_category(x * 200, p_is = "percentage"))
   expect_error(get_likelihood_category(x * -1))
 
 
   # when there are NAs
-  expect_error(get_likelihood_category(NA), "All values in x are NA")
-  expect_error(get_likelihood_category(c(NA, NA)), "All values in x are NA")
-  expect_warning(get_likelihood_category(c(0,NA,1)), "NA values found in x")
+  expect_error(get_likelihood_category(NA), "All values in p are NA")
+  expect_error(get_likelihood_category(c(NA, NA)), "All values in p are NA")
+  expect_warning(get_likelihood_category(c(0,NA,1)), "NA values found in p")
 })
 
 
