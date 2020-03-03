@@ -37,7 +37,7 @@ sen_slope <- function(x, conf_level = 0.95){
 #' x <- runif(100) * 1:100
 #' mann_kendall(x, alternative = "two.sided")
 mann_kendall <- function(x,
-                        alternative = c("two.sided", "greater", "less"),
+                        alternative = c("greater", "two.sided", "less"),
                         continuity = TRUE){
 
   test_result <- trend::mk.test(x,
