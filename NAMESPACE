@@ -4,11 +4,15 @@ export("%>%")
 export(":=")
 export(.data)
 export(all_columns_to_snakecase)
+<<<<<<< HEAD
 export(as_label)
 export(as_name)
 export(enquo)
 export(enquos)
 export(expr)
+=======
+export(calc_annual_anomaly)
+>>>>>>> master
 export(get_bucket_version_df)
 export(get_likelihood_category)
 export(get_season)

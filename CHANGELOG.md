@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.6.0
+## Version 0.7.0
 
 New features:
 
@@ -11,6 +11,12 @@ New features:
 Improvements:
 
 * Started using automatic package testing before things get out of hand
+
+## Version 0.6.0
+
+New features:
+
+* Added function to calculate annual anomalies
 
 ## Version 0.5.1
 
