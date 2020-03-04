@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.6.0
+
+New features:
+
+* Added function to calculate annual anomalies
+
 ## Version 0.5.1
 
 Improvements:
