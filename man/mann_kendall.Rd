@@ -4,7 +4,7 @@
 \alias{mann_kendall}
 \title{Mann-Kendall Trend Test}
 \usage{
-mann_kendall(x, alternative = c("two.sided", "greater", "less"),
+mann_kendall(x, alternative = c("greater", "two.sided", "less"),
   continuity = TRUE)
 }
 \arguments{

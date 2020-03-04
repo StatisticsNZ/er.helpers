@@ -39,5 +39,9 @@ wether is lower or upper case
 \examples{
  \dontrun{
 search_data_lake("temperature")
+# search matches for temperature OR lake
+search_data_lake(c("temperature", "lake"))
+# search using regex
+search_data_lake(stringr::regex("^a"))
 }
 }
