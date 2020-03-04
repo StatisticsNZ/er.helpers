@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.5.1
+
+Improvements:
+
+* Trend functions warn when number of values is small or when all values are tied in the data
+
 ## Version 0.5.0
 
 New features:
