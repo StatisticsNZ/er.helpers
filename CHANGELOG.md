@@ -12,6 +12,12 @@ Improvements:
 
 * Started using automatic package testing before things get out of hand
 
+## Version 0.5.1
+
+Improvements:
+
+* Trend functions warn when number of values is small or when all values are tied in the data
+
 ## Version 0.5.0
 
 New features:
