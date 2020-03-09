@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.7.0
+
+* New feature: Added functions to calculate rainfall intensity metrics
+
 ## Version 0.6.0
 
 New features:
