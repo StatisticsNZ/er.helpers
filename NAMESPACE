@@ -14,12 +14,20 @@ export(expr)
 export(calc_annual_anomaly)
 >>>>>>> master
 export(get_bucket_version_df)
+<<<<<<< HEAD
 export(get_likelihood_category)
+=======
+export(get_reference_rainfall)
+>>>>>>> master
 export(get_season)
 export(launch_shiny_in_background)
 export(mann_kendall)
 export(mfe_datalake_bucket)
+<<<<<<< HEAD
 export(order_likelihood_levels)
+=======
+export(rainfall_above_reference)
+>>>>>>> master
 export(read_csv_datalake)
 export(search_data_lake)
 export(sen_slope)
@@ -30,6 +38,7 @@ export(write_csv_datalake)
 importFrom(magrittr,"%>%")
 importFrom(rlang,":=")
 importFrom(rlang,.data)
+<<<<<<< HEAD
 importFrom(rlang,as_label)
 importFrom(rlang,as_name)
 importFrom(rlang,enquo)
@@ -37,4 +46,7 @@ importFrom(rlang,enquos)
 importFrom(rlang,expr)
 importFrom(rlang,sym)
 importFrom(rlang,syms)
+=======
+importFrom(stats,rlnorm)
+>>>>>>> master
 importFrom(stats,runif)
