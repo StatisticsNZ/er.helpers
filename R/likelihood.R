@@ -25,7 +25,7 @@
 #' @param p_is whether \code{p} is a probability (from 0 to 1) or a percentage
 #'   (from 0 to 100)
 #'
-#' @return a factor
+#' @return a character
 #' @family likelihood functions
 #' @export
 #'
@@ -34,16 +34,20 @@
 #'
 #' # In most water quality metrics an increasing trend (large p) corresponds to
 #' # a worsening trend
-#' get_likelihood_category(p, term_type = "worsening-improving")
+#' get_likelihood_category(p, term_type = "worsening-improving") %>%
+#'   order_likelihood_levels(
 #'
 #' # In climate metrics we usually prefer an increasing-decreasing scale
-#' get_likelihood_category(p, term_type = "increasing-decreasing")
+#' get_likelihood_category(p, term_type = "increasing-decreasing") %>%
+#'   order_likelihood_levels(
 #'
 #' # Also works when p is a percentages
-#' get_likelihood_category(p*100, p_is = "percentage")
+#' get_likelihood_category(p*100, p_is = "percentage") %>%
+#'   order_likelihood_levels(
 #'
 #' # We can also get terms used by ipcc if desired
-#' get_likelihood_category(p, scale = "ipcc")
+#' get_likelihood_category(p, scale = "ipcc") %>%
+#'   order_likelihood_levels()
 get_likelihood_category <- function(p,
                                     scale = c("statsnz", "ipcc"),
                                     term_type = c("worsening-improving",
@@ -91,14 +95,14 @@ get_likelihood_category <- function(p,
     purrr::map_dfr(function(x) {
       in_interval(p,
                   x$left_break, x$right_break,
-                  x$left_open, x$right_open)})%>%
+                  x$left_open, x$right_open)}) %>%
     as.matrix() %>%
     apply(1, which) %>%
     # Recover if p is NA
     purrr::modify_if(function(x) length(x) == 0, function(p) NA) %>%
     unlist()
 
-  terms[terms_index]
+  as.character(terms[terms_index])
 
 }
 
@@ -198,14 +202,16 @@ order_likelihood_levels <- function(x) {
   ipcc_characteristic_terms <- likelihood_terms$ipcc[c(1, 2, 5, 8, 9)]
   if (any(ipcc_characteristic_terms %in% x)) {
     factor(x, levels  = likelihood_terms$ipcc)
+  } else {
+    statsnz_likelihood_terms <- likelihood_terms[-1]
+
+    new_levels_index <- statsnz_likelihood_terms %>%
+      # remove the Indeterminate level for the comparison as it appears everywhere
+      purrr::map_lgl(~ any(.[-3] %in% x)) %>%
+      which()
+
+    factor(x, levels  = statsnz_likelihood_terms[[new_levels_index]])
   }
 
-  statsnz_likelihood_terms <- likelihood_terms[-1]
 
-  new_levels_index <- statsnz_likelihood_terms %>%
-    # remove the Indeterminate level for the comparison as it appears everywhere
-    purrr::map_lgl(~ any(.[-3] %in% x)) %>%
-    which()
-
-  factor(x, levels  = statsnz_likelihood_terms[[new_levels_index]])
 }
