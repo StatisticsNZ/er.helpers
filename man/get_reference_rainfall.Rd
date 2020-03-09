@@ -26,7 +26,7 @@ The reference rainfall corresponds to the (usually) 95th percentile of
 rainfall within the reference period.
 }
 \examples{
-#' library(dplyr)
+library(dplyr)
 # Simulate one measurement of rain per day for 10 years
 rainfall <- rlnorm(10*365)
 years <- rep(2001:2010, each = 365)

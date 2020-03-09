@@ -8,12 +8,16 @@ sen_slope(x, conf_level = 0.95)
 }
 \arguments{
 \item{x}{numeric vector or a time series object of class "ts"}
+
+\item{conf_level}{confidence level of the test}
 }
 \value{
 a tidy data frame with the test results
 }
 \description{
-Sen's slope
+#' Performs the Sen's slope trend test. This function is a wrapper around
+\code{\link[trend]{sens.slope}}. See documentation there for more details about
+the calculation
 }
 \examples{
 x <- runif(100) * 1:100
