@@ -6,8 +6,8 @@
 \usage{
 get_likelihood_category(p, scale = c("statsnz", "ipcc"),
   term_type = c("worsening-improving", "improving-worsening",
-  "increasing-decreasing", "likely-unlikely"), p_is = c("probability",
-  "percentage"))
+  "increasing-decreasing", "decreasing-increasing", "likely-unlikely"),
+  p_is = c("probability", "percentage"))
 }
 \arguments{
 \item{p}{the probability (or percentage) used to caclulate the category}
@@ -29,10 +29,10 @@ should range from "Very likely" to "Very unlikely".}
 (from 0 to 100)}
 }
 \value{
-a factor
+a character
 }
 \description{
-Given a probabiliy x it returns the term used to describe the category this
+Given a probabiliy p it returns the term used to describe the category this
 probability belongs to. It ensures the levels of the output are ordered
 appropietly.
 }
@@ -48,16 +48,20 @@ p <- seq(0, 1, length.out = 11)
 
 # In most water quality metrics an increasing trend (large p) corresponds to
 # a worsening trend
-get_likelihood_category(p, term_type = "worsening-improving")
+get_likelihood_category(p, term_type = "worsening-improving") \%>\%
+  order_likelihood_levels(
 
 # In climate metrics we usually prefer an increasing-decreasing scale
-get_likelihood_category(p, term_type = "increasing-decreasing")
+get_likelihood_category(p, term_type = "increasing-decreasing") \%>\%
+  order_likelihood_levels(
 
 # Also works when p is a percentages
-get_likelihood_category(p*100, p_is = "percentage")
+get_likelihood_category(p*100, p_is = "percentage") \%>\%
+  order_likelihood_levels(
 
 # We can also get terms used by ipcc if desired
-get_likelihood_category(p, scale = "ipcc")
+get_likelihood_category(p, scale = "ipcc") \%>\%
+  order_likelihood_levels()
 }
 \seealso{
 Other likelihood functions: \code{\link{order_likelihood_levels}}
