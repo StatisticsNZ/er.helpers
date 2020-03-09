@@ -23,23 +23,23 @@ intense events. This measure provides information about the importance of
 intense rainfall events for total annual rainfall.
 }
 \examples{
-library(magrittr)
+library(dplyr)
 # Simulate one measurement of rain per day for 10 years
 rainfall <- rlnorm(10*365)
 years <- rep(2001:2010, each = 365)
-rain_data <- tibble::tibble(rainfall = rainfall, year = years)
+rain_data <- tibble(rainfall = rainfall, year = years)
 # We chose a climate normal
 climate_normal <- c(2001, 2005)
+
 rain_data \%>\%
 # calculate reference rainfall
-  dplyr::mutate(ref = get_reference_rainfall(rainfall,
+  mutate(ref = get_reference_rainfall(rainfall,
                                              year,
                                              climate_normal,
                                              percentile = 95L)) \%>\%
 # calculate prorportion of rainfall above reference
-  dplyr::group_by(year) \%>\%
-  dplyr::summarise(prop_above = rainfall_above_reference(rainfall,
-                                                         ref))
+  group_by(year) \%>\%
+  summarise(prop_above = rainfall_above_reference(rainfall, ref))
 }
 \seealso{
 Other rainfall functions: \code{\link{get_reference_rainfall}}
