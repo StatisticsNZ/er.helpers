@@ -60,11 +60,12 @@ rainfall_above_reference <- function(rainfall,
 #'   percentile
 #'
 #' @return the 95th percentile for the reference period.
+#' @importFrom stats quantile
 #' @family rainfall functions
 #' @export
 #'
 #' @examples
-#' #' library(dplyr)
+#' library(dplyr)
 #' # Simulate one measurement of rain per day for 10 years
 #' rainfall <- rlnorm(10*365)
 #' years <- rep(2001:2010, each = 365)
