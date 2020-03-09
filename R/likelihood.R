@@ -74,8 +74,11 @@ get_likelihood_category <- function(p,
     p <- p / 100
   }
 
-  if (all(is.na(p)))
-    stop("All values in p are NA")
+  if (all(is.na(p))){
+    warning("All values in p are NA")
+    return(rep(NA, length(p)))
+  }
+
   if (any(is.na(p)))
     warning("NA values found in p")
 
