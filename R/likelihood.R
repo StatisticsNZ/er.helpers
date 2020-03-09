@@ -49,6 +49,7 @@ get_likelihood_category <- function(p,
                                     term_type = c("worsening-improving",
                                                   "improving-worsening",
                                                   "increasing-decreasing",
+                                                  "decreasing-increasing",
                                                   "likely-unlikely"),
                                     p_is = c("probability", "percentage")) {
 
@@ -133,6 +134,9 @@ get_likelihood_terms <- function(terms,
   if (term_type == "likely-unlikely") {
     return(terms)
   } else if (term_type == "increasing-decreasing") {
+    translation <- likelihood_terms$statsnz %>%
+      magrittr::set_names(rev(likelihood_terms$statsnz_increasing))
+  } else if (term_type == "decreasing-increasing") {
     translation <- likelihood_terms$statsnz %>%
       magrittr::set_names(likelihood_terms$statsnz_increasing)
   } else if (term_type == "improving-worsening") {
