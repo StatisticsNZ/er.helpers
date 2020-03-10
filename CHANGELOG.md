@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.9.1
+
+* Bug fix: ``er.helpers:::likelihood_terms` internal data was not being saved properly. 
+
 ## Version 0.9.0
 
 * New feature: Added `simplifY_likelihood_levels()` which collapses levels in likelihood category factors
