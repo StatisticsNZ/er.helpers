@@ -69,7 +69,6 @@ simple_likelihood_terms <- list(
     "Likely or very likely decreasing" = likelihood_terms$statsnz_increasing[c(4,5)])
 )
 
-usethis::use_data(likelihood_terms, internal = TRUE, overwrite = TRUE)
-usethis::use_data(simple_likelihood_terms, internal = TRUE, overwrite = TRUE)
+usethis::use_data(likelihood_terms, simple_likelihood_terms, internal = TRUE, overwrite = TRUE)
 usethis::use_data(ipcc_likelihood_scale, overwrite = TRUE)
 usethis::use_data(statsnz_likelihood_scale, overwrite = TRUE)
