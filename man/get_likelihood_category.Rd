@@ -49,15 +49,15 @@ p <- seq(0, 1, length.out = 11)
 # In most water quality metrics an increasing trend (large p) corresponds to
 # a worsening trend
 get_likelihood_category(p, term_type = "worsening-improving") \%>\%
-  order_likelihood_levels(
+  order_likelihood_levels()
 
 # In climate metrics we usually prefer an increasing-decreasing scale
 get_likelihood_category(p, term_type = "increasing-decreasing") \%>\%
-  order_likelihood_levels(
+  order_likelihood_levels()
 
 # Also works when p is a percentages
 get_likelihood_category(p*100, p_is = "percentage") \%>\%
-  order_likelihood_levels(
+  order_likelihood_levels()
 
 # We can also get terms used by ipcc if desired
 get_likelihood_category(p, scale = "ipcc") \%>\%
