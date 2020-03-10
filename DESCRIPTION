@@ -21,7 +21,8 @@ Imports:
     lubridate (>= 1.7.4), 
     stringr (>= 1.4.0),
     trend (>= 1.1.2), 
-    forcats (>= 0.4.0)
+    forcats (>= 0.4.0), 
+    ggplot2 (>= 3.2.1)
 License: file LICENCE
 Encoding: UTF-8
 LazyData: true
