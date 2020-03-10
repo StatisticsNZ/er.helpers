@@ -64,8 +64,8 @@ get_likelihood_category <- function(p,
 
   # determine the desired scale
   scale_frame <- switch(scale,
-    statsnz = er.helpers::statsnz_likelihood_scale,
-    ipcc = er.helpers::ipcc_likelihood_scale
+                        statsnz = er.helpers::statsnz_likelihood_scale,
+                        ipcc = er.helpers::ipcc_likelihood_scale
   )
 
   terms <- scale_frame$term
