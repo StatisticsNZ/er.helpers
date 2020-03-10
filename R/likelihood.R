@@ -215,3 +215,46 @@ order_likelihood_levels <- function(x) {
 
 
 }
+
+
+#' Simplify likelihood levels
+#'
+#' Collapse levels on a likelihood factor into smaller categories. For example
+#' "Likely improving" and "Very likely improving" are collapsed into a single
+#' level "Likely or very likely improving".
+#'
+#' @param x The vector with the likelihoods. Must be a factor or a character
+#'   string
+#'
+#' @return A factor with simple categories
+#' @export
+#'
+#' @examples
+#' p <- seq(0, 1, length.out = 11)
+#'
+#' get_likelihood_category(p) %>%
+#'   order_likelihood_levels() %>%
+#'   simplify_likelihood_levels()
+#'
+simplify_likelihood_levels <- function(x){
+  y <- order_likelihood_levels(x)
+  levels_x <- levels(y)
+  # terms that only appear in the ipcc terms
+  ipcc_characteristic_terms <- likelihood_terms$ipcc[c(1, 2, 5, 8, 9)]
+  if (any(ipcc_characteristic_terms %in% levels_x)) {
+    # factor(x, levels  = likelihood_terms$ipcc)
+    y
+  } else {
+    statsnz_likelihood_terms <- likelihood_terms[-1]
+    statsnz_simple_likelihood_terms <- simple_likelihood_terms[-1]
+
+    new_levels_index <- statsnz_likelihood_terms %>%
+      # remove the Indeterminate level for the comparison as it appears everywhere
+      purrr::map_lgl(~ any(.[-3] %in% x)) %>%
+      which()
+
+    purrr::lift_dl(forcats::fct_collapse)(.f = y, statsnz_simple_likelihood_terms[[new_levels_index]])
+
+  }
+
+}

@@ -55,6 +55,21 @@ likelihood_terms <- list(
                          "Very likely decreasing")
 )
 
+
+simple_likelihood_terms <- list(
+  ipcc = likelihood_terms$ipcc %>% magrittr::set_names(likelihood_terms$ipcc),
+  statsnz = list(
+    "Likely or very likely" = likelihood_terms$statsnz[c(2,1)],
+    "Unlikely or very unlikely" = likelihood_terms$statsnz[c(4,5)]),
+  statsnz_improving = list(
+    "Likely or very likely improving" = likelihood_terms$statsnz_improving[c(1,2)],
+    "Likely or very likely worsening" = likelihood_terms$statsnz_improving[c(4,5)]),
+  statsnz_increasing = list(
+    "Likely or very likely increasing" = likelihood_terms$statsnz_increasing[c(1,2)],
+    "Likely or very likely decreasing" = likelihood_terms$statsnz_increasing[c(4,5)])
+)
+
 usethis::use_data(likelihood_terms, internal = TRUE, overwrite = TRUE)
+usethis::use_data(simple_likelihood_terms, internal = TRUE, overwrite = TRUE)
 usethis::use_data(ipcc_likelihood_scale, overwrite = TRUE)
 usethis::use_data(statsnz_likelihood_scale, overwrite = TRUE)
