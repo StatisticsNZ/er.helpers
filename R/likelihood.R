@@ -227,6 +227,7 @@ order_likelihood_levels <- function(x) {
 #'   string
 #'
 #' @return A factor with simple categories
+#' @family likelihood functions
 #' @export
 #'
 #' @examples
