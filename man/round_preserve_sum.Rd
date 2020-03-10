@@ -16,7 +16,7 @@ Round values preserving their sum. Often used to round percentages such that
 their totals still add to 100%.
 }
 \examples{
-#' x <- c(10.3, 20.3, 69.4)
+x <- c(10.3, 20.3, 69.4)
 # These three values add to 100
 sum(x)
 # But when rounded they do not add to 100
