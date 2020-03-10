@@ -1,6 +1,11 @@
 # CHANGELOG
 
-# Version 0.8.0
+## Version 0.9.0
+
+* New feature: Added `simplifY_likelihood_levels()` which collapses levels in likelihood category factors
+* New feature: Added `round_preserve_sum()` which rounds a set of number while maintaining the total. Used, for example, so that rounded percentages still add to 100. 
+
+## Version 0.8.0
 
 * New feature:Added `get_likelihood_category()` which given a probabiliy p it returns the term used to describe the category this probability belongs to. It also ensures the levels of the output are ordered appropietly.
 * New feature:Added `order_likelihood_levels()` which orders the levels of a likelihood category factor
