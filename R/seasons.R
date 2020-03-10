@@ -59,6 +59,13 @@ order_season_levels <- function(x){
 
   standard_x <- standardise_season(x)
 
+  original_categories <- unique(standard_x)
+  original_in_standard <- original_categories %in% ordered_seasons
+  if (any(!original_in_standard)) {
+    warning(paste(original_categories[which(!original_in_standard)],
+                  collapse = ", "), " not recognised as valid season name(s)")
+  }
+
   if (any(grepl("annual", x))) {
     factor(standard_x, ordered_seasons)
   } else {
