@@ -244,6 +244,7 @@ simplify_likelihood_levels <- function(x){
   ipcc_characteristic_terms <- likelihood_terms$ipcc[c(1, 2, 5, 8, 9)]
   if (any(ipcc_characteristic_terms %in% levels_x)) {
     # factor(x, levels  = likelihood_terms$ipcc)
+    message("Simplification for ipcc likelihood scale has not yet been implemented")
     y
   } else {
     statsnz_likelihood_terms <- likelihood_terms[-1]
