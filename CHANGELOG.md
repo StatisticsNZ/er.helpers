@@ -1,9 +1,13 @@
 # CHANGELOG
 
+## Version 0.10.1
+
+* Bug fix: Correcting spelling of autumn in `order_season_levels()`
+
 ## Version 0.10.0
 
 * New feature: Added `order_season_levels()` to automatically order season as a factor for pretty plotting and data standarisation
-* Big fix: Corrected example that were not working in `round_preserve_sum()`
+* Bug fix: Corrected example that were not working in `round_preserve_sum()`
 
 ## Version 0.9.1
 
