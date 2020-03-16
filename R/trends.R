@@ -34,6 +34,7 @@ sen_slope <- function(x, conf_level = 0.95){
 
   if (any(is.na(x))) {
     warning("Trend analysis does not accept missing data. Returning NA instead.")
+    test_result <- list()
     test_result$conf.int <- c(NA, NA)
     `attr<-`(test_result$conf.int, "conf.level", NA)
     test_result$statistic <- c("z" = NA)
@@ -95,6 +96,7 @@ mann_kendall <- function(x,
 
   if (any(is.na(x))) {
     warning("Trend analysis does not accept missing data. Returning NA instead.")
+    test_result <- list()
     test_result$statistic <- NA
     test_result$parameter <- c("n" = NA)
     test_result$estimates <- c("S" = NA, "varS" = NA, "tau" = NA)
