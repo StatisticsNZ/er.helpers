@@ -32,7 +32,18 @@ sen_slope <- function(x, conf_level = 0.95){
   if (is.null(analysis_note))
     analysis_note <- NA_character_
 
-  test_result <- trend::sens.slope(x, conf.level = conf_level)
+  if (any(is.na(x))) {
+    warning("Trend analysis does not accept missing data. Returning NA instead.")
+    test_result$conf.int <- c(NA, NA)
+    `attr<-`(test_result$conf.int, "conf.level", NA)
+    test_result$statistic <- c("z" = NA)
+    test_result$parameter <- c("n" = NA)
+    test_result$estimates <- c("Sen's slope" = NA)
+    test_result$p.value <- test_result$method <- NA
+    analysis_note = "NA values present."
+  } else {
+    test_result <- trend::sens.slope(x, conf.level = conf_level)
+  }
 
   tibble::tibble(p_value = test_result$p.value,
                  sen_slope = test_result$estimates["Sen's slope"],
@@ -82,11 +93,22 @@ mann_kendall <- function(x,
   if (is.null(analysis_note))
     analysis_note <- NA_character_
 
-  test_result <- trend::mk.test(x,
-                                alternative = alternative,
-                                continuity = continuity)
+  if (any(is.na(x))) {
+    warning("Trend analysis does not accept missing data. Returning NA instead.")
+    test_result$statistic <- NA
+    test_result$parameter <- c("n" = NA)
+    test_result$estimates <- c("S" = NA, "varS" = NA, "tau" = NA)
+    test_result$p.value <- test_result$method <- NA
+    test_result$alternative <- NA
+    analysis_note = "NA values present."
+  } else{
+    test_result <- trend::mk.test(x,
+                                  alternative = alternative,
+                                  continuity = continuity)
+  }
 
-  tibble::tibble(p_value = ifelse(all_ties, 0.5, test_result$p.value),
+  tibble::tibble(p_value = ifelse(all_ties & !is.na(test_result$p.value), 0.5,
+                                  test_result$p.value),
                  s = test_result$estimates["S"],
                  var_s = test_result$estimates["varS"],
                  tau = test_result$estimates["tau"],

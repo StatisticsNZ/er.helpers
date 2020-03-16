@@ -17,4 +17,9 @@ test_that("trends work", {
   expect_warning(expect_match(sen_slope(z)$note, "All values tied."))
   expect_warning(expect_match(mann_kendall(z)$note, "All values tied."))
   expect_warning(expect_equal(mann_kendall(z)$p_value, 0.5))
+
+  # Should warn if there are NAs and should return NA
+  expect_warning(expect_identical(sen_slope(c(x, NA))$p_value, NA))
+  expect_warning(expect_identical(mann_kendall(c(x, NA))$p_value, NA))
+
 })
