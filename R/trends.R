@@ -36,7 +36,7 @@ sen_slope <- function(x, conf_level = 0.95){
     warning("Trend analysis does not accept missing data. Returning NA instead.")
     test_result <- list()
     test_result$conf.int <- c(NA, NA)
-    `attr<-`(test_result$conf.int, "conf.level", NA)
+    conf_level <- NA
     test_result$statistic <- c("z" = NA)
     test_result$parameter <- c("n" = NA)
     test_result$estimates <- c("Sen's slope" = NA)
@@ -50,7 +50,7 @@ sen_slope <- function(x, conf_level = 0.95){
                  sen_slope = test_result$estimates["Sen's slope"],
                  conf_low = test_result$conf.int[1],
                  conf_high = test_result$conf.int[2],
-                 conf_level = attr(test_result$conf.int, "conf.level"),
+                 conf_level = conf_level,
                  z = test_result$statistic["z"],
                  method = test_result$method,
                  n = test_result$parameter["n"],
