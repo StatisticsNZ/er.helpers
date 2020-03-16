@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.10.2
+
+* Improvement: Trend functions `sen_slope()` and `mann_kendall()` return NA if there are NAs in the input data.
+
 ## Version 0.10.1
 
 * Bug fix: Correcting spelling of autumn in `order_season_levels()`
