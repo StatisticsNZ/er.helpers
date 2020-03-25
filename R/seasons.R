@@ -66,7 +66,7 @@ order_season_levels <- function(x){
                   collapse = ", "), " not recognised as valid season name(s)")
   }
 
-  if (any(grepl("annual", x))) {
+  if (any(grepl("annual", x, ignore.case = TRUE))) {
     factor(standard_x, ordered_seasons)
   } else {
     factor(standard_x, ordered_seasons[-5])
