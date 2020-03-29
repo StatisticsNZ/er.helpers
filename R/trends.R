@@ -52,7 +52,7 @@ sen_slope <- function(x, conf_level = 0.95){
                  conf_high = test_result$conf.int[2],
                  conf_level = conf_level,
                  z = test_result$statistic["z"],
-                 method = test_result$method,
+                 method = "Sen'slope",
                  n = test_result$parameter["n"],
                  note = analysis_note)
 }
@@ -115,7 +115,7 @@ mann_kendall <- function(x,
                  var_s = test_result$estimates["varS"],
                  tau = test_result$estimates["tau"],
                  z = test_result$statistic,
-                 method = test_result$method,
+                 method = "Mann-Kendall",
                  n = test_result$parameter["n"],
                  alternative = test_result$alternative,
                  note = analysis_note)
