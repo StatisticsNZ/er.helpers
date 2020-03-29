@@ -52,7 +52,7 @@ sen_slope <- function(x, conf_level = 0.95){
                  conf_high = test_result$conf.int[2],
                  conf_level = conf_level,
                  z = test_result$statistic["z"],
-                 method = "Sen'slope",
+                 method = "Sen's slope",
                  n = test_result$parameter["n"],
                  note = analysis_note)
 }
