@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.10.3
+
+* Bug fix: Trend functions `sen_slope()` and `mann_kendall()` return their method regardless of wether the trend estimation is successful or not. 
+
 ## Version 0.10.2
 
 * Improvement: Trend functions `sen_slope()` and `mann_kendall()` return NA if there are NAs in the input data.
