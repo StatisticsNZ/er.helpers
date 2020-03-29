@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.10.4
+
+* Bug fix: Corrected spelling of Sen's slope
+
 ## Version 0.10.3
 
 * Bug fix: Trend functions `sen_slope()` and `mann_kendall()` return their method regardless of wether the trend estimation is successful or not. 
