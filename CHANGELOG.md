@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.10.6
+
+* Bug fix: When searching for a key in the data lake it looks for it in all the keys, not the first 1000
+
 ## Version 0.10.5
 
 * Bug fix: Return a p-value of 0.5 when all values are tied in Mann-Kendall test
