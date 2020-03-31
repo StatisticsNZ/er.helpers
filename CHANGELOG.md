@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 0.10.5
+
+* Bug fix: Return a p-value of 0.5 when all values are tied in Mann-Kendall test
+
 ## Version 0.10.4
 
 * Bug fix: Corrected spelling of Sen's slope
