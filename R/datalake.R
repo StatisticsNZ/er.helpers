@@ -252,7 +252,7 @@ version_list_as_df <- function(versions){
 search_data_lake <- function(pattern = "", bucket_name = mfe_datalake_bucket){
 
   check_aws_access()
-  all_keys <- aws.s3::get_bucket_df(bucket = bucket_name)
+  all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
 
   # If the pattern is a plain character then ignore case as this is ussually
   # what we want
