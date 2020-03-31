@@ -109,7 +109,7 @@ mann_kendall <- function(x,
                                   continuity = continuity)
   }
 
-  tibble::tibble(p_value = ifelse(all_ties & !is.na(test_result$p.value), 0.5,
+  tibble::tibble(p_value = ifelse(all_ties & !any(is.na(x)), 0.5,
                                   test_result$p.value),
                  s = test_result$estimates["S"],
                  var_s = test_result$estimates["varS"],
