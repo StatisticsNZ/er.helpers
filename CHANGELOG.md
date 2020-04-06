@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.11.1
+
+* Improvement: We use exclusion criteria on missing values to calculate anoamlies
+* Bug fix: When aggregation criteria were equal to 1 it correctly assume they are given as proportions
+* Improvement: Aggregation with criteria functions now have default values for maximum number of missing values and maximum number of consecutive missing values.
+
 ## Version 0.11.0
 
 * New feature: A set of functions (`aggragate_with_criteria()`) to calculate aggregations using criteria for missing data. 
