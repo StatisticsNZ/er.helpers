@@ -9,20 +9,21 @@ Description: Helper functions commonly used in Environmental Reporting at
     Ministry for Environment data lake and development of Shiny Apps.
 Depends: R (>= 3.6.0)
 Imports:
-    magrittr (>= 1.5), 
     aws.s3 (>= 0.3.12), 
     dplyr (>= 0.8.3), 
-    tibble (>= 2.1.3),
-    purrr (>= 0.2.4), 
-    readr (>= 1.3.1), 
-    rstudioapi (>= 0.10), 
-    snakecase (>= 0.11.0), 
-    rlang (>= 0.4.0), 
-    lubridate (>= 1.7.4), 
-    stringr (>= 1.4.0),
-    trend (>= 1.1.2), 
     forcats (>= 0.4.0), 
     ggplot2 (>= 3.2.1)
+    lubridate (>= 1.7.4), 
+    magrittr (>= 1.5), 
+    purrr (>= 0.2.4), 
+    readr (>= 1.3.1), 
+    rlang (>= 0.4.0), 
+    rstudioapi (>= 0.10), 
+    snakecase (>= 0.11.0), 
+    stringr (>= 1.4.0),
+    tibble (>= 2.1.3),
+    tidyr (>= 1.0.0),
+    trend (>= 1.1.2), 
 License: file LICENCE
 Encoding: UTF-8
 LazyData: true
