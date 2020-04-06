@@ -16,7 +16,7 @@
 #'
 #' @return NA if the criteria arent meet the mean of x otherwise
 #' @export
-aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean){
+aggregate_with_criteria <- function(x, max_missing = 0, max_consecutive = 0, fun = mean){
 
   na_values <- is.na(x)
   n_missing <- sum(na_values)
@@ -31,7 +31,7 @@ aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean)
     if (n_missing > max_missing)
       return(NA)
   } else {
-    stop("max_missing must be a proportion or an integer")
+    stop("max_missing must be a proportion or an integer.")
   }
 
   length_na_streaks <- na_values %>%
@@ -40,7 +40,7 @@ aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean)
   prop_na_streaks <- length_na_streaks / length(x)
 
   # If max_consecutive is a proportion
-  if (max_consecutive < 1 & max_consecutive > 0) {
+  if (max_consecutive <= 1 & max_consecutive > 0) {
     if (any(prop_na_streaks > max_consecutive))
       return(NA)
     # If max_consecutive is a integer
@@ -48,7 +48,7 @@ aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean)
     if (any(length_na_streaks > max_consecutive))
       return(NA)
   } else {
-    stop("max_consecutive must be a proportion or an integer")
+    stop("max_consecutive must be a proportion or an integer.")
   }
 
   mean(x, na.rm = TRUE)
@@ -56,18 +56,18 @@ aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean)
 
 #' @describeIn aggregate_with_criteria Mean with criteria
 #' @export
-mean_with_criteria <- function(x, max_missing, max_consecutive){
+mean_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
   aggregate_with_criteria(x, max_missing, max_consecutive, fun = mean)
 }
 
 #' @describeIn aggregate_with_criteria Minimum with criteria
 #' @export
-min_with_criteria <- function(x, max_missing, max_consecutive){
+min_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
   aggregate_with_criteria(x, max_missing, max_consecutive, fun = min)
 }
 
 #' @describeIn aggregate_with_criteria Maximum with criteria
 #' @export
-max_with_criteria <- function(x, max_missing, max_consecutive){
+max_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
   aggregate_with_criteria(x, max_missing, max_consecutive, fun = max)
 }
