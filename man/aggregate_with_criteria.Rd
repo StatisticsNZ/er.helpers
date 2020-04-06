@@ -7,22 +7,24 @@
 \alias{max_with_criteria}
 \title{Calculate an aggregated value taking into account certain exclusion cirteria}
 \usage{
-aggregate_with_criteria(x, max_missing, max_consecutive, fun = mean)
+aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0,
+  fun = mean)
 
-mean_with_criteria(x, max_missing, max_consecutive)
+mean_with_criteria(x, max_missing = 0, max_consecutive = 0)
 
-min_with_criteria(x, max_missing, max_consecutive)
+min_with_criteria(x, max_missing = 0, max_consecutive = 0)
 
-max_with_criteria(x, max_missing, max_consecutive)
+max_with_criteria(x, max_missing = 0, max_consecutive = 0)
 }
 \arguments{
 \item{x}{Numeric values}
 
 \item{max_missing}{Numeric. Maximum number or proportion of missing values in
-x}
+x. If any number of missing values is allowed set to 1 (100%) or NULL.}
 
 \item{max_consecutive}{Numeric. Maximum number or proportion of consecutive
-missing values in x}
+missing values in x. If any number of missing values is allowed set to 1
+(100%) or NULL.}
 
 \item{fun}{Function. Function used to aggregate values usually, mean, min,
 max, or sum}

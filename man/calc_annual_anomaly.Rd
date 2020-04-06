@@ -4,7 +4,8 @@
 \alias{calc_annual_anomaly}
 \title{Calculate annual anomaly}
 \usage{
-calc_annual_anomaly(x, year, period = NULL)
+calc_annual_anomaly(x, year, period = NULL, max_missing = 0.2,
+  max_consecutive = NULL)
 }
 \arguments{
 \item{x}{metric. A vector}
@@ -15,7 +16,14 @@ length as x}
 \item{period}{the reference period of the anomaly. A vector of length 2 or
 NULL. If a vector, the first element indicates the beginning of the
 reference period and the second the end of the reference period. If NULL
-(the default) the reference period goes from the first to the last year}
+(the default) the reference period goes from the first to the last year.}
+
+\item{max_missing}{Numeric. Maximum number or proportion of missing values in
+x. If any number of missing values is allowed set to 1 (100%) or NULL.}
+
+\item{max_consecutive}{Numeric. Maximum number or proportion of consecutive
+missing values in x. If any number of missing values is allowed set to 1
+(100%) or NULL.}
 }
 \value{
 a vector with the anomaly of x
