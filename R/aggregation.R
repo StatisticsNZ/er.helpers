@@ -23,7 +23,7 @@ aggregate_with_criteria <- function(x, max_missing, max_consecutive, fun = mean)
   prop_missing <- n_missing / length(x)
 
   # If max missing is a proportion
-  if (max_missing < 1 & max_missing > 0) {
+  if (max_missing <= 1 & max_missing > 0) {
     if (prop_missing > max_missing)
       return(NA)
     # If max_missing is a integer
