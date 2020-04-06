@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 0.11.0
+
+* New feature: A set of functions (`aggragate_with_criteria()`) to calculate aggregations using criteria for missing data. 
+* New feature: A function to print the range of a numeric vector in a "pretty way".
+
 ## Version 0.10.6
 
 * Bug fix: When searching for a key in the data lake it looks for it in all the keys, not the first 1000
