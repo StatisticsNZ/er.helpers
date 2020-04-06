@@ -20,25 +20,27 @@
 #' dplyr::mutate(anomaly = calc_annual_anomaly(temperature,
 #'                                            year,
 #'                                            reference_period))
-calc_annual_anomaly <- function(x, year, period = NULL) {
+calc_annual_anomaly <- function(x, year, period = NULL, max_missing = 0.2, max_consecutive = NULL) {
 
   if (is.null(period))
     period <- c(min(year), max(year))
 
   if (min(year) > min(period) | max(year) < max(period)) {
-    warning("Reference period not covered by the time series. Returning NA instead")
-    return(NA)
+    warning("Reference period not covered by the time series.")
   }
 
   if (length(x) != length(year))
     stop("x and year must have the same length")
 
-  years <- year >= min(period) & year <= max(period)
-  values <- x[years]
+  df <- tibble::tibble(year = year,
+                 values = x) %>%
+    tidyr::complete(year = tidyr::full_seq(c(year, period), period = 1)) %>%
+    dplyr::filter(year >= min(period),
+                  year <= max(period))
 
-  if (anyNA(values))
-    warning("Missing values for the anomaly reference period")
+  if (anyNA(df$values))
+    warning("Missing values for the anomaly reference period.")
 
-  reference <- mean(values)
+  reference <- mean_with_criteria(df$values, max_missing, max_consecutive)
   x - reference
 }
