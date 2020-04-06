@@ -8,15 +8,21 @@
 #'
 #' @param x Numeric values
 #' @param max_missing Numeric. Maximum number or proportion of missing values in
-#'   x
+#'   x. If any number of missing values is allowed set to 1 (100%) or NULL.
 #' @param max_consecutive Numeric. Maximum number or proportion of consecutive
-#'   missing values in x
+#'   missing values in x. If any number of missing values is allowed set to 1
+#'   (100%) or NULL.
 #' @param fun Function. Function used to aggregate values usually, mean, min,
 #'   max, or sum
 #'
 #' @return NA if the criteria arent meet the mean of x otherwise
 #' @export
 aggregate_with_criteria <- function(x, max_missing = 0, max_consecutive = 0, fun = mean){
+
+  if (is.null(max_missing))
+    max_missing <- 1
+  if (is.null(max_consecutive))
+    max_consecutive <- 1
 
   na_values <- is.na(x)
   n_missing <- sum(na_values)
