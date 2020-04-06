@@ -8,10 +8,10 @@
 #'   reference period and the second the end of the reference period. If NULL
 #'   (the default) the reference period goes from the first to the last year.
 #' @param max_missing Numeric. Maximum number or proportion of missing values in
-#'   x. If any number of missing values is allowed set to 1 (100%) or NULL.
+#'   x. If any number of missing values is allowed set to 1 (100\%) or NULL.
 #' @param max_consecutive Numeric. Maximum number or proportion of consecutive
 #'   missing values in x. If any number of missing values is allowed set to 1
-#'   (100%) or NULL.
+#'   (100\%) or NULL.
 #'
 #' @return a vector with the anomaly of x
 #' @export

@@ -20,11 +20,11 @@ max_with_criteria(x, max_missing = 0, max_consecutive = 0)
 \item{x}{Numeric values}
 
 \item{max_missing}{Numeric. Maximum number or proportion of missing values in
-x. If any number of missing values is allowed set to 1 (100%) or NULL.}
+x. If any number of missing values is allowed set to 1 (100\%) or NULL.}
 
 \item{max_consecutive}{Numeric. Maximum number or proportion of consecutive
 missing values in x. If any number of missing values is allowed set to 1
-(100%) or NULL.}
+(100\%) or NULL.}
 
 \item{fun}{Function. Function used to aggregate values usually, mean, min,
 max, or sum}

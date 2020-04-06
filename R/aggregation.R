@@ -8,10 +8,10 @@
 #'
 #' @param x Numeric values
 #' @param max_missing Numeric. Maximum number or proportion of missing values in
-#'   x. If any number of missing values is allowed set to 1 (100%) or NULL.
+#'   x. If any number of missing values is allowed set to 1 (100\%) or NULL.
 #' @param max_consecutive Numeric. Maximum number or proportion of consecutive
 #'   missing values in x. If any number of missing values is allowed set to 1
-#'   (100%) or NULL.
+#'   (100\%) or NULL.
 #' @param fun Function. Function used to aggregate values usually, mean, min,
 #'   max, or sum
 #'
