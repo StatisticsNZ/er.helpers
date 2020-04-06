@@ -6,7 +6,7 @@
 #' @param x numeric vector to round
 #' @param digits integer indicating the number of decimal places to be used
 #'
-#' @return
+#' @return a numeric value
 #' @importFrom utils tail
 #' @export
 #'

@@ -36,7 +36,7 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' Read a CSV file stored in an AWS S3 bucket.
 #'
 #' This function get the specified object from an AWS S3 bucket and reads it
-#' using \code{\link[readr]{read_csv}. It keeps the CSV in memory and, therefore, it
+#' using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and, therefore, it
 #' avoids the unintended consequences of saving the file in the disk.
 #'
 #' @param s3_path The filename of the desired CSV in the S3 bucket including the

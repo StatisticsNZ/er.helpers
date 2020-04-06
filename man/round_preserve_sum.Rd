@@ -11,6 +11,9 @@ round_preserve_sum(x, digits = 0)
 
 \item{digits}{integer indicating the number of decimal places to be used}
 }
+\value{
+a numeric value
+}
 \description{
 Round values preserving their sum. Often used to round percentages such that
 their totals still add to 100%.
