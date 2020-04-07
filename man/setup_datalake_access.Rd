@@ -10,7 +10,7 @@ setup_datalake_access(cred_csv = "~/credentials.csv",
 \arguments{
 \item{cred_csv}{A csv file with the credentials information. At a minimum it
 should have two columns: "Access key ID" and "Secret access key". By
-default \code{setup_datalake_access} looks for this file in the user
+default \code{\link{setup_datalake_access}} looks for this file in the user
 directory "~/credentials.csv".}
 
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the

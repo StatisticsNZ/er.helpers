@@ -12,7 +12,7 @@ all_columns_to_snakecase(x)
 \description{
 This function modifies the input data frame such that the names of every
 column are in snake case. Internally, it uses the
-\code{snakecase::to_snake_case}.
+\code{\link[snakecase]{to_snake_case}}.
 }
 \examples{
 x <- data.frame(notSnakecase = 1:10)

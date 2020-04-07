@@ -13,8 +13,6 @@
 #' @return a value between 0 and 1
 #' @importFrom stats rlnorm
 #' @family rainfall functions
-#' @name rainfall_above_reference
-#' @seealso \code{\link{er.helpers-deprecated}}
 #' @export
 #'
 #' @examples
@@ -69,8 +67,6 @@ precipitation_above_reference <- function(precipitation,
 #' @return the 95th percentile for the reference period.
 #' @importFrom stats quantile
 #' @family rainfall functions
-#' @name get_reference_rainfall
-#' @seealso \code{\link{er.helpers-deprecated}}
 #' @export
 #'
 #' @examples

@@ -8,11 +8,18 @@ search_datalake(..., bucket_name = mfe_datalake_bucket,
   object_versions = FALSE)
 }
 \arguments{
+\item{...}{Patterns to look for. Each argument can be a character string or a
+regex pattern. If multiple arguments are passed only Keys that match all
+patterns are returned. Strings are passed to \code{\link[stringr]{coll}}
+and it ignores whether it is lower or upper case. If you want to search
+using regex construct the pattern using \code{\link[stringr]{regex}} (see
+examples).}
+
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the
 Ministry for the Environment data lake for environmental reporting
 "mfedlkinput".}
 
-\item{object_versions}{}
+\item{object_versions}{Logical. Whether to include object version IDs in the search}
 }
 \value{
 a data frame with metadata for selected objects
@@ -27,6 +34,9 @@ results.
 }
 \examples{
  \dontrun{
+# return all objects
+search_data_lake()
+# search for a word
 search_data_lake("temperature")
 # search using regex
 search_data_lake(stringr::regex("^a"))

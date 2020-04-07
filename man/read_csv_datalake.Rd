@@ -25,8 +25,9 @@ A `\code{\link[tibble]{tibble}}
 }
 \description{
 This function get the specified object from an AWS S3 bucket and reads it
-using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and, therefore, it
-avoids the unintended consequences of saving the file in the disk.
+using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk.
 }
 \examples{
 \dontrun{

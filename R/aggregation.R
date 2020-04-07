@@ -40,9 +40,9 @@ aggregate_with_criteria <- function(x, max_missing = 0, max_consecutive = 0, fun
     stop("max_missing must be a proportion or an integer.")
   }
 
-  length_na_streaks <- na_values %>%
-    rle() %>%
-    {.$lengths[.$values]}
+  rle_na_streaks <- na_values %>%
+    rle()
+  length_na_streaks <- rle_na_streaks$lengths[rle_na_streaks$values]
   prop_na_streaks <- length_na_streaks / length(x)
 
   # If max_consecutive is a proportion

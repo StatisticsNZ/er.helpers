@@ -2,10 +2,12 @@
 % Please edit documentation in R/datalake.R
 \name{check_aws_access}
 \alias{check_aws_access}
-\title{Check if aws credentials have been configured and attempt default configuration otherwise}
+\title{Check if aws credentials have been configured and attempt default
+configuration otherwise}
 \usage{
 check_aws_access()
 }
 \description{
-Check if aws credentials have been configured and attempt default configuration otherwise
+Check if aws credentials have been configured and attempt default
+configuration otherwise
 }

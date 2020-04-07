@@ -11,7 +11,7 @@ mfe_datalake_bucket <- "mfedlkinput"
 #'
 #' @param cred_csv A csv file with the credentials information. At a minimum it
 #'   should have two columns: "Access key ID" and "Secret access key". By
-#'   default \code{setup_datalake_access} looks for this file in the user
+#'   default \code{\link{setup_datalake_access}} looks for this file in the user
 #'   directory "~/credentials.csv".
 #' @param bucket_name Name of the bucket to connect. By default, it uses the
 #'   Ministry for the Environment data lake for environmental reporting
@@ -36,8 +36,9 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' Read a CSV file stored in an AWS S3 bucket.
 #'
 #' This function get the specified object from an AWS S3 bucket and reads it
-#' using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and, therefore, it
-#' avoids the unintended consequences of saving the file in the disk.
+#' using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and,
+#' therefore, it avoids the unintended consequences of saving the file in the
+#' disk.
 #'
 #' @param s3_path The filename of the desired CSV in the S3 bucket including the
 #'   full path
@@ -124,7 +125,7 @@ write_csv_datalake <- function(x,
 #'
 #' This function modifies the input data frame such that the names of every
 #' column are in snake case. Internally, it uses the
-#' \code{snakecase::to_snake_case}.
+#' \code{\link[snakecase]{to_snake_case}}.
 #'
 #' @param x The input data frame.
 #'
@@ -139,7 +140,8 @@ all_columns_to_snakecase <- function(x){
 }
 
 
-#' Check if aws credentials have been configured and attempt default configuration otherwise
+#' Check if aws credentials have been configured and attempt default
+#' configuration otherwise
 #'
 check_aws_access <- function() {
   aws_credentials_configured <- c("AWS_ACCESS_KEY_ID",
@@ -151,7 +153,7 @@ check_aws_access <- function() {
     any()
 
   if (!aws_credentials_configured) {
-    warning("AWS credentials not configured
+    message("AWS credentials not configured in this session.
 Attempting setup with `setup_datalake_access()` and default settings
 You need to setup access manually if this function fails.")
     setup_datalake_access()
@@ -243,7 +245,7 @@ version_list_as_df <- function(versions){
 #'   and it ignores whether it is lower or upper case. If you want to search
 #'   using regex construct the pattern using \code{\link[stringr]{regex}} (see
 #'   examples).
-#' @param object_versions
+#' @param object_versions Logical. Whether to include object version IDs in the search
 #'
 #' @return a data frame with metadata for selected objects
 #' @importFrom utils View
