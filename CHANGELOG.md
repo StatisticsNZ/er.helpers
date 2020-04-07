@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## dev-version
+## Version 0.11.3
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
 * Improvement: `search_data_lake()` has been deprecated in favour of `search_datalake()` to be consistent with naming
