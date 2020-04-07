@@ -7,12 +7,14 @@
 #' intense events. This measure provides information about the importance of
 #' intense rainfall events for total annual rainfall.
 #'
-#' @param rainfall vector with rainfall values
-#' @param reference_rainfall reference value of rainfall
+#' @inheritParams get_reference_precipitation
+#' @param reference_precipitation reference value of precipitation
 #'
 #' @return a value between 0 and 1
 #' @importFrom stats rlnorm
 #' @family rainfall functions
+#' @name rainfall_above_reference
+#' @seealso \code{\link{er.helpers-deprecated}}
 #' @export
 #'
 #' @examples
@@ -26,15 +28,16 @@
 #'
 #' rain_data %>%
 #' # calculate reference rainfall
-#'   mutate(ref = get_reference_rainfall(rainfall,
-#'                                              year,
-#'                                              climate_normal,
-#'                                              percentile = 95L)) %>%
+#'   mutate(ref = get_reference_precipitation(rainfall,
+#'                                             year,
+#'                                             climate_normal,
+#'                                             percentile = 95L)) %>%
 #' # calculate prorportion of rainfall above reference
 #'   group_by(year) %>%
-#'   summarise(prop_above = rainfall_above_reference(rainfall, ref))
-rainfall_above_reference <- function(rainfall,
-                                     reference_rainfall){
+#'   summarise(prop_above = precipitation_above_reference(rainfall, ref))
+precipitation_above_reference <- function(precipitation,
+                                          reference_precipitation,
+                                          wet_day_threshold){
 
 
   above_reference <- rainfall[rainfall > reference_rainfall]
@@ -44,22 +47,30 @@ rainfall_above_reference <- function(rainfall,
 }
 
 
-#' Calculate reference rainfall for a reference period/climate normal
+#' Calculate reference precipitation for a reference period/climate normal
 #'
-#' The reference rainfall corresponds to the (usually) 95th percentile of
-#' rainfall within the reference period.
+#' The reference rainfall corresponds to the (usually) 95th or 99th percentile
+#' of rainfall within the reference period.
 
 #'
-#' @param rainfall vector with rainfall values
-#' @param date year for each rain value. Must be the same lentgth of rainfall
-#' @param reference_period vector with the beginning and end of the reference
-#'   period
+#' @param precipitation vector with rainfall values
+#' @param date date for each rain value. Must be the same lentgth of rainfall
+#'   and must be the same type as the reference period. I.e if date is numeric
+#'   (e.g. year) then the reference period must be given as numeric as well. If
+#'   date is a date or a date-time ("date" or "POSIX.ct") then the reference
+#'   period must be also a date or a date-time
+#' @param reference_period vector of length 2 with the beginning and end of the
+#'   reference period
 #' @param percentile percentile for the reference period. Defaults to the 95th
 #'   percentile
+#' @param wet_day_threshold Numeric. Amount of precipitation at which the day is
+#'   considered a wet day. Defaults to 1.
 #'
 #' @return the 95th percentile for the reference period.
 #' @importFrom stats quantile
 #' @family rainfall functions
+#' @name get_reference_rainfall
+#' @seealso \code{\link{er.helpers-deprecated}}
 #' @export
 #'
 #' @examples
@@ -73,17 +84,18 @@ rainfall_above_reference <- function(rainfall,
 #'
 #' rain_data %>%
 #' # calculate reference rainfall
-#'   mutate(ref = get_reference_rainfall(rainfall,
-#'                                              year,
-#'                                              climate_normal,
-#'                                              percentile = 95L)) %>%
+#'   mutate(ref = get_reference_precipitation(rainfall,
+#'                                            year,
+#'                                            climate_normal,
+#'                                            percentile = 95L)) %>%
 #' # calculate prorportion of rainfall above reference
 #'   group_by(year) %>%
-#'   summarise(prop_above = rainfall_above_reference(rainfall, ref))
-get_reference_rainfall <- function(rainfall,
-                                   date = NULL,
-                                   reference_period = NULL,
-                                   percentile = 95L){
+#'   summarise(prop_above = precipitation_above_reference(rainfall, ref))
+get_reference_precipitation <- function(precipitation,
+                                        date = NULL,
+                                        reference_period = NULL,
+                                        percentile = 95L,
+                                        wet_day_threshold = 1){
   # error checking
   if (length(percentile) != 1)
     stop("percentile must be of lenghth 1")
@@ -94,10 +106,13 @@ get_reference_rainfall <- function(rainfall,
   if (is.null(reference_period)) {
     rainfall_for_reference <- rainfall
   } else {
-    rainfall_for_reference <- rainfall[date >= reference_period[1] & date <= reference_period[2]]
+    rainfall_for_reference <- rainfall[date >= reference_period[1] &
+                                         date <= reference_period[2]]
   }
 
   rainfall_for_reference <- rainfall_for_reference[rainfall_for_reference >=
                                                      wet_day_threshold]
   quantile(rainfall_for_reference, probs = percentile / 100)
 }
+
+
