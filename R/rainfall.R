@@ -37,11 +37,9 @@ rainfall_above_reference <- function(rainfall,
                                      reference_rainfall){
 
 
-  above_reference <- ifelse(rainfall > reference_rainfall,
-                            rainfall - reference_rainfall,
-                            0)
-
-  sum(above_reference, na.rm = TRUE) / sum(rainfall, na.rm = TRUE)
+  above_reference <- rainfall[rainfall > reference_rainfall]
+  wet_days <- rainfall[rainfall >= wet_day_threshold]
+  sum(above_reference, na.rm = TRUE) / sum(wet_days, na.rm = TRUE)
 
 }
 
@@ -99,5 +97,7 @@ get_reference_rainfall <- function(rainfall,
     rainfall_for_reference <- rainfall[date >= reference_period[1] & date <= reference_period[2]]
   }
 
+  rainfall_for_reference <- rainfall_for_reference[rainfall_for_reference >=
+                                                     wet_day_threshold]
   quantile(rainfall_for_reference, probs = percentile / 100)
 }
