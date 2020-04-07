@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## Version 0.11.2
+
+* Bug fix: Fix documentation warning generated when installing the package.
+* Bug fix: Functions used to calculate rainfall indices use wet days only (days > 1mm precipitation by default). 
+* Improvement: Deprecated`get_reference_rainfall()` and `rainfall_above_reference()` in favour of `get_reference_precipitation()` and `precipitation_above_reference()` in order to adopt WMO names.   
+
 ## Version 0.11.1
 
-* Improvement: We use exclusion criteria on missing values to calculate anoamlies
+* Improvement: We use exclusion criteria on missing values to calculate anoamliesS
 * Bug fix: When aggregation criteria were equal to 1 it correctly assume they are given as proportions
 * Improvement: Aggregation with criteria functions now have default values for maximum number of missing values and maximum number of consecutive missing values.
 
