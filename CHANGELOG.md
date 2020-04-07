@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## dev-version
+
+* Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
+
 ## Version 0.11.2
 
 * Bug fix: Fix documentation warning generated when installing the package.

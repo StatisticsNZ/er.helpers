@@ -6,7 +6,7 @@
 \title{Get proportion of rainfall above reference}
 \usage{
 precipitation_above_reference(precipitation, reference_precipitation,
-  wet_day_threshold)
+  wet_day_threshold = 1)
 }
 \arguments{
 \item{reference_precipitation}{reference value of precipitation}
