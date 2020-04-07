@@ -4,11 +4,14 @@
 \alias{er.helpers-deprecated}
 \alias{get_reference_rainfall}
 \alias{rainfall_above_reference}
+\alias{search_data_lake}
 \title{Deprecated functions in package \pkg{er.helpers}.}
 \usage{
 get_reference_rainfall(rainfall, year, reference_period, percentile)
 
 rainfall_above_reference(rainfall, reference_rainfall)
+
+search_data_lake(...)
 }
 \description{
 The functions listed below are deprecated and will be defunct in
@@ -24,6 +27,11 @@ For \code{get_reference_rainfall}, use \code{\link{get_reference_precipitation}}
 \section{\code{rainfall_above_reference}}{
 
 For \code{rainfall_above_reference}, use \code{\link{precipitation_above_reference}}.
+}
+
+\section{\code{search_data_lake}}{
+
+For \code{search_data_lake}, use \code{\link{search_datalake}}.
 }
 
 \keyword{internal}

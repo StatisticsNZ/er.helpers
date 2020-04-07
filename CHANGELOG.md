@@ -3,9 +3,10 @@
 ## dev-version
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
-* Improvement (breaking change): `search_data_lake()` now uses AND instead of OR when filtering keys. 
-* Improvement: `search_data_lake()` now invokes a data viewer when run in interactive mode
-* Improvement: `search_data_lake()` now returns a tibble
+* Improvement: `search_data_lake()` has been deprecated in favour of `search_datalake()` to be consistent with naming
+* Improvement (breaking change): `search_datalake()` now uses AND instead of OR when filtering keys. 
+* Improvement: `search_datalake()` now invokes a data viewer when run in interactive mode
+* Improvement: `search_datalake()` now returns a tibble
 * Improvement: Using MIT License
 
 ## Version 0.11.2

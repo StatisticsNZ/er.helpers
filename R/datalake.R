@@ -256,7 +256,7 @@ version_list_as_df <- function(versions){
 #' # search tidy datasets for atmosphere and climate 2020
 #' search_data_lake("tidy", "climate", "2020")
 #' }
-search_data_lake <- function(..., bucket_name = mfe_datalake_bucket, object_versions = FALSE){
+search_datalake <- function(..., bucket_name = mfe_datalake_bucket, object_versions = FALSE){
 
   patterns <- list(...) %>%
     prepare_pattern()

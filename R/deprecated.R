@@ -27,3 +27,12 @@ rainfall_above_reference <- function(rainfall, reference_rainfall) {
   .Deprecated("precipitation_above_reference")
   precipitation_above_reference(rainfall, reference_rainfall)
 }
+
+#' @rdname er.helpers-deprecated
+#' @section \code{search_data_lake}:
+#' For \code{search_data_lake}, use \code{\link{search_datalake}}.
+#' @keywords internal
+#' @export
+search_data_lake <- function(...) {
+  search_datalake(...)
+}
