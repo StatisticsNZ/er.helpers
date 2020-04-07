@@ -37,11 +37,11 @@
 #'   summarise(prop_above = precipitation_above_reference(rainfall, ref))
 precipitation_above_reference <- function(precipitation,
                                           reference_precipitation,
-                                          wet_day_threshold){
+                                          wet_day_threshold = 1){
 
 
-  above_reference <- rainfall[rainfall > reference_rainfall]
-  wet_days <- rainfall[rainfall >= wet_day_threshold]
+  above_reference <- precipitation[precipitation > reference_precipitation]
+  wet_days <- precipitation[precipitation >= wet_day_threshold]
   sum(above_reference, na.rm = TRUE) / sum(wet_days, na.rm = TRUE)
 
 }
@@ -104,10 +104,10 @@ get_reference_precipitation <- function(precipitation,
     stop("percentile must be between 0 and 100")
 
   if (is.null(reference_period)) {
-    rainfall_for_reference <- rainfall
+    rainfall_for_reference <- precipitation
   } else {
-    rainfall_for_reference <- rainfall[date >= reference_period[1] &
-                                         date <= reference_period[2]]
+    rainfall_for_reference <- precipitation[date >= reference_period[1] &
+                                              date <= reference_period[2]]
   }
 
   rainfall_for_reference <- rainfall_for_reference[rainfall_for_reference >=
