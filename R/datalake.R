@@ -241,22 +241,29 @@ version_list_as_df <- function(versions){
 #'   regex pattern. If multiple arguments are passed only Keys that match all
 #'   patterns are returned. Strings are passed to \code{\link[stringr]{coll}}
 #'   and it ignores whether it is lower or upper case. If you want to search
-#'   using regex construct the pattern using \code{\link[stringr]{regex} (see
+#'   using regex construct the pattern using \code{\link[stringr]{regex}} (see
 #'   examples).
 #' @param object_versions
 #'
 #' @return a data frame with metadata for selected objects
+#' @importFrom utils View
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
 #'  \dontrun{
+#' # return all objects
+#' search_data_lake()
+#' # search for a word
 #' search_data_lake("temperature")
 #' # search using regex
 #' search_data_lake(stringr::regex("^a"))
 #' # search tidy datasets for atmosphere and climate 2020
 #' search_data_lake("tidy", "climate", "2020")
 #' }
-search_datalake <- function(..., bucket_name = mfe_datalake_bucket, object_versions = FALSE){
+search_datalake <- function(...,
+                            bucket_name = mfe_datalake_bucket,
+                            object_versions = FALSE){
 
   patterns <- list(...) %>%
     prepare_pattern()
@@ -264,9 +271,9 @@ search_datalake <- function(..., bucket_name = mfe_datalake_bucket, object_versi
   check_aws_access()
 
   if (object_versions) {
-    all_keys <- get_bucket_version_df(bucket = bucket_name)
+    all_keys <- get_bucket_version_df(bucket_name = bucket_name)
   } else {
-    all_keys <- aws.s3::get_bucket_df(bucket = bucket_name)
+    all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
   }
 
   if (any(patterns == "")) {
@@ -276,11 +283,8 @@ search_datalake <- function(..., bucket_name = mfe_datalake_bucket, object_versi
   search_results <- all_keys
   for (pattern in patterns) {
     search_results <- search_results %>%
-      dplyr::filter(stringr::str_detect(Key, pattern))
+      dplyr::filter(stringr::str_detect(.data$Key, pattern))
   }
-
-  if (rlang::is_interactive())
-    View(search_results)
 
   search_results %>%
     tibble::as_tibble()
