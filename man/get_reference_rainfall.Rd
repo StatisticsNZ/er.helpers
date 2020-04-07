@@ -2,28 +2,36 @@
 % Please edit documentation in R/rainfall.R
 \name{get_reference_rainfall}
 \alias{get_reference_rainfall}
-\title{Calculate reference rainfall for a reference period/climate normal}
+\alias{get_reference_precipitation}
+\title{Calculate reference precipitation for a reference period/climate normal}
 \usage{
-get_reference_rainfall(rainfall, date = NULL, reference_period = NULL,
-  percentile = 95L)
+get_reference_precipitation(precipitation, date = NULL,
+  reference_period = NULL, percentile = 95L, wet_day_threshold = 1)
 }
 \arguments{
-\item{rainfall}{vector with rainfall values}
+\item{precipitation}{vector with rainfall values}
 
-\item{date}{year for each rain value. Must be the same lentgth of rainfall}
+\item{date}{date for each rain value. Must be the same lentgth of rainfall
+and must be the same type as the reference period. I.e if date is numeric
+(e.g. year) then the reference period must be given as numeric as well. If
+date is a date or a date-time ("date" or "POSIX.ct") then the reference
+period must be also a date or a date-time}
 
-\item{reference_period}{vector with the beginning and end of the reference
-period}
+\item{reference_period}{vector of length 2 with the beginning and end of the
+reference period}
 
 \item{percentile}{percentile for the reference period. Defaults to the 95th
 percentile}
+
+\item{wet_day_threshold}{Numeric. Amount of precipitation at which the day is
+considered a wet day. Defaults to 1.}
 }
 \value{
 the 95th percentile for the reference period.
 }
 \description{
-The reference rainfall corresponds to the (usually) 95th percentile of
-rainfall within the reference period.
+The reference rainfall corresponds to the (usually) 95th or 99th percentile
+of rainfall within the reference period.
 }
 \examples{
 library(dplyr)
@@ -36,15 +44,17 @@ climate_normal <- c(2001, 2005)
 
 rain_data \%>\%
 # calculate reference rainfall
-  mutate(ref = get_reference_rainfall(rainfall,
-                                             year,
-                                             climate_normal,
-                                             percentile = 95L)) \%>\%
+  mutate(ref = get_reference_precipitation(rainfall,
+                                           year,
+                                           climate_normal,
+                                           percentile = 95L)) \%>\%
 # calculate prorportion of rainfall above reference
   group_by(year) \%>\%
-  summarise(prop_above = rainfall_above_reference(rainfall, ref))
+  summarise(prop_above = precipitation_above_reference(rainfall, ref))
 }
 \seealso{
+\code{\link{er.helpers-deprecated}}
+
 Other rainfall functions: \code{\link{rainfall_above_reference}}
 }
 \concept{rainfall functions}

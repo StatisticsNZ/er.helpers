@@ -2,14 +2,14 @@
 % Please edit documentation in R/rainfall.R
 \name{rainfall_above_reference}
 \alias{rainfall_above_reference}
+\alias{precipitation_above_reference}
 \title{Get proportion of rainfall above reference}
 \usage{
-rainfall_above_reference(rainfall, reference_rainfall)
+precipitation_above_reference(precipitation, reference_precipitation,
+  wet_day_threshold)
 }
 \arguments{
-\item{rainfall}{vector with rainfall values}
-
-\item{reference_rainfall}{reference value of rainfall}
+\item{reference_precipitation}{reference value of precipitation}
 }
 \value{
 a value between 0 and 1
@@ -33,15 +33,17 @@ climate_normal <- c(2001, 2005)
 
 rain_data \%>\%
 # calculate reference rainfall
-  mutate(ref = get_reference_rainfall(rainfall,
-                                             year,
-                                             climate_normal,
-                                             percentile = 95L)) \%>\%
+  mutate(ref = get_reference_precipitation(rainfall,
+                                            year,
+                                            climate_normal,
+                                            percentile = 95L)) \%>\%
 # calculate prorportion of rainfall above reference
   group_by(year) \%>\%
-  summarise(prop_above = rainfall_above_reference(rainfall, ref))
+  summarise(prop_above = precipitation_above_reference(rainfall, ref))
 }
 \seealso{
+\code{\link{er.helpers-deprecated}}
+
 Other rainfall functions: \code{\link{get_reference_rainfall}}
 }
 \concept{rainfall functions}
