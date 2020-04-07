@@ -232,11 +232,18 @@ version_list_as_df <- function(versions){
 #' Returns metadata about objects in a bucket. This function is a wrapper to
 #' `aws.s3::get_bucket_df` but filters out the desired Keys. If there are more
 #' than 1000 objects, it makes iterative calls to the AWS S3 API to retrieve the
-#' metadata for all versions. If pattern is a character string, it ignores
-#' wether is lower or upper case
+#' metadata for all versions. If the function is called from an interactive
+#' session, it invokes a data viewer (\code{\link[utils]{View}}) with the search
+#' results.
 #'
 #' @inheritParams setup_datalake_access
-#' @inheritParams stringr::str_detect
+#' @param ... Patterns to look for. Each argument can be a character string or a
+#'   regex pattern. If multiple arguments are passed only Keys that match all
+#'   patterns are returned. Strings are passed to \code{\link[stringr]{coll}}
+#'   and it ignores whether it is lower or upper case. If you want to search
+#'   using regex construct the pattern using \code{\link[stringr]{regex} (see
+#'   examples).
+#' @param object_versions
 #'
 #' @return a data frame with metadata for selected objects
 #' @export
@@ -244,27 +251,46 @@ version_list_as_df <- function(versions){
 #' @examples
 #'  \dontrun{
 #' search_data_lake("temperature")
-#' # search matches for temperature OR lake
-#' search_data_lake(c("temperature", "lake"))
 #' # search using regex
 #' search_data_lake(stringr::regex("^a"))
+#' # search tidy datasets for atmosphere and climate 2020
+#' search_data_lake("tidy", "climate", "2020")
 #' }
-search_data_lake <- function(pattern = "", bucket_name = mfe_datalake_bucket){
+search_data_lake <- function(..., bucket_name = mfe_datalake_bucket, object_versions = FALSE){
+
+  patterns <- list(...) %>%
+    prepare_pattern()
 
   check_aws_access()
-  all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
 
+  if (object_versions) {
+    all_keys <- get_bucket_version_df(bucket = bucket_name)
+  } else {
+    all_keys <- aws.s3::get_bucket_df(bucket = bucket_name)
+  }
+
+  if (any(patterns == "")) {
+    return(all_keys)
+  }
+
+  search_results <- all_keys
+  for (pattern in patterns) {
+    search_results <- search_results %>%
+      dplyr::filter(stringr::str_detect(Key, pattern))
+  }
+
+  if (rlang::is_interactive())
+    View(search_results)
+
+  search_results
+}
+
+# Prepare a pattern for look in the data lake and use with str_detect
+prepare_pattern <- function(pattern){
   # If the pattern is a plain character then ignore case as this is ussually
   # what we want
   if (is.null(attr(pattern, "class"))) {
     pattern <- pattern %>%
       purrr::map(stringr::coll, ignore_case = TRUE)
   }
-
-  if (any(pattern == "")) {
-    return(all_keys)
-  }
-
-  pattern %>%
-    purrr::map_dfr(~ dplyr::filter(all_keys, stringr::str_detect(Key, .)))
 }

@@ -4,27 +4,15 @@
 \alias{search_data_lake}
 \title{Search for keys in the data lake}
 \usage{
-search_data_lake(pattern = "", bucket_name = mfe_datalake_bucket)
+search_data_lake(..., bucket_name = mfe_datalake_bucket,
+  object_versions = FALSE)
 }
 \arguments{
-\item{pattern}{Pattern to look for.
-
-The default interpretation is a regular expression, as described
-in \link[stringi:stringi-search-regex]{stringi::stringi-search-regex}. Control options with
-\code{\link[=regex]{regex()}}.
-
-Match a fixed string (i.e. by comparing only bytes), using
-\code{\link[=fixed]{fixed()}}. This is fast, but approximate. Generally,
-for matching human text, you'll want \code{\link[=coll]{coll()}} which
-respects character matching rules for the specified locale.
-
-Match character, word, line and sentence boundaries with
-\code{\link[=boundary]{boundary()}}. An empty pattern, "", is equivalent to
-\code{boundary("character")}.}
-
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the
 Ministry for the Environment data lake for environmental reporting
 "mfedlkinput".}
+
+\item{object_versions}{}
 }
 \value{
 a data frame with metadata for selected objects
@@ -33,15 +21,16 @@ a data frame with metadata for selected objects
 Returns metadata about objects in a bucket. This function is a wrapper to
 `aws.s3::get_bucket_df` but filters out the desired Keys. If there are more
 than 1000 objects, it makes iterative calls to the AWS S3 API to retrieve the
-metadata for all versions. If pattern is a character string, it ignores
-wether is lower or upper case
+metadata for all versions. If the function is called from an interactive
+session, it invokes a data viewer (\code{\link[utils]{View}}) with the search
+results.
 }
 \examples{
  \dontrun{
 search_data_lake("temperature")
-# search matches for temperature OR lake
-search_data_lake(c("temperature", "lake"))
 # search using regex
 search_data_lake(stringr::regex("^a"))
+# search tidy datasets for atmosphere and climate 2020
+search_data_lake("tidy", "climate", "2020")
 }
 }

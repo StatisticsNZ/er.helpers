@@ -3,6 +3,7 @@
 ## dev-version
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
+* Improvement (breaking change): `search_data_lake()` now uses AND instead of OR when filtering keys. 
 
 ## Version 0.11.2
 
