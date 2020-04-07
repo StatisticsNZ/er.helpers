@@ -4,6 +4,9 @@
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
 * Improvement (breaking change): `search_data_lake()` now uses AND instead of OR when filtering keys. 
+* Improvement: `search_data_lake()` now invokes a data viewer when run in interactive mode
+* Improvement: `search_data_lake()` now returns a tibble
+* Improvement: Using MIT License
 
 ## Version 0.11.2
 

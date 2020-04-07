@@ -282,7 +282,8 @@ search_data_lake <- function(..., bucket_name = mfe_datalake_bucket, object_vers
   if (rlang::is_interactive())
     View(search_results)
 
-  search_results
+  search_results %>%
+    tibble::as_tibble()
 }
 
 # Prepare a pattern for look in the data lake and use with str_detect
