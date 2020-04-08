@@ -14,7 +14,7 @@
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.
 * Improvement: `search_data_lake()` has been deprecated in favour of `search_datalake()` to be consistent with naming
-* Improvement (breaking change): `search_datalake()` now uses AND instead of OR when filtering keys. 
+* Improvement: `search_datalake()` now uses AND instead of OR when filtering keys. 
 * Improvement: `search_datalake()` now returns a tibble
 * Improvement: Using MIT License
 
@@ -86,63 +86,41 @@
 
 ## Version 0.6.0
 
-New features:
-
-* Added function to calculate annual anomalies
+* New feature: Added function to calculate annual anomalies
 
 ## Version 0.5.1
 
-Improvements:
-
-* Trend functions warn when number of values is small or when all values are tied in the data
+* Improvement: Trend functions warn when number of values is small or when all values are tied in the data
 
 ## Version 0.5.0
 
-New features:
-
-* Added function search for object keys in a data lake
+* New feature: Added function search for object keys in a data lake
 
 ## Version 0.4.1
 
-Bug fixes:
-
-* Reading data frames with a rowname X1 column doesn't fail anymore
+* Bug fix: Reading data frames with a rowname X1 column doesn't fail anymore
 
 ## Version 0.4.0
 
-New features:
-
-* Added function to calculate trends using Sen's slope and Mann-Kendall test
-
-Improvements:
-
-* When downloading a csv from the data lake remove the X1 column
+* New feature: Added function to calculate trends using Sen's slope and Mann-Kendall test
+* Improvement: When downloading a csv from the data lake remove the X1 column
 
 ## Version 0.3.0
 
-New features:
-
-* Added function to calculate the season of a date-time
+* New feature: Added function to calculate the season of a date-time
 
 ## Version 0.2.1
 
-Improvements:
-
-* Added contribution section to README
-* Improved documentation
-* Added CHANGELOG 
+* Improvement: Added contribution section to README
+* Improvement: Improved documentation
+* Improvement: Added CHANGELOG 
 
 ## Version 0.2.0
 
-New features:
-
-* Retrieve any version of a csv in the data lake
-* Check all the versions of an object in the data lake
-
-Improvements:
-
-* Better documentation
-* Fix notes and warnings in package testing
+* New feature: Retrieve any version of a csv in the data lake
+* New feature: Check all the versions of an object in the data lake
+* Improvement: Better documentation
+* Improvement: Fix notes and warnings in package testing
 
 ## Version 0.1.0
 
