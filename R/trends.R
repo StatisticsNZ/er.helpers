@@ -47,7 +47,7 @@ sen_slope <- function(x, conf_level = 0.95){
   }
 
   tibble::tibble(p_value = test_result$p.value,
-                 sen_slope = test_result$estimates["Sen's slope"],
+                 slope = test_result$estimates["Sen's slope"],
                  conf_low = test_result$conf.int[1],
                  conf_high = test_result$conf.int[2],
                  conf_level = conf_level,
