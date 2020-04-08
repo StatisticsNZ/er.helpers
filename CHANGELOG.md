@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 0.12.0
+
+* New feature: Added `sum_with_criteria()` to collection of aggregation functions
+* Bug fix: Fixed a bug in `aggregate_with_criteria()` that meant that the mean was calculated regardless of the function indicated
+
 ## Version 0.11.3
 
 * Bug fix: Fixed bug in precipitation functions that prevented them from being calculated properly.

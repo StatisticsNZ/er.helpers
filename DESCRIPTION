@@ -1,7 +1,7 @@
 Package: er.helpers
 Type: Package
 Title: Helper functions commonly used in Environmental Reporting at Stats NZ
-Version: 0.11.3
+Version: 0.12.0
 Authors@R: c(
     person("Fernando", "Cagua", email = "fernando.cagua@stats.govt.nz", role = c("aut", "cre")), 
     person("David", "Hodge", email = "david.hodge@stats.govt.nz", role = c("ctb")), 
