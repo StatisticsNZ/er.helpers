@@ -122,6 +122,71 @@ mann_kendall <- function(x,
 
 }
 
+
+#' Linear model for trend analysis
+#'
+#' Performs a linear model for
+#'
+#' @param x numeric vector
+#' @param y optional time variable, converted to numeric. If its not provided it
+#'   will be assumed that all values in X are sequential, regularly measured,
+#'   and there are no gaps in the measurements.
+#' @conf_level numeric. Level of confidence to be used to calculate the
+#'   confidence intervals
+#'
+#' @return a tidy data frame with the model results
+#' @importFrom broom glance tidy
+#' @importFrom stats lm qnorm
+#' @export
+#'
+#' @examples
+#' x <- runif(100) * 1:100
+#' linear_model(x)
+#' # If measurements were for example taken daily
+#' linear_model(x, y = Sys.Date() + (1:100))
+linear_model <- function(x, y = NULL, conf_level = 0.95){
+
+  analysis_note <- NULL
+
+  if (length(x) < 10) {
+    warning("Less than 10 values provided for trend analysis")
+    analysis_note <- paste0(analysis_note, "Less than 10 values provided. ")
+  }
+
+  if (is.null(y)) {
+    y <- 1:length(x)
+  } else {
+    y <- as.numeric(y)
+  }
+
+  model_data <- tibble::tibble(x = x) %>%
+    dplyr::mutate(y = y)
+
+  model <- lm(x ~ y, data = model_data)
+  model_glance <- glance(model)
+  model_tidy <- tidy(model)
+
+  quantile <- qnorm((1 + conf_level)/2)
+  conf_width <- model_tidy[2, "std.error"] %>%
+    magrittr::multiply_by(quantile) %>%
+    magrittr::extract2(1)
+
+  if (is.null(analysis_note))
+    analysis_note <- NA_character_
+
+  tibble::tibble(p_value = model_glance$p.value,
+                 slope = model_tidy[2, "estimate"][[1]],
+                 conf_low = model_tidy[2, "estimate"][[1]] - conf_width,
+                 conf_high = model_tidy[2, "estimate"][[1]] + conf_width,
+                 conf_level = conf_level,
+                 intercept = model_tidy[1, "estimate"][[1]],
+                 r_squared = model_glance$r.squared[1],
+                 sigma = model_glance$sigma[1],
+                 method = "Linear model",
+                 n = length(x),
+                 note = analysis_note)
+}
+
 #' Are all values on x the same?
 #'
 #' @param x the values

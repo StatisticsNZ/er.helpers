@@ -12,7 +12,8 @@ Description: Helper functions commonly used in Environmental Reporting at
     Ministry for Environment data lake and development of Shiny Apps.
 Depends: R (>= 3.6.0)
 Imports:
-    aws.s3 (>= 0.3.12), 
+    aws.s3 (>= 0.3.12),
+    broom (>= 0.5.5),
     dplyr (>= 0.8.3), 
     forcats (>= 0.4.0), 
     ggplot2 (>= 3.2.1),
@@ -23,6 +24,7 @@ Imports:
     rlang (>= 0.4.0), 
     rstudioapi (>= 0.10), 
     snakecase (>= 0.11.0), 
+    stats (>= 3.6.1),
     stringr (>= 1.4.0),
     tibble (>= 2.1.3),
     tidyr (>= 1.0.0),

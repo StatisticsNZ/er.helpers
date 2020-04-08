@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 1.0.0
+
+* New feature: Added `linear_model()` as another option for trend estimation
+* Breaking changes: The slope calculated using `sen_slope()` is now returned in a data frame with a column called "slope" instead of "sen_slope". This is for consistency with the slope calculated using `linear_model()`
+
 ## Version 0.12.0
 
 * New feature: Added `sum_with_criteria()` to collection of aggregation functions
