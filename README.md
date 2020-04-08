@@ -1,6 +1,23 @@
 # er.helpers
 
-Helper functions commonly used in Environmental Reporting at Stats NZ
+Analysis and reporting of environmental indicators. This package helps carry out common tasks used in for the analyis and reporting of environental statistics. 
+
+These helper functions can be grouped in the following categories:
+
+* __Data agregation:__ Environmental statistics are often aggregated using missing data criteria agreed by international organisation. This package includes functions to aggregate (mean, sum, max, min, etc..) environmental data specifying a maximum number (or proportion) of missing data and a maximum number of consecutive missing daya.
+
+
+
+Graphical and statistical analyses of environmental data, with
+focus on analyzing chemical concentrations and physical parameters, usually in
+the context of mandated environmental monitoring. Major environmental
+statistical methods found in the literature and regulatory guidance documents,
+with extensive help that explains what these methods do, how to use them,
+and where to find them in the literature. Numerous built-in data sets from
+regulatory guidance documents and environmental statistics literature. Includes
+scripts reproducing analyses presented in the book ``EnvStats: An R Package for
+Environmental Statistics'' (Millard, 2013, Springer, ISBN 978-1-4614-8455-4,
+<http://www.springer.com/book/9781461484554>).
 
 ## Motivation
 
