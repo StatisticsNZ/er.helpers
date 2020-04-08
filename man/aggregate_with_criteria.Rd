@@ -5,6 +5,7 @@
 \alias{mean_with_criteria}
 \alias{min_with_criteria}
 \alias{max_with_criteria}
+\alias{sum_with_criteria}
 \title{Calculate an aggregated value taking into account certain exclusion cirteria}
 \usage{
 aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0,
@@ -15,6 +16,8 @@ mean_with_criteria(x, max_missing = 0, max_consecutive = 0)
 min_with_criteria(x, max_missing = 0, max_consecutive = 0)
 
 max_with_criteria(x, max_missing = 0, max_consecutive = 0)
+
+sum_with_criteria(x, max_missing = 0, max_consecutive = 0)
 }
 \arguments{
 \item{x}{Numeric values}
@@ -46,5 +49,7 @@ monthly value by specifing these thresholds
 \item \code{min_with_criteria}: Minimum with criteria
 
 \item \code{max_with_criteria}: Maximum with criteria
+
+\item \code{sum_with_criteria}: Sum with criteria
 }}
 
