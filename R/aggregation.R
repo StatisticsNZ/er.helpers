@@ -57,7 +57,7 @@ aggregate_with_criteria <- function(x, max_missing = 0, max_consecutive = 0, fun
     stop("max_consecutive must be a proportion or an integer.")
   }
 
-  mean(x, na.rm = TRUE)
+  fun(x, na.rm = TRUE)
 }
 
 #' @describeIn aggregate_with_criteria Mean with criteria
@@ -76,4 +76,10 @@ min_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
 #' @export
 max_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
   aggregate_with_criteria(x, max_missing, max_consecutive, fun = max)
+}
+
+#' @describeIn aggregate_with_criteria Sum with criteria
+#' @export
+sum_with_criteria <- function(x, max_missing = 0, max_consecutive = 0){
+  aggregate_with_criteria(x, max_missing, max_consecutive, fun = sum)
 }
