@@ -12,6 +12,9 @@ linear_model(x, y = NULL, conf_level = 0.95)
 \item{y}{optional time variable, converted to numeric. If its not provided it
 will be assumed that all values in X are sequential, regularly measured,
 and there are no gaps in the measurements.}
+
+\item{conf_level}{numeric. Level of confidence to be used to calculate the
+confidence intervals}
 }
 \value{
 a tidy data frame with the model results

@@ -131,7 +131,7 @@ mann_kendall <- function(x,
 #' @param y optional time variable, converted to numeric. If its not provided it
 #'   will be assumed that all values in X are sequential, regularly measured,
 #'   and there are no gaps in the measurements.
-#' @conf_level numeric. Level of confidence to be used to calculate the
+#' @param conf_level numeric. Level of confidence to be used to calculate the
 #'   confidence intervals
 #'
 #' @return a tidy data frame with the model results
