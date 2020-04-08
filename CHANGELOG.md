@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.1
+
+* Improvement: Order of season levels changed such that the annual category goes before the other seasons. 
+
 ## Version 1.0.0
 
 * New feature: Added `linear_model()` as another option for trend estimation

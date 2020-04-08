@@ -55,7 +55,7 @@ get_season <- function(x, with_year = TRUE){
 #' qplot(season, n, fill = season, data = ordered_seasons, geom = "col")
 #'
 order_season_levels <- function(x){
-  ordered_seasons <- c("Spring", "Summer", "Autumn", "Winter", "Annual")
+  ordered_seasons <- c("Annual", "Spring", "Summer", "Autumn", "Winter")
 
   standard_x <- standardise_season(x)
 
