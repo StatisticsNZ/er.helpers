@@ -6,7 +6,7 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 
 * _Anomaly calculation:_ Functions to easily calculate anomalies of environmental indicators (e.g. temperature, rainfall, etc.
 * _Data aggregation:_ Environmental statistics are often aggregated using missing data criteria agreed by international organisations. This package includes functions to aggregate (mean, sum, max, min, etc.) environmental data specifying a maximum number (or proportion) of missing data and a maximum number of consecutive missing data.
-* _Data acquisition:_ Environmental data is often stored in cloud services like AWS S3. This package has functions to retrieve and discover data from cloud buckets easily. 
+* _Data acquisition:_ Environmental data is often stored in cloud services like AWS S3. This package has wrapper functions to the aws.s3 R package to facilitate dataset retrieval and discovery. 
 * _Likelihood estimation:_ Environmental reporting often involves communicating the likelihood of an event. This package contains functions to categorise the likelihood of a statistic based on its p-value. The categories are based on the IPCC categories and simplified versions used by Statistics NZ.
 * _Precipitation:_ Functions to calculate some standard precipitation indices (precipitation from very wet days).
 * _R Shiny_: Functions to facilitate the development of R Shiny applications.
