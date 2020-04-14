@@ -18,7 +18,7 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 
 ```r
 # install.packages("remotes")
-remotes::install_local("~/Network-Shares/U-Drive-SAS-03BAU/MEES/National Accounts/EnvReporting_Secure/rpackages/er.helpers/")
+remotes::install_github("StatisticsNZ/er.helpers")
 ```
 
 ---
