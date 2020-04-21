@@ -26,13 +26,13 @@ pal_snz_trend5 <- c("#35345D", "#0D94A3", "#C4C4C7", "#AE4E51", "#6F2E38")
 #' @description A colour palette used for depicting subcategories in the NZ conservation threat status.
 #' @return A vector of hex codes.
 #' @export
-pal_snz_nof4 <- c("#35345d", "#085c75", "#d2ac2f", "#6f2e38")
+pal_snz_nof4 <-  c("#35345d", "#085c75", "#76a93f", "#d2ac2f")
 
 #' @title Colour palette for 5 categories from good to bad
 #' @description A colour palette used for depicting subcategories in the NZ conservation threat status.
 #' @return A vector of hex codes.
 #' @export
-pal_snz_nof5 <- c("#35345d", "#085c75", "#76a93f", "#d2ac2f", "#6f2e38")
+pal_snz_nof5 <-  c("#35345d", "#085c75", "#76a93f", "#d2ac2f", "#6f2e38")
 
 #' @title Colour palette for the NZTCS.
 #' @description A colour palette used for depicting categories in the NZ conservation threat status.
@@ -78,13 +78,13 @@ pal_ea19_trend5 <- c("#172a45", "#00b2c3", "#c4c4c7", "#c04124", "#702e01")
 #' @description A colour palette used for depicting subcategories in the NZ conservation threat status.
 #' @return A vector of hex codes.
 #' @export
-pal_ea19_nof4 <- c("#172a45", "#00b2c3", "#a2c62b", "#702e01")
+pal_ea19_nof4 <- c("#172a45", "#00b2c3", "#a2c62b", "#c04124")
 
 #' @title Colour palette for 5 categories from good to bad
 #' @description A colour palette used for depicting subcategories in the NZ conservation threat status.
 #' @return A vector of hex codes.
 #' @export
-pal_ea19_nof5 <- c("#172a45", "#00b2c3", "#a2c62b", "#ff590d", "#702e01")
+pal_ea19_nof5 <- c("#172a45", "#00b2c3", "#a2c62b", "#c04124", "#702e01")
 
 #' @title Colour palette for the NZTCS.
 #' @description A colour palette used for depicting categories in the NZ conservation threat status.
@@ -109,4 +109,3 @@ pal_point_trend3 <- c("#4575B4", "#D3D3D3", "#D73027")
 #' @return A vector of hex codes.
 #' @export
 pal_point_trend5 <- c("#4575B4", "#90C3DD", "#D3D3D3", "#F98E52", "#D73027")
-
