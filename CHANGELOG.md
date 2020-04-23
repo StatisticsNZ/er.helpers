@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 1.1.0
+
+* New feature: Added all palettes from simplevis, plus a signed square root trans function scales. 
+* New feature: Added a signed square root transformation function scale. 
+
 ## Version 1.0.1
 
 * Improvement: Order of season levels changed such that the annual category goes before the other seasons. 
