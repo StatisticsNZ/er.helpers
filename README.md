@@ -13,7 +13,7 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 * _Seasonality:_ A function to obtain the season of a date.
 * _Summary and visualisation:_ A function to extract a range and format it to be used in plot labels. Functions to automatically order common environmental factors like seasons, likelihoods, and statistics. Functions to round percentages while maintaining their sum. 
 * _Trends:_ Functions to calculate environmental trends (Sen's slope, Mann-Kendall test, and linear models).
-* _Pals: Colour palettes to be used for points, snz webpages or ea19 report images. 
+* _Palettes:_ Colour palettes to be used for points, snz webpages or ea19 report images. 
 
 ## Installation
 
