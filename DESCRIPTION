@@ -24,7 +24,7 @@ Imports:
     rlang (>= 0.4.0), 
     rstudioapi (>= 0.10), 
     snakecase (>= 0.11.0), 
-    scales,
+    scales (>= 1.1.0),
     stats (>= 3.6.1),
     stringr (>= 1.4.0),
     tibble (>= 2.1.3),
