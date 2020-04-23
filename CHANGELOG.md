@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 1.0.2
+## Version 1.1.0
 
 * New feature: Added all palettes from simplevis, plus a signed square root trans function scales. 
 * New feature: Added a signed square root transformation function scale. 
