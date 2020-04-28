@@ -15,12 +15,18 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 * _Trends:_ Functions to calculate environmental trends (Sen's slope, Mann-Kendall test, and linear models).
 * _Palettes:_ Colour palettes to be used for points, snz webpages or ea19 report images. 
 
-## Installation
+# Installation
 
 ```r
 # install.packages("remotes")
 remotes::install_github("StatisticsNZ/er.helpers")
 ```
+
+# Documentation
+
+Webpage URL:
+
+https://statisticsnz.github.io/er.helpers/
 
 ---
 
