@@ -1,3 +1,7 @@
+## er.helpers 1.1.1
+
+* Bug fix: aggregation functions now return NA as expected when all values are missing. Even if it passes other requirements.
+
 ## er.helpers 1.1.0
 
 * New feature: Added all palettes from simplevis, plus a signed square root trans function scales. 
