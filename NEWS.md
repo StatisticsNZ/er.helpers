@@ -1,3 +1,7 @@
+## er.helpers 1.1.1
+
+* Improvement: darkened the shade of grey in pal_point_trend3 and pal_point_trend5.
+
 ## er.helpers 1.1.0
 
 * New feature: Added all palettes from simplevis, plus a signed square root trans function scales. 
