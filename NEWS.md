@@ -1,6 +1,10 @@
-## er.helpers 1.1.1
+## er.helpers 1.1.2
 
 * Improvement: darkened the shade of grey in pal_point_trend3 and pal_point_trend5.
+
+## er.helpers 1.1.1
+
+* Bug fix: aggregation functions now return NA as expected when all values are missing. Even if it passes other requirements.
 
 ## er.helpers 1.1.0
 

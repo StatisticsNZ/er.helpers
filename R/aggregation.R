@@ -28,6 +28,10 @@ aggregate_with_criteria <- function(x, max_missing = 0, max_consecutive = 0, fun
   n_missing <- sum(na_values)
   prop_missing <- n_missing / length(x)
 
+  # Don't need to calculate anything else if everything is missing
+  if (prop_missing == 1)
+    return(NA)
+
   # If max missing is a proportion
   if (max_missing <= 1 & max_missing > 0) {
     if (prop_missing > max_missing)

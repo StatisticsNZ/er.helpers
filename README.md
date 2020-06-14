@@ -21,7 +21,7 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 
 ```r
 # install.packages("remotes")
-remotes::install_github("StatisticsNZ/er.helpers")
+remotes::install_github("StatisticsNZ/er.helpers", build_vignettes = TRUE)
 ```
 
 ### Documentation
