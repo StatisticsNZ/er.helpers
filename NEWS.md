@@ -1,3 +1,7 @@
+## er.helpers 1.1.3
+
+* New feature: added the sankey_build_data function to support networkD3 sankey charts.
+
 ## er.helpers 1.1.2
 
 * Improvement: darkened the shade of grey in pal_point_trend3 and pal_point_trend5.

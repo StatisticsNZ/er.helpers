@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sen's slope — sen_slope • er.helpers</title>
+<title>Prepare data to be input into the networkD3 sankeyNetwork function. — sankey_build_data • er.helpers</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,11 +36,9 @@
 
 
 
-<meta property="og:title" content="Sen's slope — sen_slope" />
+<meta property="og:title" content="Prepare data to be input into the networkD3 sankeyNetwork function. — sankey_build_data" />
 
-<meta property="og:description" content="#' Performs the Sen's slope trend test. This function is a wrapper around
-sens.slope. See documentation there for more details about
-the calculation" />
+<meta property="og:description" content="Prepare data to be input into the networkD3 sankeyNetwork function." />
 
 
 
@@ -113,45 +111,65 @@ the calculation" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sen's slope</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/trends.R'><code>R/trends.R</code></a></small>
-    <div class="hidden name"><code>sen_slope.Rd</code></div>
+    <h1>Prepare data to be input into the networkD3 sankeyNetwork function.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/sankey.R'><code>R/sankey.R</code></a></small>
+    <div class="hidden name"><code>sankey_build_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>#' Performs the Sen's slope trend test. This function is a wrapper around
-<code><a href='https://rdrr.io/pkg/trend/man/sens.slope.html'>sens.slope</a></code>. See documentation there for more details about
-the calculation</p>
+    <p>Prepare data to be input into the networkD3 sankeyNetwork function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sen_slope</span>(<span class='no'>x</span>, <span class='kw'>conf_level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>)</pre>
+    <pre class="usage"><span class='fu'>sankey_build_data</span>(<span class='no'>data</span>, <span class='no'>colour_data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>numeric vector or a time series object of class "ts"</p></td>
+      <th>data</th>
+      <td><p>A tibble or dataframe with all categorical columns apart from the final column, which is numeric. Required input.</p></td>
     </tr>
     <tr>
-      <th>conf_level</th>
-      <td><p>confidence level of the test</p></td>
+      <th>colour_data</th>
+      <td><p>A tibble or dataframe with variable 1 called name containing relevant categorical values and variable 2 called colour and containing hex codes (or colour names). Required input.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tidy data frame with the test results</p>
+    <p>A vector of labels.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>100</span>) * <span class='fl'>1</span>:<span class='fl'>100</span>
-<span class='fu'>sen_slope</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 9</span><span>
-#&gt;    p_value slope conf_low conf_high conf_level     z method          n note 
-#&gt;      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4.23</span><span style='color: #949494;'>e</span><span style='color: #BB0000;'>-10</span><span> 0.464    0.330     0.594       0.95  6.25 Sen's slope   100 </span><span style='color: #BB0000;'>NA</span><span>   </div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='no'>plot_data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
+~<span class='no'>state1</span>, ~<span class='no'>state2</span>, ~<span class='no'>value</span>,
+<span class='st'>"Trees"</span>, <span class='st'>"Grass"</span>, <span class='fl'>5</span>,
+<span class='st'>"Trees"</span>, <span class='st'>"Wetland"</span>, <span class='fl'>1</span>,
+<span class='st'>"Grass"</span>, <span class='st'>"Trees"</span>, <span class='fl'>7</span>,
+<span class='st'>"Grass"</span>, <span class='st'>"Wetland"</span>, <span class='fl'>1</span>,
+<span class='st'>"Wetland"</span>, <span class='st'>"Trees"</span>, <span class='fl'>1</span>,
+<span class='st'>"Wetland"</span>, <span class='st'>"Grass"</span>, <span class='fl'>2</span>)
+
+<span class='no'>pal_data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
+  ~<span class='no'>name</span>, ~<span class='no'>colour</span>,
+  <span class='st'>"Trees"</span>, <span class='st'>"purple"</span>,
+  <span class='st'>"Grass"</span>, <span class='st'>"green"</span>,
+  <span class='st'>"Wetland"</span>, <span class='st'>"brown"</span>)
+
+<span class='no'>sankey_data</span> <span class='kw'>&lt;-</span> <span class='fu'>sankey_build_data</span>(
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>plot_data</span>,
+  <span class='kw'>colour_data</span> <span class='kw'>=</span> <span class='no'>pal_data</span>)
+
+<span class='no'>units</span> <span class='kw'>&lt;-</span> <span class='st'>"ha"</span>
+
+<span class='kw pkg'>networkD3</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></span>(<span class='kw'>Links</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>links</span>, <span class='kw'>Nodes</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>nodes</span>,
+                         <span class='kw'>Source</span> <span class='kw'>=</span> <span class='st'>"source_id"</span>, <span class='kw'>Target</span> <span class='kw'>=</span> <span class='st'>"target_id"</span>, <span class='kw'>Value</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
+                         <span class='kw'>NodeID</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>colourScale</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>colour_scale</span>,
+                         <span class='kw'>fontSize</span> <span class='kw'>=</span> <span class='fl'>14</span>, <span class='kw'>fontFamily</span> <span class='kw'>=</span> <span class='st'>"Arial"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='no'>units</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
