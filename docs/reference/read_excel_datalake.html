@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Colour palette for a categorical trend variable with 3 values. — pal_ea19_trend3 • er.helpers</title>
+<title>Read a excel file stored in an AWS S3 bucket. — read_excel_datalake • er.helpers</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,9 +36,12 @@
 
 
 
-<meta property="og:title" content="Colour palette for a categorical trend variable with 3 values. — pal_ea19_trend3" />
+<meta property="og:title" content="Read a excel file stored in an AWS S3 bucket. — read_excel_datalake" />
 
-<meta property="og:description" content="Colour palette for categorical variables." />
+<meta property="og:description" content="This function get the specified object from an AWS S3 bucket and reads it
+using read_excel. It keeps the excel in memory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk." />
 
 
 
@@ -111,30 +114,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Colour palette for a categorical trend variable with 3 values.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/pal.R'><code>R/pal.R</code></a></small>
-    <div class="hidden name"><code>pal_ea19_trend3.Rd</code></div>
+    <h1>Read a excel file stored in an AWS S3 bucket.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/datalake.R'><code>R/datalake.R</code></a></small>
+    <div class="hidden name"><code>read_excel_datalake.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Colour palette for categorical variables.</p>
+    <p>This function get the specified object from an AWS S3 bucket and reads it
+using <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></code>. It keeps the excel in memory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>pal_ea19_trend3</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>character</code> of length 3.</p>
+    <pre class="usage"><span class='fu'>read_excel_datalake</span>(<span class='no'>s3_path</span>, <span class='kw'>bucket_name</span> <span class='kw'>=</span> <span class='no'>mfe_datalake_bucket</span>,
+  <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>s3_path</th>
+      <td><p>The filename of the desired excel in the S3 bucket including the
+full path</p></td>
+    </tr>
+    <tr>
+      <th>bucket_name</th>
+      <td><p>Name of the bucket to connect. By default, it uses the
+Ministry for the Environment data lake for environmental reporting
+"mfedlkinput".</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>VersionId of the object key desired. Can be retrieved using
+<code><a href='get_bucket_version_df.html'>get_bucket_version_df</a></code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed to the reading_function</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of hex codes.</p>
+    <p>A `<code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/show_col.html'>show_col</a></span>(<span class='no'>pal_ea19_trend3</span>)</div><div class='img'><img src='pal_ea19_trend3-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='setup_datalake_access.html'>setup_datalake_access</a></span>()
+<span class='no'>excel_object_path</span> <span class='kw'>&lt;-</span> <span class='st'>"freshwater/2020/raw/urban_stream_water_quality_state.excel"</span>
+<span class='fu'>read_excel_datalake</span>(<span class='no'>excel_object_path</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

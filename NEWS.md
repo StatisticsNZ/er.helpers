@@ -1,3 +1,7 @@
+## er.helpers 1.1.4
+
+* New feature: added read_excel_datalake and write_excel_datalake functions.
+
 ## er.helpers 1.1.3
 
 * New feature: added the sankey_build_data function to support networkD3 sankey charts.
