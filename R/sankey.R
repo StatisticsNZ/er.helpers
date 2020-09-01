@@ -46,8 +46,8 @@ sankey_build_data <- function(data, colour_data) {
   value_col <- names(data)[ncol(data)]
 
   node_data <- data %>%
-    dplyr::select(one_of(gather_cols)) %>%
-    tidyr::gather(one_of(gather_cols), key = 'variable', value = 'name') %>%
+    dplyr::select(dplyr::one_of(gather_cols)) %>%
+    tidyr::gather(dplyr::one_of(gather_cols), key = 'variable', value = 'name') %>%
     dplyr::distinct() %>%
     dplyr::mutate(id = as.numeric(factor(paste(variable, name, sep = "//"))) - 1) %>%
     dplyr::arrange(id)

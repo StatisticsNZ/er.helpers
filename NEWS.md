@@ -1,6 +1,6 @@
 ## er.helpers 1.1.4
 
-* New feature: added read_excel_datalake and write_excel_datalake functions.
+* New feature: added read_excel_datalake function.
 
 ## er.helpers 1.1.3
 

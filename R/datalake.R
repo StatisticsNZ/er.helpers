@@ -175,40 +175,6 @@ read_excel_datalake <- function(s3_path,
 }
 
 
-
-#' Write a excel file as an object in an AWS S3 bucket.
-#'
-#' @param x A data frame to write to the bucket
-#' @inheritParams read_excel_datalake
-#'
-#' @return TRUE if it succeeded and FALSE if it failed
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access()
-#' excel_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.excel"
-#' write_excel_datalake(iris, excel_object_path)
-#' }
-write_excel_datalake <- function(x,
-                                 s3_path,
-                                 bucket_name = mfe_datalake_bucket,
-                                 ...){
-
-  check_aws_access()
-
-  # Make sure the connection is clossed on exit
-  connection <- rawConnection(raw(0), "w")
-  on.exit(unlink(connection))
-
-  readxl::write_excel(x, connection, ...)
-  aws.s3::put_object(rawConnectionValue(connection),
-                     object = s3_path,
-                     bucket = bucket_name)
-
-}
-
 #' Make all columns of a data frame snakecase.
 #'
 #' This function modifies the input data frame such that the names of every
