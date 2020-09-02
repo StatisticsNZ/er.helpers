@@ -1,3 +1,7 @@
+## er.helpers 1.1.5
+
+* New feature: add an NZ hexagonal grid sf object.
+
 ## er.helpers 1.1.4
 
 * New feature: added read_excel_datalake function.

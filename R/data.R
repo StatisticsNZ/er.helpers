@@ -37,3 +37,8 @@
 #'
 #' @source http://archive.stats.govt.nz/browse_for_stats/environment/environmental-reporting-series/environmental-indicators/Home/About/trend-assessment-technical-information.aspx
 "statsnz_likelihood_scale"
+
+#' @title Hexagonal grid sf object with hexagons of 346km2.
+#' @description Hexagonal grid sf object with hexagons of 346km2.
+#' @format An \code{sf} object.
+"nz_grid_hex_346"
