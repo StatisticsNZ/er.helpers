@@ -130,6 +130,7 @@ write_csv_datalake <- function(x,
 #'
 #' @param s3_path The filename of the desired excel in the S3 bucket including the
 #'   full path
+#' @param sheet The sheet number to extract. Defaults to 1.
 #' @inheritParams setup_datalake_access
 #' @param version VersionId of the object key desired. Can be retrieved using
 #'   \code{\link{get_bucket_version_df}}
@@ -142,14 +143,17 @@ write_csv_datalake <- function(x,
 #' @examples
 #' \dontrun{
 #' setup_datalake_access()
-#' excel_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.excel"
-#' read_excel_datalake(excel_object_path)
+#' files <- search_data_lake(".x", "land", "2021")$Key
+#' read_excel_datalake(files[2])
+#' read_excel_datalake(files[1], sheet = 2)
 #' }
-read_excel_datalake <- function(s3_path,
-                                bucket_name = mfe_datalake_bucket,
-                                version = NULL, ...){
+read_excel_datalake <- function (s3_path,
+                        bucket_name = mfe_datalake_bucket,
+                        version = NULL,
+                        sheet = 1,
+                        ...) {
 
-  check_aws_access()
+  #check_aws_access()
 
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
@@ -160,18 +164,20 @@ read_excel_datalake <- function(s3_path,
                               query = list(`versionId` = version))
   }
 
-  connection <- rawConnection(obj)
-  # Make sure the connection is clossed on exit
-  on.exit(close(connection))
 
-  data <- readxl::read_excel(file = connection, ...)
 
-  if (names(data)[1] == "X1") {
-    data %>%
-      dplyr::select(-"X1")
-  } else {
-    data
+  tmp <- tempfile()
+  data <- aws.s3::save_object(bucket = bucket_name, object = s3_path, file = tmp)
+  excel_sheet <- readxl::read_excel(data, sheet = sheet)
+
+  if (length(readxl::excel_sheets(data)) > 1) {
+    message("Defaulting to the first spreadsheet. Other sheets present in data:\n",
+            glue::glue_collapse(readxl::excel_sheets(data), ", ", last = " and "))
   }
+
+  else NULL
+
+  excel_sheet
 }
 
 

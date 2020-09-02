@@ -1,3 +1,7 @@
+## er.helpers 1.1.6
+
+* Bug fix: fixed read_excel_datalake.
+
 ## er.helpers 1.1.5
 
 * New feature: add an NZ hexagonal grid sf object.

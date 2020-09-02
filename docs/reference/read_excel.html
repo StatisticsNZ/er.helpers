@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make all columns of a data frame snakecase. — all_columns_to_snakecase • er.helpers</title>
+<title>Read a excel file stored in an AWS S3 bucket. — read_excel • er.helpers</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,11 +36,12 @@
 
 
 
-<meta property="og:title" content="Make all columns of a data frame snakecase. — all_columns_to_snakecase" />
+<meta property="og:title" content="Read a excel file stored in an AWS S3 bucket. — read_excel" />
 
-<meta property="og:description" content="This function modifies the input data frame such that the names of every
-column are in snake case. Internally, it uses the
-to_snake_case." />
+<meta property="og:description" content="This function get the specified object from an AWS S3 bucket and reads it
+using read_excel. It keeps the excel in memory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk." />
 
 
 
@@ -113,44 +114,64 @@ to_snake_case." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make all columns of a data frame snakecase.</h1>
+    <h1>Read a excel file stored in an AWS S3 bucket.</h1>
     <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/datalake.R'><code>R/datalake.R</code></a></small>
-    <div class="hidden name"><code>all_columns_to_snakecase.Rd</code></div>
+    <div class="hidden name"><code>read_excel.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function modifies the input data frame such that the names of every
-column are in snake case. Internally, it uses the
-<code><a href='https://rdrr.io/pkg/snakecase/man/caseconverter.html'>to_snake_case</a></code>.</p>
+    <p>This function get the specified object from an AWS S3 bucket and reads it
+using <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></code>. It keeps the excel in memory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>all_columns_to_snakecase</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>read_excel</span>(<span class='no'>s3_path</span>, <span class='kw'>bucket_name</span> <span class='kw'>=</span> <span class='no'>mfe_datalake_bucket</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>The input data frame.</p></td>
+      <th>s3_path</th>
+      <td><p>The filename of the desired excel in the S3 bucket including the
+full path</p></td>
+    </tr>
+    <tr>
+      <th>bucket_name</th>
+      <td><p>Name of the bucket to connect. By default, it uses the
+Ministry for the Environment data lake for environmental reporting
+"mfedlkinput".</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>VersionId of the object key desired. Can be retrieved using
+<code><a href='get_bucket_version_df.html'>get_bucket_version_df</a></code></p></td>
+    </tr>
+    <tr>
+      <th>sheet</th>
+      <td><p>The sheet number to extract. Defaults to 1.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed to the reading_function</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A `<code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>notSnakecase</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='fu'>all_columns_to_snakecase</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;    not_snakecase
-#&gt; 1              1
-#&gt; 2              2
-#&gt; 3              3
-#&gt; 4              4
-#&gt; 5              5
-#&gt; 6              6
-#&gt; 7              7
-#&gt; 8              8
-#&gt; 9              9
-#&gt; 10            10</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='setup_datalake_access.html'>setup_datalake_access</a></span>()
+<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>(<span class='st'>".x"</span>, <span class='st'>"land"</span>, <span class='st'>"2021"</span>)$<span class='no'>Key</span>
+<span class='fu'>read_excel</span>(<span class='no'>files</span>[<span class='fl'>2</span>])
+<span class='fu'>read_excel</span>(<span class='no'>files</span>[<span class='fl'>1</span>], <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

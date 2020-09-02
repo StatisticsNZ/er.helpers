@@ -74,7 +74,7 @@ disk." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@ disk.</p>
     </div>
 
     <pre class="usage"><span class='fu'>read_excel_datalake</span>(<span class='no'>s3_path</span>, <span class='kw'>bucket_name</span> <span class='kw'>=</span> <span class='no'>mfe_datalake_bucket</span>,
-  <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +151,10 @@ Ministry for the Environment data lake for environmental reporting
 <code><a href='get_bucket_version_df.html'>get_bucket_version_df</a></code></p></td>
     </tr>
     <tr>
+      <th>sheet</th>
+      <td><p>The sheet number to extract. Defaults to 1.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Other arguments passed to the reading_function</p></td>
     </tr>
@@ -164,8 +168,9 @@ Ministry for the Environment data lake for environmental reporting
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='setup_datalake_access.html'>setup_datalake_access</a></span>()
-<span class='no'>excel_object_path</span> <span class='kw'>&lt;-</span> <span class='st'>"freshwater/2020/raw/urban_stream_water_quality_state.excel"</span>
-<span class='fu'>read_excel_datalake</span>(<span class='no'>excel_object_path</span>)
+<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>(<span class='st'>".x"</span>, <span class='st'>"land"</span>, <span class='st'>"2021"</span>)$<span class='no'>Key</span>
+<span class='fu'>read_excel_datalake</span>(<span class='no'>files</span>[<span class='fl'>2</span>])
+<span class='fu'>read_excel_datalake</span>(<span class='no'>files</span>[<span class='fl'>1</span>], <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

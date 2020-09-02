@@ -5,7 +5,7 @@
 \title{Read a excel file stored in an AWS S3 bucket.}
 \usage{
 read_excel_datalake(s3_path, bucket_name = mfe_datalake_bucket,
-  version = NULL, ...)
+  version = NULL, sheet = 1, ...)
 }
 \arguments{
 \item{s3_path}{The filename of the desired excel in the S3 bucket including the
@@ -17,6 +17,8 @@ Ministry for the Environment data lake for environmental reporting
 
 \item{version}{VersionId of the object key desired. Can be retrieved using
 \code{\link{get_bucket_version_df}}}
+
+\item{sheet}{The sheet number to extract. Defaults to 1.}
 
 \item{...}{Other arguments passed to the reading_function}
 }
@@ -32,7 +34,8 @@ disk.
 \examples{
 \dontrun{
 setup_datalake_access()
-excel_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.excel"
-read_excel_datalake(excel_object_path)
+files <- search_data_lake(".x", "land", "2021")$Key
+read_excel_datalake(files[2])
+read_excel_datalake(files[1], sheet = 2)
 }
 }
