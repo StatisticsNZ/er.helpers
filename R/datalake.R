@@ -148,10 +148,10 @@ write_csv_datalake <- function(x,
 #' read_excel_datalake(files[1], sheet = 2)
 #' }
 read_excel_datalake <- function (s3_path,
-                        bucket_name = mfe_datalake_bucket,
-                        version = NULL,
-                        sheet = 1,
-                        ...) {
+                                 bucket_name = mfe_datalake_bucket,
+                                 version = NULL,
+                                 sheet = 1,
+                                 ...) {
 
   #check_aws_access()
 
@@ -168,7 +168,7 @@ read_excel_datalake <- function (s3_path,
 
   tmp <- tempfile()
   data <- aws.s3::save_object(bucket = bucket_name, object = s3_path, file = tmp)
-  excel_sheet <- readxl::read_excel(data, sheet = sheet)
+  excel_sheet <- readxl::read_excel(path = data, sheet = sheet, ...)
 
   if (length(readxl::excel_sheets(data)) > 1) {
     message("Defaulting to the first spreadsheet. Other sheets present in data:\n",
