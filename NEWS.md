@@ -1,3 +1,7 @@
+## er.helpers 1.1.7
+
+* New feature: add gridify_mb_data function to create a grid from meshblock data.
+
 ## er.helpers 1.1.6
 
 * Bug fix: fixed read_excel_datalake.
