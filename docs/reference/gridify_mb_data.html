@@ -129,11 +129,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data object with meshblock id variable called id and 1 numeric linecode variable called var. Required input.</p></td>
+      <td><p>A dataframe of meshblock level data. Required input.</p></td>
+    </tr>
+    <tr>
+      <th>data_id_var</th>
+      <td><p>An unquoted variable of the the meshblock id of the meshblock data. Required input.</p></td>
+    </tr>
+    <tr>
+      <th>data_vars_vctr</th>
+      <td><p>A quoted character vector of the meshblock columns that you want to gridify. Required input.</p></td>
     </tr>
     <tr>
       <th>shp</th>
-      <td><p>A sf object of the meshblock shapes with meshblock id variable called id. Use the year after the APS year for a better join. Required input.</p></td>
+      <td><p>A sf object of the meshblock level shapes. Note for APS data, use a shp year after the APS year for a better join. Required input.</p></td>
+    </tr>
+    <tr>
+      <th>shp_id_var</th>
+      <td><p>An unquoted variable of the the meshblock id of the meshblock shapes.  Required input.</p></td>
     </tr>
     <tr>
       <th>grid</th>

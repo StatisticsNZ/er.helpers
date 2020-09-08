@@ -2,8 +2,11 @@
 #'
 #' @description Converts meshblock data, a meshblock sf object and a grid sf object to grid sf object with density.
 #'
-#' @param data A data object with meshblock id variable called id and 1 numeric linecode variable called var. Required input.
-#' @param shp A sf object of the meshblock shapes with meshblock id variable called id. Use the year after the APS year for a better join. Required input.
+#' @param data A dataframe of meshblock level data. Required input.
+#' @param data_id_var An unquoted variable of the the meshblock id of the meshblock data. Required input.
+#' @param data_vars_vctr A quoted character vector of the meshblock columns that you want to gridify. Required input.
+#' @param shp A sf object of the meshblock level shapes. Note for APS data, use a shp year after the APS year for a better join. Required input.
+#' @param shp_id_var An unquoted variable of the the meshblock id of the meshblock shapes.  Required input.
 #' @param grid A sf object of a grid. E.g. er.helpers::nz_grid_hex_346. Required input.
 #'
 #' @return A sf object with estimated grid totals and densities for the var in the input data.

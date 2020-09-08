@@ -7,9 +7,15 @@
 gridify_mb_data(data, data_id_var, data_vars_vctr, shp, shp_id_var, grid)
 }
 \arguments{
-\item{data}{A data object with meshblock id variable called id and 1 numeric linecode variable called var. Required input.}
+\item{data}{A dataframe of meshblock level data. Required input.}
 
-\item{shp}{A sf object of the meshblock shapes with meshblock id variable called id. Use the year after the APS year for a better join. Required input.}
+\item{data_id_var}{An unquoted variable of the the meshblock id of the meshblock data. Required input.}
+
+\item{data_vars_vctr}{A quoted character vector of the meshblock columns that you want to gridify. Required input.}
+
+\item{shp}{A sf object of the meshblock level shapes. Note for APS data, use a shp year after the APS year for a better join. Required input.}
+
+\item{shp_id_var}{An unquoted variable of the the meshblock id of the meshblock shapes.  Required input.}
 
 \item{grid}{A sf object of a grid. E.g. er.helpers::nz_grid_hex_346. Required input.}
 }
