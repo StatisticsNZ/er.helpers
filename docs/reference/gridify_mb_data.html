@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.8</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>gridify_mb_data</span>(<span class='no'>data</span>, <span class='no'>shp</span>, <span class='no'>grid</span>)</pre>
+    <pre class="usage"><span class='fu'>gridify_mb_data</span>(<span class='no'>data</span>, <span class='no'>data_id_var</span>, <span class='no'>data_vars_vctr</span>, <span class='no'>shp</span>, <span class='no'>shp_id_var</span>, <span class='no'>grid</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,27 +148,30 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>simplevis</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>GMS</span>)
-
 <span class='no'>agdir</span> <span class='kw'>&lt;-</span> <span class='st'>"~/Network-Shares/U-Drive-SAS-03BAU/IndLabr/Bus Infra &amp; Performance/Agriculture/Ag_Secure/"</span>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>haven</span><span class='kw ns'>::</span><span class='fu'><a href='https://haven.tidyverse.org/reference/read_sas.html'>read_sas</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>agdir</span>, <span class='st'>"2017/all_linecodes_perturbed_final.sas7bdat"</span>))
 
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>haven</span><span class='kw ns'>::</span><span class='fu'><a href='https://haven.tidyverse.org/reference/read_sas.html'>read_sas</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>agdir</span>, <span class='st'>"2017/all_linecodes_perturbed_final.sas7bdat"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>CAR_Meshblock</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='no'>APS_Val_IrriTotArea</span>) <span class='co'>#data with cols id and var</span>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>select</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>CAR_Meshblock</span>,
+         <span class='kw'>dairy</span> <span class='kw'>=</span> <span class='no'>APS_TotDairy</span>,
+         <span class='kw'>beef</span> <span class='kw'>=</span> <span class='no'>APS_TotBeef</span>)
 
-<span class='no'>shp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/GMS/man/get_feature_class.html'>get_feature_class</a></span>(<span class='st'>"MB2018_V1_00"</span>,  <span class='kw'>epsg</span> <span class='kw'>=</span> <span class='fl'>2193</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>mb2018_v1_00</span>)  <span class='co'>#shp with col id</span>
+<span class='no'>shp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_feature_class</span>(<span class='st'>"MB2018_V1_00"</span>,  <span class='kw'>epsg</span> <span class='kw'>=</span> <span class='fl'>2193</span>)
 
-<span class='no'>grid_irrigated_land_17</span> <span class='kw'>&lt;-</span> <span class='fu'>gridify_mb_data</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>,
-  <span class='kw'>shp</span> <span class='kw'>=</span> <span class='no'>shp</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='kw pkg'>er.helpers</span><span class='kw ns'>::</span><span class='no'><a href='nz_grid_hex_346.html'>nz_grid_hex_346</a></span>)
+<span class='no'>shp</span> <span class='kw'>&lt;-</span> <span class='no'>shp</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>select</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>mb2018_v1_00</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/simplevis/man/leaflet_sf_col.html'>leaflet_sf_col</a></span>(<span class='no'>grid_irrigated_land_17</span>,
-               <span class='no'>grid_density_per_km2</span>,
-               <span class='kw'>col_method</span> <span class='kw'>=</span> <span class='st'>"bin"</span>, <span class='kw'>col_cuts</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>15</span>, <span class='fl'>30</span>, <span class='fl'>45</span>, <span class='fl'>60</span>, <span class='fl'>Inf</span>))
+<span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>er.helpers</span><span class='kw ns'>::</span><span class='no'><a href='nz_grid_hex_346.html'>nz_grid_hex_346</a></span>
+
+<span class='no'>aps_grid_17</span> <span class='kw'>&lt;-</span> <span class='fu'>gridify_mb_data</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>,
+                               <span class='kw'>data_id_var</span> <span class='kw'>=</span> <span class='no'>id</span>,
+                               <span class='kw'>data_vars_vctr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dairy"</span>, <span class='st'>"beef"</span>),
+                               <span class='kw'>shp</span> <span class='kw'>=</span> <span class='no'>shp</span>,
+                               <span class='kw'>shp_id_var</span> <span class='kw'>=</span> <span class='no'>id</span>,
+                             <span class='kw'>grid</span> <span class='kw'>=</span> <span class='kw pkg'>er.helpers</span><span class='kw ns'>::</span><span class='no'><a href='nz_grid_hex_346.html'>nz_grid_hex_346</a></span>)
+
+<span class='fu'>leaflet_sf_col</span>(<span class='no'>aps_grid_17</span>, <span class='no'>dairy_density_per_km2</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Dairy density, 2017"</span>)
+<span class='fu'>leaflet_sf_col</span>(<span class='no'>aps_grid_17</span>, <span class='no'>beef_density_per_km2</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Beef density, 2017"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

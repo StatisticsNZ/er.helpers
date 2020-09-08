@@ -16,6 +16,9 @@ We can group these helper functions into anomaly calculation, data aggregation, 
 * _Summary and visualisation:_ A function to extract a range and format it to be used in plot labels. Functions to automatically order common environmental factors like seasons, likelihoods, and statistics. Functions to round percentages while maintaining their sum. 
 * _Trends:_ Functions to calculate environmental trends (Sen's slope, Mann-Kendall test, and linear models).
 * _Palettes:_ Colour palettes to be used for points, snz webpages or ea19 report images. 
+* _Sankey:_ A function to build datasets for sankey diagrams.
+* _Grids:_ A function to make grids from meshblock data, and standard hexagonal grids for use.
+
 
 ### Installation
 

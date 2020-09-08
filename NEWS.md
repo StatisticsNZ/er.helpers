@@ -1,3 +1,7 @@
+## er.helpers 1.1.8
+
+* New feature: expand gridify_mb_data function to support the gridifying of more than 1 linecode.
+
 ## er.helpers 1.1.7
 
 * New feature: add gridify_mb_data function to create a grid from meshblock data.

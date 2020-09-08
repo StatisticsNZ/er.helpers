@@ -4,7 +4,7 @@
 \alias{gridify_mb_data}
 \title{Gridify meshblock data}
 \usage{
-gridify_mb_data(data, shp, grid)
+gridify_mb_data(data, data_id_var, data_vars_vctr, shp, shp_id_var, grid)
 }
 \arguments{
 \item{data}{A data object with meshblock id variable called id and 1 numeric linecode variable called var. Required input.}
@@ -21,26 +21,29 @@ Converts meshblock data, a meshblock sf object and a grid sf object to grid sf o
 }
 \examples{
 \dontrun{
-library(dplyr)
-library(sf)
-library(simplevis)
-library(GMS)
-
 agdir <- "~/Network-Shares/U-Drive-SAS-03BAU/IndLabr/Bus Infra & Performance/Agriculture/Ag_Secure/"
+data <- haven::read_sas(paste0(agdir, "2017/all_linecodes_perturbed_final.sas7bdat"))
 
-data <- haven::read_sas(paste0(agdir, "2017/all_linecodes_perturbed_final.sas7bdat")) \%>\%
-  select(id = CAR_Meshblock, var = APS_Val_IrriTotArea) #data with cols id and var
+data <- data \%>\%
+  select(id = CAR_Meshblock,
+         dairy = APS_TotDairy,
+         beef = APS_TotBeef)
 
-shp <- get_feature_class("MB2018_V1_00",  epsg = 2193) \%>\%
-  select(id = mb2018_v1_00)  #shp with col id
+shp <- get_feature_class("MB2018_V1_00",  epsg = 2193)
 
-grid_irrigated_land_17 <- gridify_mb_data(
-  data = data,
-  shp = shp,
-  grid = er.helpers::nz_grid_hex_346)
+shp <- shp \%>\%
+  select(id = mb2018_v1_00)
 
-leaflet_sf_col(grid_irrigated_land_17,
-               grid_density_per_km2,
-               col_method = "bin", col_cuts = c(0, 3, 15, 30, 45, 60, Inf))
+grid <- er.helpers::nz_grid_hex_346
+
+aps_grid_17 <- gridify_mb_data(data = data,
+                               data_id_var = id,
+                               data_vars_vctr = c("dairy", "beef"),
+                               shp = shp,
+                               shp_id_var = id,
+                             grid = er.helpers::nz_grid_hex_346)
+
+leaflet_sf_col(aps_grid_17, dairy_density_per_km2, title = "Dairy density, 2017")
+leaflet_sf_col(aps_grid_17, beef_density_per_km2, title = "Beef density, 2017")
 }
 }

@@ -11,42 +11,54 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(dplyr)
-#' library(sf)
-#' library(simplevis)
-#' library(GMS)
-#'
 #' agdir <- "~/Network-Shares/U-Drive-SAS-03BAU/IndLabr/Bus Infra & Performance/Agriculture/Ag_Secure/"
+#' data <- haven::read_sas(paste0(agdir, "2017/all_linecodes_perturbed_final.sas7bdat"))
 #'
-#' data <- haven::read_sas(paste0(agdir, "2017/all_linecodes_perturbed_final.sas7bdat")) %>%
-#'   select(id = CAR_Meshblock, var = APS_Val_IrriTotArea) #data with cols id and var
+#' data <- data %>%
+#'   select(id = CAR_Meshblock,
+#'          dairy = APS_TotDairy,
+#'          beef = APS_TotBeef)
 #'
-#' shp <- get_feature_class("MB2018_V1_00",  epsg = 2193) %>%
-#'   select(id = mb2018_v1_00)  #shp with col id
+#' shp <- get_feature_class("MB2018_V1_00",  epsg = 2193)
 #'
-#' grid_irrigated_land_17 <- gridify_mb_data(
-#'   data = data,
-#'   shp = shp,
-#'   grid = er.helpers::nz_grid_hex_346)
+#' shp <- shp %>%
+#'   select(id = mb2018_v1_00)
 #'
-#' leaflet_sf_col(grid_irrigated_land_17,
-#'                grid_density_per_km2,
-#'                col_method = "bin", col_cuts = c(0, 3, 15, 30, 45, 60, Inf))
+#' grid <- er.helpers::nz_grid_hex_346
+#'
+#' aps_grid_17 <- gridify_mb_data(data = data,
+#'                                data_id_var = id,
+#'                                data_vars_vctr = c("dairy", "beef"),
+#'                                shp = shp,
+#'                                shp_id_var = id,
+#'                              grid = er.helpers::nz_grid_hex_346)
+#'
+#' leaflet_sf_col(aps_grid_17, dairy_density_per_km2, title = "Dairy density, 2017")
+#' leaflet_sf_col(aps_grid_17, beef_density_per_km2, title = "Beef density, 2017")
 #' }
-gridify_mb_data <- function(data, shp, grid) {
+gridify_mb_data <- function(data,
+                            data_id_var,
+                            data_vars_vctr,
+                            shp,
+                            shp_id_var,
+                            grid) {
 
-  shp <- shp %>%
+  data_id_var <- rlang::enquo(data_id_var)
+  shp_id_var <- rlang::enquo(shp_id_var)
+
+  shp_area <- shp %>%
+    dplyr::select(!!shp_id_var) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_make_valid() %>%
-    dplyr::mutate(shp_area_m2 = as.numeric(sf::st_area(.))) #grid with col grid_id and grid_area_m2
+    dplyr::mutate(shp_area_m2 = as.numeric(sf::st_area(.)))
 
   grid <- grid  %>%
     dplyr::mutate(grid_id = row_number()) %>%
-    dplyr::mutate(grid_area_m2 = as.numeric(sf::st_area(.))) #grid with col grid_id and grid_area_m2
+    dplyr::mutate(grid_area_m2 = as.numeric(sf::st_area(.)))
 
   shp_grid <- grid %>%
-    sf::st_intersection(shp) %>%
+    sf::st_intersection(shp_area) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_make_valid() %>%
@@ -54,21 +66,24 @@ gridify_mb_data <- function(data, shp, grid) {
     dplyr::mutate(prop_of_shp = area_m2 / shp_area_m2)
 
   data_shp_grid <- data %>%
-    dplyr::filter(!is.na(var)) %>%
-    dplyr::right_join(shp_grid, by = "id") %>%
-    dplyr::mutate(var = ifelse(is.na(var), 0, var)) %>%  #convert NAs to 0's
-    dplyr::mutate(var = var * prop_of_shp) %>%
+    dplyr::select(!!data_id_var, data_vars_vctr) %>%
+    dplyr::filter(dplyr::across(c(data_vars_vctr), ~(. != "."))) %>% #remove any with no ids
+    dplyr::rename(!!shp_id_var := !!data_id_var) %>%
+    dplyr::right_join(shp_grid) %>%
+    dplyr::mutate(dplyr::across(c(data_vars_vctr), ~ifelse(is.na(.), 0, .))) %>%  #convert NAs to 0's
+    dplyr::mutate(dplyr::across(c(data_vars_vctr), ~(. * prop_of_shp))) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_make_valid()
 
   data_grid <- data_shp_grid %>%
     dplyr::group_by(grid_id, grid_area_m2) %>%
-    dplyr::summarise(grid_total = sum(var)) %>%
+    dplyr::summarise(dplyr::across(c(data_vars_vctr), ~sum(.), .names = "grid_{.col}")) %>%
     dplyr::mutate(grid_area_ha = grid_area_m2 * 0.0001) %>%
     dplyr::mutate(grid_area_km2 = grid_area_m2 * 0.000001) %>%
-    dplyr::mutate(grid_density_per_ha = grid_total / grid_area_ha) %>%
-    dplyr::mutate(grid_density_per_km2 = grid_total / grid_area_km2) %>%
+    dplyr::mutate(dplyr::across(tidyselect::contains(data_vars_vctr) & tidyselect::contains("grid_"), ~(. / grid_area_ha), .names = "{.col}_density_per_ha")) %>%
+    dplyr::mutate(dplyr::across(tidyselect::contains(data_vars_vctr) & tidyselect::contains("grid_") & !tidyselect::contains("_density_per_ha"), ~(. / grid_area_km2), .names = "{.col}_density_per_km2")) %>%
+    dplyr::rename_with(~stringr::str_replace_all(., "grid_", ""), starts_with("grid_")) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_make_valid()
