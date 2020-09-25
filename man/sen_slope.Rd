@@ -7,8 +7,6 @@
 sen_slope(x, conf_level = 0.95)
 }
 \arguments{
-\item{x}{numeric vector or a time series object of class "ts"}
-
 \item{conf_level}{confidence level of the test}
 }
 \value{

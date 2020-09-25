@@ -1,3 +1,7 @@
+## er.helpers 1.1.9
+
+* New feature: added 2 new pals.
+
 ## er.helpers 1.1.8
 
 * New feature: expand gridify_mb_data function to support the gridifying of more than 1 linecode.
