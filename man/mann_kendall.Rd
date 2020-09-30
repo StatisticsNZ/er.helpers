@@ -7,6 +7,14 @@
 mann_kendall(x, alternative = c("greater", "two.sided", "less"),
   continuity = TRUE)
 }
+\arguments{
+\item{x}{a vector of class "numeric" or a time series object of class "ts"}
+
+\item{alternative}{the alternative hypothesis, defaults to \code{two.sided}}
+
+\item{continuity}{logical, indicates whether a continuity correction
+should be applied, defaults to \code{TRUE}.}
+}
 \value{
 a tidy data frame with the test results
 }
