@@ -8,11 +8,13 @@
 
 <title>Order season levels — order_season_levels • er.helpers</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,12 +38,11 @@
 
 
 
-<meta property="og:title" content="Order season levels — order_season_levels" />
 
+<meta property="og:title" content="Order season levels — order_season_levels" />
 <meta property="og:description" content="Standardise season as a factor with ordered seasons. If an &quot;annual&quot; category
 is present it includes at the end of the other seasons. Season names are
 converted to sentence case" />
-
 
 
 
@@ -73,7 +74,7 @@ converted to sentence case" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -81,7 +82,7 @@ converted to sentence case" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -92,11 +93,10 @@ converted to sentence case" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/statisticsNZ/er.helpers/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,15 +119,13 @@ converted to sentence case" />
     </div>
 
     <div class="ref-description">
-    
     <p>Standardise season as a factor with ordered seasons. If an "annual" category
 is present it includes at the end of the other seasons. Season names are
 converted to sentence case</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>order_season_levels</span>(<span class='no'>x</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -136,11 +134,10 @@ converted to sentence case</p>
       <td><p>character vector. If a factor will be coerced to character first</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a factor with ordered levels for season</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
@@ -157,7 +154,7 @@ converted to sentence case</p>
 <span class='no'>ordered_seasons</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>seasons</span>,
                                 <span class='kw'>season</span> <span class='kw'>=</span> <span class='fu'>order_season_levels</span>(<span class='no'>season</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Problem with `mutate()` input `season`.</span>
 #&gt; <span class='warning'><span style='color: #0000BB;'>ℹ</span><span> Autum not recognised as valid season name(s)</span>
-#&gt; <span class='warning'></span><span style='color: #0000BB;'>ℹ</span><span> Input `season` is `order_season_levels(season)`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Autum not recognised as valid season name(s)</span></div><div class='input'><span class='co'># nice ordered plot</span>
+#&gt; <span class='warning'></span><span style='color: #0000BB;'>ℹ</span><span> Input `season` is `order_season_levels(season)`.</span></div><div class='input'><span class='co'># nice ordered plot</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span>(<span class='no'>season</span>, <span class='no'>n</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>season</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ordered_seasons</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"col"</span>)</div><div class='img'><img src='order_season_levels-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></span></pre>
   </div>

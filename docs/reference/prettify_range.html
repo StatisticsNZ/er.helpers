@@ -8,11 +8,13 @@
 
 <title>Makes it easy to get the period for printing or visualisation — prettify_range • er.helpers</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,11 +38,10 @@
 
 
 
-<meta property="og:title" content="Makes it easy to get the period for printing or visualisation — prettify_range" />
 
+<meta property="og:title" content="Makes it easy to get the period for printing or visualisation — prettify_range" />
 <meta property="og:description" content="Usually for plotting or reports one needs to print the range of a datasets.
 This function prints a nice range of dates or numbers easily" />
-
 
 
 
@@ -72,7 +73,7 @@ This function prints a nice range of dates or numbers easily" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -80,7 +81,7 @@ This function prints a nice range of dates or numbers easily" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,11 +92,10 @@ This function prints a nice range of dates or numbers easily" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/statisticsNZ/er.helpers/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -118,14 +118,12 @@ This function prints a nice range of dates or numbers easily" />
     </div>
 
     <div class="ref-description">
-    
     <p>Usually for plotting or reports one needs to print the range of a datasets.
 This function prints a nice range of dates or numbers easily</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>prettify_range</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"–"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -141,11 +139,10 @@ range by the maximum of y</p></td>
       <td><p>separator between the range</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a character with the range</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -156,23 +153,23 @@ range by the maximum of y</p></td>
 <span class='co'># second is returned</span>
 <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>period_start</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2020</span>,
                <span class='kw'>period_end</span> <span class='kw'>=</span> <span class='fl'>2020</span>:<span class='fl'>2030</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>pretty_range</span> <span class='kw'>=</span> <span class='fu'>prettify_range</span>(<span class='no'>period_start</span>, <span class='no'>period_end</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 3</span><span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>pretty_range</span> <span class='kw'>=</span> <span class='fu'>prettify_range</span>(<span class='no'>period_start</span>, <span class='no'>period_end</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 11 x 3</span><span>
 #&gt;    period_start period_end pretty_range
-#&gt;           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>         </span><span style='text-decoration: underline;'>2</span><span>010       </span><span style='text-decoration: underline;'>2</span><span>020 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>         </span><span style='text-decoration: underline;'>2</span><span>011       </span><span style='text-decoration: underline;'>2</span><span>021 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>         </span><span style='text-decoration: underline;'>2</span><span>012       </span><span style='text-decoration: underline;'>2</span><span>022 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>         </span><span style='text-decoration: underline;'>2</span><span>013       </span><span style='text-decoration: underline;'>2</span><span>023 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>         </span><span style='text-decoration: underline;'>2</span><span>014       </span><span style='text-decoration: underline;'>2</span><span>024 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>         </span><span style='text-decoration: underline;'>2</span><span>015       </span><span style='text-decoration: underline;'>2</span><span>025 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>         </span><span style='text-decoration: underline;'>2</span><span>016       </span><span style='text-decoration: underline;'>2</span><span>026 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>         </span><span style='text-decoration: underline;'>2</span><span>017       </span><span style='text-decoration: underline;'>2</span><span>027 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>         </span><span style='text-decoration: underline;'>2</span><span>018       </span><span style='text-decoration: underline;'>2</span><span>028 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span>         </span><span style='text-decoration: underline;'>2</span><span>019       </span><span style='text-decoration: underline;'>2</span><span>029 2010–2030   
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span>         </span><span style='text-decoration: underline;'>2</span><span>020       </span><span style='text-decoration: underline;'>2</span><span>030 2010–2030   </div><div class='input'><span class='co'># Also work with dates</span>
+#&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'> 1</span><span>         </span><span style='text-decoration: underline;'>2</span><span>010       </span><span style='text-decoration: underline;'>2</span><span>020 2010–2030   
+#&gt; </span><span style='color: #555555;'> 2</span><span>         </span><span style='text-decoration: underline;'>2</span><span>011       </span><span style='text-decoration: underline;'>2</span><span>021 2010–2030   
+#&gt; </span><span style='color: #555555;'> 3</span><span>         </span><span style='text-decoration: underline;'>2</span><span>012       </span><span style='text-decoration: underline;'>2</span><span>022 2010–2030   
+#&gt; </span><span style='color: #555555;'> 4</span><span>         </span><span style='text-decoration: underline;'>2</span><span>013       </span><span style='text-decoration: underline;'>2</span><span>023 2010–2030   
+#&gt; </span><span style='color: #555555;'> 5</span><span>         </span><span style='text-decoration: underline;'>2</span><span>014       </span><span style='text-decoration: underline;'>2</span><span>024 2010–2030   
+#&gt; </span><span style='color: #555555;'> 6</span><span>         </span><span style='text-decoration: underline;'>2</span><span>015       </span><span style='text-decoration: underline;'>2</span><span>025 2010–2030   
+#&gt; </span><span style='color: #555555;'> 7</span><span>         </span><span style='text-decoration: underline;'>2</span><span>016       </span><span style='text-decoration: underline;'>2</span><span>026 2010–2030   
+#&gt; </span><span style='color: #555555;'> 8</span><span>         </span><span style='text-decoration: underline;'>2</span><span>017       </span><span style='text-decoration: underline;'>2</span><span>027 2010–2030   
+#&gt; </span><span style='color: #555555;'> 9</span><span>         </span><span style='text-decoration: underline;'>2</span><span>018       </span><span style='text-decoration: underline;'>2</span><span>028 2010–2030   
+#&gt; </span><span style='color: #555555;'>10</span><span>         </span><span style='text-decoration: underline;'>2</span><span>019       </span><span style='text-decoration: underline;'>2</span><span>029 2010–2030   
+#&gt; </span><span style='color: #555555;'>11</span><span>         </span><span style='text-decoration: underline;'>2</span><span>020       </span><span style='text-decoration: underline;'>2</span><span>030 2010–2030   </div><div class='input'><span class='co'># Also work with dates</span>
 <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() + <span class='fl'>100</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>prettify_range</span>(<span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" and "</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"between"</span>, <span class='no'>.</span>)</div><div class='output co'>#&gt; [1] "between 2020-09-30 and 2021-01-08"</div><div class='input'>
+  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"between"</span>, <span class='no'>.</span>)</div><div class='output co'>#&gt; [1] "between 2021-01-29 and 2021-05-09"</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

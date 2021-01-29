@@ -8,11 +8,13 @@
 
 <title>Read a excel file stored in an AWS S3 bucket. — read_excel_datalake • er.helpers</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,13 +38,12 @@
 
 
 
-<meta property="og:title" content="Read a excel file stored in an AWS S3 bucket. — read_excel_datalake" />
 
+<meta property="og:title" content="Read a excel file stored in an AWS S3 bucket. — read_excel_datalake" />
 <meta property="og:description" content="This function get the specified object from an AWS S3 bucket and reads it
 using read_excel. It keeps the excel in memory and,
 therefore, it avoids the unintended consequences of saving the file in the
 disk." />
-
 
 
 
@@ -74,7 +75,7 @@ disk." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -82,7 +83,7 @@ disk." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,11 +94,10 @@ disk." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/statisticsNZ/er.helpers/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -120,17 +120,15 @@ disk." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function get the specified object from an AWS S3 bucket and reads it
 using <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></code>. It keeps the excel in memory and,
 therefore, it avoids the unintended consequences of saving the file in the
 disk.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>read_excel_datalake</span>(<span class='no'>s3_path</span>, <span class='kw'>bucket_name</span> <span class='kw'>=</span> <span class='no'>mfe_datalake_bucket</span>,
   <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,11 +157,10 @@ Ministry for the Environment data lake for environmental reporting
       <td><p>Other arguments passed to the reading_function</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A `<code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

@@ -1,3 +1,7 @@
+## er.helpers 1.2.0
+
+* New feature: updated NZTCS pals.
+
 ## er.helpers 1.1.9
 
 * New feature: added 2 new pals.
