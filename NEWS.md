@@ -1,3 +1,7 @@
+## er.helpers 1.2.1
+
+* Bug fix: ungrouped output from gridify_mb_data, so that an sf object is returned.
+
 ## er.helpers 1.2.0
 
 * New feature: updated NZTCS pals.

@@ -87,6 +87,7 @@ gridify_mb_data <- function(data,
     dplyr::mutate(dplyr::across(tidyselect::contains(data_vars_vctr) & tidyselect::contains("grid_"), ~(. / grid_area_ha), .names = "{.col}_density_per_ha")) %>%
     dplyr::mutate(dplyr::across(tidyselect::contains(data_vars_vctr) & tidyselect::contains("grid_") & !tidyselect::contains("_density_per_ha"), ~(. / grid_area_km2), .names = "{.col}_density_per_km2")) %>%
     dplyr::rename_with(~stringr::str_replace_all(., "grid_", ""), starts_with("grid_")) %>%
+    dplyr::ungroup() %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
     sf::st_make_valid()
