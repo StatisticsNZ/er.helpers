@@ -116,7 +116,8 @@ write_csv_datalake <- function(x,
   readr::write_csv(x, connection, ...)
   aws.s3::put_object(rawConnectionValue(connection),
                      object = s3_path,
-                     bucket = bucket_name)
+                     bucket = bucket_name, 
+                    multipart = T)
 
 }
 
