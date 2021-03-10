@@ -292,6 +292,26 @@ read_excel_datalake <- function (s3_path,
   excel_sheet
 }
 
+
+#' Make all columns of a data frame snakecase.
+#'
+#' This function modifies the input data frame such that the names of every
+#' column are in snake case. Internally, it uses the
+#' \code{\link[snakecase]{to_snake_case}}.
+#'
+#' @param x The input data frame.
+#'
+#' @export
+#'
+#' @examples
+#' x <- data.frame(notSnakecase = 1:10)
+#' all_columns_to_snakecase(x)
+all_columns_to_snakecase <- function(x){
+  new_names <-  snakecase::to_snake_case(names(x))
+  magrittr::set_colnames(x, new_names)
+}
+
+
 #' Check if aws credentials have been configured and attempt default
 #' configuration otherwise
 #'
