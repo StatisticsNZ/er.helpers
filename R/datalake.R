@@ -112,7 +112,7 @@ read_from_datalake <- function(...){
 
   if(length(files) != 1){
     stop(errorCondition(message = paste0("More than one file match the search terms: ",
-                   glue::glue_collapse(files, sep = " \n", last = " and ")))
+                   glue::glue_collapse(files, sep = " \n", last = " and "))))
   }
 
   if(length(files) == 1){
