@@ -86,6 +86,50 @@ read_csv_datalake <- function(s3_path,
   }
 }
 
+#' Read any type file stored in an AWS S3 bucket.
+#'
+#' This function get the specified object from an AWS S3 bucket and reads it
+#' using functions designed for each relevant file type. If the file is either a .RDS, .csv, or .xlsx; it first downloads the file to a temp directory and,
+#' therefore, it avoids the unintended consequences of saving the file in the
+#' disk. If it is not a recognisable file type, it saves it to the working directory. 
+#' This function also uses key search terms and will throw an error if there is more than one file with the search terms used. 
+#'
+#' @param ... Key terms to search for in the AWS S3 bucket
+#' @inheritParams setup_datalake_access 
+#' @inheritParams read_excel_datalake
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' setup_datalake_access()
+#' read_from_datalake("landcover", "concordance", "lcdb4")
+#' }
+
+read_from_datalake <- function(...){
+  
+  files <- er.helpers::search_data_lake(...)$Key
+  
+  if(length(files) != 1){
+    stop(errorCondition(message = paste0("More than one file match the search terms: ",
+                                         glue::glue_collapse(files, sep = " \n", last = " and "))))
+  }
+  
+  else if(length(files) == 1){
+    tmp <- tempfile()
+    data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                object = files,
+                                file = tmp)
+    
+    if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
+    else if(grepl(x = files, pattern = "csv")) return(data <- read_csv(data))
+    else if(str_detect(files, "xls")) er.helpers::read_excel_datalake(s3_path = files)
+    else {
+      message("file type not recognised, saved object into working directory")
+      aws.s3::save_object(object = files, bucket = mfe_datalake_bucket)
+    }
+  }
+}
 
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
