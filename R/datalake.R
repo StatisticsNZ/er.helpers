@@ -130,6 +130,9 @@ read_from_datalake <- function(...){
   }
  }
 }
+ 
+#' place holder 
+all_columns_to_snakecase <- janitor::clean_names()
          
 #' Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
 #' But you can add your own using attr(). V
