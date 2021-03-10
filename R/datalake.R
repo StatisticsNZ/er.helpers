@@ -166,6 +166,36 @@ write_rds_datalake <- function(data, s3_path){
                      bucket = mfe_datalake_bucket)
   
 }
+  
+  
+#' Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.
+#'
+#' @param ... Key words for an object in the lake
+#'
+#' @return TRUE if it succeeded and FALSE if it failed
+#'
+#' @export
+#'
+
+get_metadata <- function(...){
+  
+  data <- read_from_lake(...)
+  if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
+  
+  else if(!is.null(data)){
+    attributes_ <- attributes(data)
+    
+    if(attributes_$Metadata == "TRUE"){
+      if(any(names(attributes_) == "row.names")){
+        indices <- which(names(attributes_) == "row.names")
+        attributes_[-indices]
+      }
+      else attributes_
+    }
+    
+    else warning("No metadata found")
+  }
+}
 
 
 #' Write a CSV file as an object in an AWS S3 bucket.
