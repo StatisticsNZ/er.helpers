@@ -86,91 +86,6 @@ read_csv_datalake <- function(s3_path,
   }
 }
 
-#' Read any type file stored in an AWS S3 bucket.
-#'
-#' This function get the specified object from an AWS S3 bucket and reads it
-#' using functions designed for each relevant file type. If the file is either a .RDS, .csv, or .xlsx; it first downloads the file to a temp directory and,
-#' therefore, it avoids the unintended consequences of saving the file in the
-#' disk. If it is not a recognisable file type, it saves it to the working directory. 
-#' This function also uses key search terms and will throw an error if there is more than one file with the search terms used. 
-#'
-#' @param ... Key terms to search for in the AWS S3 bucket
-#' @inheritParams setup_datalake_access 
-#' @inheritParams read_excel_datalake
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access()
-#' read_from_datalake("landcover", "concordance", "lcdb4")
-#' }
-
-read_from_datalake <- function(...){
-
- files <- er.helpers::search_data_lake(...)$Key
-
-  if(length(files) != 1){
-    stop(errorCondition(message = paste0("More than one file match the search terms: ",
-                   glue::glue_collapse(files, sep = " \n", last = " and "))))
-  }
-
-  if(length(files) == 1){
-  tmp <- tempfile()
-  data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
-                              object = files,
-                              file = tmp)
-
-  if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
-  else if(grepl(x = files, pattern = "csv")) return(data <- read_csv(data))
-  else if(str_detect(files, "xls")) er.helpers::read_excel_datalake(s3_path = files)
-  else {
-    message("file type not recognised, saved object into working directory")
-    aws.s3::save_object(object = files, bucket = mfe_datalake_bucket)
-  }
- }
-}
- 
-#' place holder 
-all_columns_to_snakecase <- janitor::clean_names()
-         
-#' Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
-#' But you can add your own using attr(). V
-#' The function first writes the file to a temp directory
-#' therefore, it avoids the unintended consequences of saving the file in the
-#' disk. 
-#'
-#' @param data an object to write to the lake 
-#' @param s3_path the object path in the lake to save to (this should have the extension .RDS)
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access()
-#' read_from_datalake("landcover", "concordance", "lcdb4")
-#' }
-
-write_rds_datalake <- function(data, s3_path){
-  
-   if(tools::file_ext(s3_path) != "RDS") stop(errorCondition(
-     message = "This function is for .RDS file types only. S3 path should have the extension .RDS"
-   ))
-
-    attr(data, "Creater") <- Sys.info()[["user"]]
-    attr(data, "Metadata") <- "TRUE"
-    attr(data, "Date uploaded") <- Sys.time()
-
-    temp_location <- paste0(tempdir(), "/",  basename(s3_path))
-    saveRDS(data, temp_location)
-
-    aws.s3::put_object(file = temp_location,
-                       object = s3_path,
-                       bucket = mfe_datalake_bucket)
-
-}
-
-
 
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
@@ -265,35 +180,26 @@ read_excel_datalake <- function (s3_path,
 
   excel_sheet
 }
-         
-#' Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.
+
+
+#' Make all columns of a data frame snakecase.
 #'
-#' @param ... Key words for an object in the lake
+#' This function modifies the input data frame such that the names of every
+#' column are in snake case. Internally, it uses the
+#' \code{\link[snakecase]{to_snake_case}}.
 #'
-#' @return TRUE if it succeeded and FALSE if it failed
+#' @param x The input data frame.
 #'
 #' @export
 #'
-         
-get_metadata <- function(...){
-
-  data <- read_from_lake(...)
-  if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
-
-  else if(!is.null(data)){
-  attributes_ <- attributes(data)
-
-  if(attributes_$Metadata == "TRUE"){
-  if(any(names(attributes_) == "row.names")){
-    indices <- which(names(attributes_) == "row.names")
-    attributes_[-indices]
-  }
-    else attributes_
-  }
-
-  else warning("No metadata found")
-  }
+#' @examples
+#' x <- data.frame(notSnakecase = 1:10)
+#' all_columns_to_snakecase(x)
+all_columns_to_snakecase <- function(x){
+  new_names <-  snakecase::to_snake_case(names(x))
+  magrittr::set_colnames(x, new_names)
 }
+
 
 #' Check if aws credentials have been configured and attempt default
 #' configuration otherwise
