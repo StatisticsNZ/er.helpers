@@ -91,11 +91,11 @@ read_csv_datalake <- function(s3_path,
 #' This function get the specified object from an AWS S3 bucket and reads it
 #' using functions designed for each relevant file type. If the file is either a .RDS, .csv, or .xlsx; it first downloads the file to a temp directory and,
 #' therefore, it avoids the unintended consequences of saving the file in the
-#' disk. If it is not a recognisable file type, it saves it to the working directory. 
-#' This function also uses key search terms and will throw an error if there is more than one file with the search terms used. 
+#' disk. If it is not a recognisable file type, it saves it to the working directory.
+#' This function also uses key search terms and will throw an error if there is more than one file with the search terms used.
 #'
 #' @param ... Key terms to search for in the AWS S3 bucket
-#' @inheritParams setup_datalake_access 
+#' @inheritParams setup_datalake_access
 #' @inheritParams read_excel_datalake
 #'
 #' @export
@@ -106,38 +106,42 @@ read_csv_datalake <- function(s3_path,
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
-read_from_datalake <- function(...){
-  
+read_from_datalake <- function(..., all_sheets = T){
+
   files <- er.helpers::search_data_lake(...)$Key
   
-  if(length(files) != 1){
+  if(length(files) == 0){stop(errorCondition(message = "No match found."))}
+
+  else if(length(files) > 1){
     stop(errorCondition(message = paste0("More than one file match the search terms: ",
                                          glue::glue_collapse(files, sep = " \n", last = " and "))))
   }
-  
+
   else if(length(files) == 1){
+    message(paste0(files), " matched")
+    
     tmp <- tempfile()
     data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
                                 object = files,
                                 file = tmp)
-    
+
     if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
     else if(grepl(x = files, pattern = "csv")) return(data <- read_csv(data))
-    else if(str_detect(files, "xls")) er.helpers::read_excel_datalake(s3_path = files)
+    else if(grepl(x = files, pattern = "xls")) read_excel_datalake(s3_path = files, all_sheets = all_sheets)
     else {
       message("file type not recognised, saved object into working directory")
       aws.s3::save_object(object = files, bucket = mfe_datalake_bucket)
     }
   }
 }
-    
+
 #' Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
 #' But you can add your own using attr(). V
 #' The function first writes the file to a temp directory
 #' therefore, it avoids the unintended consequences of saving the file in the
-#' disk. 
+#' disk.
 #'
-#' @param data an object to write to the lake 
+#' @param data an object to write to the lake
 #' @param s3_path the object path in the lake to save to (this should have the extension .RDS)
 #'
 #' @export
@@ -149,52 +153,62 @@ read_from_datalake <- function(...){
 #' }
 
 write_rds_datalake <- function(data, s3_path){
-  
+
   if(tools::file_ext(s3_path) != "RDS"){stop(errorCondition(
     message = "This function is for .RDS file types only. S3 path should have the extension .RDS"
   ))}
-  
+
   attr(data, "Creater") <- Sys.info()[["user"]]
   attr(data, "Metadata") <- "TRUE"
   attr(data, "Date uploaded") <- Sys.time()
-  
+
   temp_location <- paste0(tempdir(), "/",  basename(s3_path))
   saveRDS(data, temp_location)
-  
+
   aws.s3::put_object(file = temp_location,
                      object = s3_path,
                      bucket = mfe_datalake_bucket)
-  
+
 }
-  
-  
+
+
 #' Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.
 #'
 #' @param ... Key words for an object in the lake
+#' @inheritParams read_from_lake
 #'
 #' @return TRUE if it succeeded and FALSE if it failed
 #'
 #' @export
 #'
 
-get_metadata <- function(...){
+get_metadata <- function(..., from_datalake = T, data = NULL){
   
-  data <- read_from_lake(...)
+  if(from_datalake == T){
+  data <- read_from_datalake(...)
   if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
-  
-  else if(!is.null(data)){
-    attributes_ <- attributes(data)
-    
-    if(attributes_$Metadata == "TRUE"){
-      if(any(names(attributes_) == "row.names")){
-        indices <- which(names(attributes_) == "row.names")
-        attributes_[-indices]
-      }
-      else attributes_
-    }
-    
-    else warning("No metadata found")
   }
+  
+  else if(from_datalake == F){
+    data <- data
+  }
+  
+    ## Placeholder 
+    data_attributes <- attributes(data ) %>% 
+      purrr::list_modify("row.names" = NULL)  
+    
+    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>% 
+      plyr::compact()
+    
+    l <- list()
+    all_attributes <- c(data_attributes, colname_attributes)
+    
+    if(any(names(all_attributes) == "Metadata")){message("Created metadata found")}
+    if(!any(names(all_attributes) == "Metadata")){warning("No created metadata found")}
+    
+    return(all_attributes)
+  
+    
 }
 
 
@@ -227,7 +241,7 @@ write_csv_datalake <- function(x,
   readr::write_csv(x, connection, ...)
   aws.s3::put_object(rawConnectionValue(connection),
                      object = s3_path,
-                     bucket = bucket_name, 
+                     bucket = bucket_name,
                     multipart = T)
 
 }
@@ -243,6 +257,7 @@ write_csv_datalake <- function(x,
 #' @param s3_path The filename of the desired excel in the S3 bucket including the
 #'   full path
 #' @param sheet The sheet number to extract. Defaults to 1.
+#' @param all_sheets If more than one sheet is present, T = read all sheets into a list, F = default to sheet specified
 #' @inheritParams setup_datalake_access
 #' @param version VersionId of the object key desired. Can be retrieved using
 #'   \code{\link{get_bucket_version_df}}
@@ -262,6 +277,7 @@ write_csv_datalake <- function(x,
 read_excel_datalake <- function (s3_path,
                                  bucket_name = mfe_datalake_bucket,
                                  version = NULL,
+                                 all_sheets = T, 
                                  sheet = 1,
                                  ...) {
 
@@ -280,16 +296,37 @@ read_excel_datalake <- function (s3_path,
 
   tmp <- tempfile()
   data <- aws.s3::save_object(bucket = bucket_name, object = s3_path, file = tmp)
-  excel_sheet <- readxl::read_excel(path = data, sheet = sheet, ...)
+  
+  if(all_sheets == T){
+    
+    message("All sheets = T; reading in ", glue::glue_collapse(readxl::excel_sheets(data), "\n ", last = " and "))
+    
+    
+    sheets <- readxl::excel_sheets(data)
+    list_sheets <- suppressMessages(purrr::map(sheets, ~ readxl::read_excel(path = data, sheet = .x)))
+    list_sheets <- rlang::set_names(list_sheets, nm = sheets)
+    return(list_sheets)
+    
+  }
+  
+  if(all_sheets == F){
+    
+  d <- readxl::read_excel(path = data, sheet = sheet, ...)
 
   if (length(readxl::excel_sheets(data)) > 1) {
-    message("Defaulting to the first spreadsheet. Other sheets present in data:\n",
-            glue::glue_collapse(readxl::excel_sheets(data), ", ", last = " and "))
+    
+    suppressMessages({
+    all_sheets <- readxl::excel_sheets(data)
+    })
+    
+    message("Defaulting to the first spreadsheet: ", all_sheets[1],  ". Other sheets present in data:\n",
+            glue::glue_collapse(all_sheets[-1], "\n ", last = " and "))
+  }
+  return(d)
   }
 
   else NULL
 
-  excel_sheet
 }
 
 
