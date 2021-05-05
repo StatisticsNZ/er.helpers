@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_hbar_x_na_inf.R
 \name{ggplot_hbar_x_na_inf}
 \alias{ggplot_hbar_x_na_inf}
-\title{Horizontal bar ggplot - with x_na_inf support.}
+\title{Horizontal bar ggplot with x_na_inf support.}
 \usage{
 ggplot_hbar_x_na_inf(data, x_var, y_var, text_var = NULL, pal = NULL,
   width = 0.75, alpha = 1, size_line = 0.5, title = "[Title]",

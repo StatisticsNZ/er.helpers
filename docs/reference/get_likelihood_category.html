@@ -181,16 +181,32 @@ ordered correctly.</p>
 <span class='co'># In most water quality metrics an increasing trend (large p) corresponds to</span>
 <span class='co'># a worsening trend</span>
 <span class='fu'>get_likelihood_category</span>(<span class='no'>p</span>, <span class='kw'>term_type</span> <span class='kw'>=</span> <span class='st'>"worsening-improving"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in get_likelihood_category(p, term_type = "worsening-improving") %&gt;%     order_likelihood_levels(): could not find function "%&gt;%"</span></div><div class='input'>
+  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt;  [1] Very likely improving Likely improving      Likely improving     
+#&gt;  [4] Likely improving      Indeterminate         Indeterminate        
+#&gt;  [7] Indeterminate         Likely worsening      Likely worsening     
+#&gt; [10] Likely worsening      Very likely worsening
+#&gt; 5 Levels: Very likely improving Likely improving ... Very likely worsening</div><div class='input'>
 <span class='co'># In climate metrics we usually prefer an increasing-decreasing scale</span>
 <span class='fu'>get_likelihood_category</span>(<span class='no'>p</span>, <span class='kw'>term_type</span> <span class='kw'>=</span> <span class='st'>"increasing-decreasing"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in get_likelihood_category(p, term_type = "increasing-decreasing") %&gt;%     order_likelihood_levels(): could not find function "%&gt;%"</span></div><div class='input'>
+  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt;  [1] Very likely increasing Likely increasing      Likely increasing     
+#&gt;  [4] Likely increasing      Indeterminate          Indeterminate         
+#&gt;  [7] Indeterminate          Likely decreasing      Likely decreasing     
+#&gt; [10] Likely decreasing      Very likely decreasing
+#&gt; 5 Levels: Very likely increasing Likely increasing ... Very likely decreasing</div><div class='input'>
 <span class='co'># Also works when p is a percentages</span>
 <span class='fu'>get_likelihood_category</span>(<span class='no'>p</span>*<span class='fl'>100</span>, <span class='kw'>p_is</span> <span class='kw'>=</span> <span class='st'>"percentage"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in get_likelihood_category(p * 100, p_is = "percentage") %&gt;% order_likelihood_levels(): could not find function "%&gt;%"</span></div><div class='input'>
+  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt;  [1] Very likely improving Likely improving      Likely improving     
+#&gt;  [4] Likely improving      Indeterminate         Indeterminate        
+#&gt;  [7] Indeterminate         Likely worsening      Likely worsening     
+#&gt; [10] Likely worsening      Very likely worsening
+#&gt; 5 Levels: Very likely improving Likely improving ... Very likely worsening</div><div class='input'>
 <span class='co'># We can also get terms used by ipcc if desired</span>
 <span class='fu'>get_likelihood_category</span>(<span class='no'>p</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"ipcc"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in get_likelihood_category(p, scale = "ipcc") %&gt;% order_likelihood_levels(): could not find function "%&gt;%"</span></div></pre>
+  <span class='fu'><a href='order_likelihood_levels.html'>order_likelihood_levels</a></span>()</div><div class='output co'>#&gt;  [1] Exceptionally unlikely Unlikely               Unlikely              
+#&gt;  [4] Unlikely               About as likely as not About as likely as not
+#&gt;  [7] About as likely as not Likely                 Likely                
+#&gt; [10] Likely                 Virtually certain     
+#&gt; 9 Levels: Virtually certain Extremely likely Very likely ... Exceptionally unlikely</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

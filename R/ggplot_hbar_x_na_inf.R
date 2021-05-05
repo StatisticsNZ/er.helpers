@@ -2,6 +2,11 @@
 
 #' @title Horizontal bar ggplot with x_na_inf support.
 #' @description Horizontal bar ggplot that is not coloured and not facetted.
+#'
+#' @import ggplot2
+#' @import dplyr
+#' @import rlang
+#'
 #' @param data A tibble or dataframe. Required input.
 #' @param x_var Unquoted numeric variable to be on the x axis. Required input.
 #' @param y_var Unquoted categorical variable to be on the y axis. Required input.
@@ -70,8 +75,6 @@ ggplot_hbar_x_na_inf <- function(data,
                                  font_size_title = NULL,
                                  font_size_body = NULL,
                                  mobile = FALSE) {
-
-  library(ggplot2)
 
   data <- dplyr::ungroup(data)
   x_var <- rlang::enquo(x_var) #numeric var
