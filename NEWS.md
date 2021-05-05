@@ -1,3 +1,7 @@
+## er.helpers 1.2.2
+
+* New feature: added read_from_datalake, get_metadata and write_rds_datalake functions.
+
 ## er.helpers 1.2.1
 
 * Bug fix: ungrouped output from gridify_mb_data, so that an sf object is returned.

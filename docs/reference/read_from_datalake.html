@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wether a value is within a specified interval — in_interval • er.helpers</title>
+<title>Read any type file stored in an AWS S3 bucket. — read_from_datalake • er.helpers</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Wether a value is within a specified interval — in_interval" />
-<meta property="og:description" content="Wether a value is within a specified interval" />
+<meta property="og:title" content="Read any type file stored in an AWS S3 bucket. — read_from_datalake" />
+<meta property="og:description" content="This function get the specified object from an AWS S3 bucket and reads it
+using functions designed for each relevant file type. If the file is either a .RDS, .csv, or .xlsx; it first downloads the file to a temp directory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk. If it is not a recognisable file type, it saves it to the working directory.
+This function also uses key search terms and will throw an error if there is more than one file with the search terms used." />
 
 
 
@@ -111,46 +115,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wether a value is within a specified interval</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/likelihood.R'><code>R/likelihood.R</code></a></small>
-    <div class="hidden name"><code>in_interval.Rd</code></div>
+    <h1>Read any type file stored in an AWS S3 bucket.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/datalake.R'><code>R/datalake.R</code></a></small>
+    <div class="hidden name"><code>read_from_datalake.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wether a value is within a specified interval</p>
+    <p>This function get the specified object from an AWS S3 bucket and reads it
+using functions designed for each relevant file type. If the file is either a .RDS, .csv, or .xlsx; it first downloads the file to a temp directory and,
+therefore, it avoids the unintended consequences of saving the file in the
+disk. If it is not a recognisable file type, it saves it to the working directory.
+This function also uses key search terms and will throw an error if there is more than one file with the search terms used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>in_interval</span>(<span class='no'>x</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='no'>left_open</span>, <span class='no'>right_open</span>)</pre>
+    <pre class="usage"><span class='fu'>read_from_datalake</span>(<span class='no'>...</span>, <span class='kw'>all_sheets</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>the value to test</p></td>
+      <th>...</th>
+      <td><p>Key terms to search for in the AWS S3 bucket</p></td>
     </tr>
     <tr>
-      <th>lower</th>
-      <td><p>lower limit</p></td>
-    </tr>
-    <tr>
-      <th>upper</th>
-      <td><p>upper limit</p></td>
-    </tr>
-    <tr>
-      <th>left_open</th>
-      <td><p>whether the lower limit is an open interval</p></td>
-    </tr>
-    <tr>
-      <th>right_open</th>
-      <td><p>whether the upper limit is an open interval</p></td>
+      <th>all_sheets</th>
+      <td><p>If more than one sheet is present, T = read all sheets into a list, F = default to sheet specified</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>logical</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='setup_datalake_access.html'>setup_datalake_access</a></span>()
+<span class='fu'>read_from_datalake</span>(<span class='st'>"landcover"</span>, <span class='st'>"concordance"</span>, <span class='st'>"lcdb4"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

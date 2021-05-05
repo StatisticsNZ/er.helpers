@@ -6,7 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wether a value is within a specified interval — in_interval • er.helpers</title>
+<title>Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
+But you can add your own using attr(). V
+The function first writes the file to a temp directory
+therefore, it avoids the unintended consequences of saving the file in the
+disk. — write_rds_datalake • er.helpers</title>
 
 
 <!-- jquery -->
@@ -39,8 +43,16 @@
 
 
 
-<meta property="og:title" content="Wether a value is within a specified interval — in_interval" />
-<meta property="og:description" content="Wether a value is within a specified interval" />
+<meta property="og:title" content="Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
+But you can add your own using attr(). V
+The function first writes the file to a temp directory
+therefore, it avoids the unintended consequences of saving the file in the
+disk. — write_rds_datalake" />
+<meta property="og:description" content="Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
+But you can add your own using attr(). V
+The function first writes the file to a temp directory
+therefore, it avoids the unintended consequences of saving the file in the
+disk." />
 
 
 
@@ -111,46 +123,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wether a value is within a specified interval</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/likelihood.R'><code>R/likelihood.R</code></a></small>
-    <div class="hidden name"><code>in_interval.Rd</code></div>
+    <h1>Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
+But you can add your own using attr(). V
+The function first writes the file to a temp directory
+therefore, it avoids the unintended consequences of saving the file in the
+disk.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/datalake.R'><code>R/datalake.R</code></a></small>
+    <div class="hidden name"><code>write_rds_datalake.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wether a value is within a specified interval</p>
+    <p>Write an RDS file to the lake. .RDS so the attributes can be saved as metadata. Basic attributes are applied below
+But you can add your own using attr(). V
+The function first writes the file to a temp directory
+therefore, it avoids the unintended consequences of saving the file in the
+disk.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>in_interval</span>(<span class='no'>x</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='no'>left_open</span>, <span class='no'>right_open</span>)</pre>
+    <pre class="usage"><span class='fu'>write_rds_datalake</span>(<span class='no'>data</span>, <span class='no'>s3_path</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>the value to test</p></td>
+      <th>data</th>
+      <td><p>an object to write to the lake</p></td>
     </tr>
     <tr>
-      <th>lower</th>
-      <td><p>lower limit</p></td>
-    </tr>
-    <tr>
-      <th>upper</th>
-      <td><p>upper limit</p></td>
-    </tr>
-    <tr>
-      <th>left_open</th>
-      <td><p>whether the lower limit is an open interval</p></td>
-    </tr>
-    <tr>
-      <th>right_open</th>
-      <td><p>whether the upper limit is an open interval</p></td>
+      <th>s3_path</th>
+      <td><p>the object path in the lake to save to (this should have the extension .RDS)</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>logical</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='setup_datalake_access.html'>setup_datalake_access</a></span>()
+<span class='fu'><a href='read_from_datalake.html'>read_from_datalake</a></span>(<span class='st'>"landcover"</span>, <span class='st'>"concordance"</span>, <span class='st'>"lcdb4"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

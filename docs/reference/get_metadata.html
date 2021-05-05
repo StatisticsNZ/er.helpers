@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wether a value is within a specified interval — in_interval • er.helpers</title>
+<title>Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function. — get_metadata • er.helpers</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Wether a value is within a specified interval — in_interval" />
-<meta property="og:description" content="Wether a value is within a specified interval" />
+<meta property="og:title" content="Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function. — get_metadata" />
+<meta property="og:description" content="Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function." />
 
 
 
@@ -111,45 +111,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wether a value is within a specified interval</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/likelihood.R'><code>R/likelihood.R</code></a></small>
-    <div class="hidden name"><code>in_interval.Rd</code></div>
+    <h1>Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/datalake.R'><code>R/datalake.R</code></a></small>
+    <div class="hidden name"><code>get_metadata.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wether a value is within a specified interval</p>
+    <p>Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>in_interval</span>(<span class='no'>x</span>, <span class='no'>lower</span>, <span class='no'>upper</span>, <span class='no'>left_open</span>, <span class='no'>right_open</span>)</pre>
+    <pre class="usage"><span class='fu'>get_metadata</span>(<span class='no'>...</span>, <span class='kw'>from_datalake</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>the value to test</p></td>
-    </tr>
-    <tr>
-      <th>lower</th>
-      <td><p>lower limit</p></td>
-    </tr>
-    <tr>
-      <th>upper</th>
-      <td><p>upper limit</p></td>
-    </tr>
-    <tr>
-      <th>left_open</th>
-      <td><p>whether the lower limit is an open interval</p></td>
-    </tr>
-    <tr>
-      <th>right_open</th>
-      <td><p>whether the upper limit is an open interval</p></td>
+      <th>...</th>
+      <td><p>Key words for an object in the lake</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>logical</p>
+    <p>TRUE if it succeeded and FALSE if it failed</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
