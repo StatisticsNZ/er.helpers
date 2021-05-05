@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Translate likely-unlikely to a specified term scale — get_likelihood_terms • er.helpers</title>
+<title>Theme for horizontal bar ggplots. — theme_hbar • er.helpers</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Translate likely-unlikely to a specified term scale — get_likelihood_terms" />
-<meta property="og:description" content="Translate likely-unlikely to a specified term scale" />
+<meta property="og:title" content="Theme for horizontal bar ggplots. — theme_hbar" />
+<meta property="og:description" content="Theme for horizontal bar ggplots." />
 
 
 
@@ -111,43 +111,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Translate likely-unlikely to a specified term scale</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/likelihood.R'><code>R/likelihood.R</code></a></small>
-    <div class="hidden name"><code>get_likelihood_terms.Rd</code></div>
+    <h1>Theme for horizontal bar ggplots.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/ggplot_hbar_x_na_inf.R'><code>R/ggplot_hbar_x_na_inf.R</code></a></small>
+    <div class="hidden name"><code>theme_hbar.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Translate likely-unlikely to a specified term scale</p>
+    <p>Theme for horizontal bar ggplots.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_likelihood_terms</span>(<span class='no'>terms</span>, <span class='kw'>term_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"worsening-improving"</span>,
-  <span class='st'>"improving-worsening"</span>, <span class='st'>"increasing-decreasing"</span>, <span class='st'>"likely-unlikely"</span>))</pre>
+    <pre class="usage"><span class='fu'>theme_hbar</span>(<span class='kw'>font_family</span> <span class='kw'>=</span> <span class='st'>"Helvetica"</span>, <span class='kw'>font_size_title</span> <span class='kw'>=</span> <span class='fl'>11</span>,
+  <span class='kw'>font_size_body</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>terms</th>
-      <td><p>terms to translate</p></td>
+      <th>font_family</th>
+      <td><p>Font family to use. Defaults to "Helvetica".</p></td>
     </tr>
     <tr>
-      <th>term_type</th>
-      <td><p>when <code>scale = "statsnz"</code> it allows to modify the terms
-depending on what the probability <code>p</code> indicates. <code>term_type =
-"worsening-improving"</code> indicates that a large <code>p</code> corresponds to a
-worsening trend; this is the default. <code>term_type =
-"improving-worsening"</code> indicates that a large <code>p</code> corresponds to an
-improving trend. <code>term_type = "increasing-decreasing"</code> indicates that
-the output should range from "Very likely increasing" to "Very likely
-decreasing". <code>term_type = "likely-unlikely"</code> indicates that the output
-should range from "Very likely" to "Very unlikely".</p></td>
+      <th>font_size_title</th>
+      <td><p>Font size for the title text. Defaults to 11.</p></td>
+    </tr>
+    <tr>
+      <th>font_size_body</th>
+      <td><p>Font size for all text other than the title. Defaults to 10.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a factor</p>
+    <p>A ggplot theme.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>() +
+  <span class='fu'>theme_hbar</span>(<span class='st'>"Courier"</span>, <span class='fl'>9</span>, <span class='fl'>7</span>) +
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"This is a title of a selected font family and size"</span>)</div><div class='img'><img src='theme_hbar-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

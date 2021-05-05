@@ -36,7 +36,7 @@ disk.
 \examples{
 \dontrun{
 setup_datalake_access()
-files <- search_data_lake(".x", "land", "2021")$Key
+files <- search_datalake(".x", "land", "2021")$Key
 read_excel_datalake(files[2])
 read_excel_datalake(files[1], sheet = 2)
 }

@@ -1,3 +1,7 @@
+## er.helpers 1.2.3
+
+* New feature: added ggplot hbar functions that work with x_na_inf for APS data.
+
 ## er.helpers 1.2.2
 
 * New feature: added read_from_datalake, get_metadata and write_rds_datalake functions.

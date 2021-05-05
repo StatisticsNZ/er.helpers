@@ -35,12 +35,12 @@ results.
 \examples{
  \dontrun{
 # return all objects
-search_data_lake()
+search_datalake()
 # search for a word
-search_data_lake("temperature")
+search_datalake("temperature")
 # search using regex
-search_data_lake(stringr::regex("^a"))
+search_datalake(stringr::regex("^a"))
 # search tidy datasets for atmosphere and climate 2020
-search_data_lake("tidy", "climate", "2020")
+search_datalake("tidy", "climate", "2020")
 }
 }

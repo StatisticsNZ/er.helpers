@@ -77,7 +77,7 @@ results." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
       </span>
     </div>
 
@@ -164,13 +164,13 @@ Ministry for the Environment data lake for environmental reporting
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'> <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># return all objects</span>
-<span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>()
+<span class='fu'>search_datalake</span>()
 <span class='co'># search for a word</span>
-<span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>(<span class='st'>"temperature"</span>)
+<span class='fu'>search_datalake</span>(<span class='st'>"temperature"</span>)
 <span class='co'># search using regex</span>
-<span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/modifiers.html'>regex</a></span>(<span class='st'>"^a"</span>))
+<span class='fu'>search_datalake</span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/modifiers.html'>regex</a></span>(<span class='st'>"^a"</span>))
 <span class='co'># search tidy datasets for atmosphere and climate 2020</span>
-<span class='fu'><a href='er.helpers-deprecated.html'>search_data_lake</a></span>(<span class='st'>"tidy"</span>, <span class='st'>"climate"</span>, <span class='st'>"2020"</span>)
+<span class='fu'>search_datalake</span>(<span class='st'>"tidy"</span>, <span class='st'>"climate"</span>, <span class='st'>"2020"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

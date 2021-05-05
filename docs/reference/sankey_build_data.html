@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.3</span>
       </span>
     </div>
 
@@ -159,14 +159,13 @@
 
 <span class='no'>sankey_data</span> <span class='kw'>&lt;-</span> <span class='fu'>sankey_build_data</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>plot_data</span>,
-  <span class='kw'>colour_data</span> <span class='kw'>=</span> <span class='no'>pal_data</span>)
-
+  <span class='kw'>colour_data</span> <span class='kw'>=</span> <span class='no'>pal_data</span>)</div><div class='output co'>#&gt; <span class='error'>Error in sankey_build_data(data = plot_data, colour_data = pal_data): could not find function "sankey_build_data"</span></div><div class='input'>
 <span class='no'>units</span> <span class='kw'>&lt;-</span> <span class='st'>"ha"</span>
 
 <span class='kw pkg'>networkD3</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></span>(<span class='kw'>Links</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>links</span>, <span class='kw'>Nodes</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>nodes</span>,
                          <span class='kw'>Source</span> <span class='kw'>=</span> <span class='st'>"source_id"</span>, <span class='kw'>Target</span> <span class='kw'>=</span> <span class='st'>"target_id"</span>, <span class='kw'>Value</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
                          <span class='kw'>NodeID</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>colourScale</span> <span class='kw'>=</span> <span class='no'>sankey_data</span>$<span class='no'>colour_scale</span>,
-                         <span class='kw'>fontSize</span> <span class='kw'>=</span> <span class='fl'>14</span>, <span class='kw'>fontFamily</span> <span class='kw'>=</span> <span class='st'>"Arial"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='no'>units</span>)</div></pre>
+                         <span class='kw'>fontSize</span> <span class='kw'>=</span> <span class='fl'>14</span>, <span class='kw'>fontFamily</span> <span class='kw'>=</span> <span class='st'>"Arial"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='no'>units</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.factor(Source): object 'sankey_data' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

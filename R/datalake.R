@@ -108,8 +108,8 @@ read_csv_datalake <- function(s3_path,
 
 read_from_datalake <- function(..., all_sheets = T){
 
-  files <- er.helpers::search_data_lake(...)$Key
-  
+  files <- er.helpers::search_datalake(...)$Key
+
   if(length(files) == 0){stop(errorCondition(message = "No match found."))}
 
   else if(length(files) > 1){
@@ -119,7 +119,7 @@ read_from_datalake <- function(..., all_sheets = T){
 
   else if(length(files) == 1){
     message(paste0(files), " matched")
-    
+
     tmp <- tempfile()
     data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
                                 object = files,
@@ -183,32 +183,32 @@ write_rds_datalake <- function(data, s3_path){
 #'
 
 get_metadata <- function(..., from_datalake = T, data = NULL){
-  
+
   if(from_datalake == T){
   data <- read_from_datalake(...)
   if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
   }
-  
+
   else if(from_datalake == F){
     data <- data
   }
-  
-    ## Placeholder 
-    data_attributes <- attributes(data ) %>% 
-      purrr::list_modify("row.names" = NULL)  
-    
-    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>% 
+
+    ## Placeholder
+    data_attributes <- attributes(data ) %>%
+      purrr::list_modify("row.names" = NULL)
+
+    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
       plyr::compact()
-    
+
     l <- list()
     all_attributes <- c(data_attributes, colname_attributes)
-    
+
     if(any(names(all_attributes) == "Metadata")){message("Created metadata found")}
     if(!any(names(all_attributes) == "Metadata")){warning("No created metadata found")}
-    
+
     return(all_attributes)
-  
-    
+
+
 }
 
 
@@ -270,14 +270,14 @@ write_csv_datalake <- function(x,
 #' @examples
 #' \dontrun{
 #' setup_datalake_access()
-#' files <- search_data_lake(".x", "land", "2021")$Key
+#' files <- search_datalake(".x", "land", "2021")$Key
 #' read_excel_datalake(files[2])
 #' read_excel_datalake(files[1], sheet = 2)
 #' }
 read_excel_datalake <- function (s3_path,
                                  bucket_name = mfe_datalake_bucket,
                                  version = NULL,
-                                 all_sheets = T, 
+                                 all_sheets = T,
                                  sheet = 1,
                                  ...) {
 
@@ -296,29 +296,29 @@ read_excel_datalake <- function (s3_path,
 
   tmp <- tempfile()
   data <- aws.s3::save_object(bucket = bucket_name, object = s3_path, file = tmp)
-  
+
   if(all_sheets == T){
-    
+
     message("All sheets = T; reading in ", glue::glue_collapse(readxl::excel_sheets(data), "\n ", last = " and "))
-    
-    
+
+
     sheets <- readxl::excel_sheets(data)
     list_sheets <- suppressMessages(purrr::map(sheets, ~ readxl::read_excel(path = data, sheet = .x)))
     list_sheets <- rlang::set_names(list_sheets, nm = sheets)
     return(list_sheets)
-    
+
   }
-  
+
   if(all_sheets == F){
-    
+
   d <- readxl::read_excel(path = data, sheet = sheet, ...)
 
   if (length(readxl::excel_sheets(data)) > 1) {
-    
+
     suppressMessages({
     all_sheets <- readxl::excel_sheets(data)
     })
-    
+
     message("Defaulting to the first spreadsheet: ", all_sheets[1],  ". Other sheets present in data:\n",
             glue::glue_collapse(all_sheets[-1], "\n ", last = " and "))
   }
@@ -464,13 +464,13 @@ version_list_as_df <- function(versions){
 #' @examples
 #'  \dontrun{
 #' # return all objects
-#' search_data_lake()
+#' search_datalake()
 #' # search for a word
-#' search_data_lake("temperature")
+#' search_datalake("temperature")
 #' # search using regex
-#' search_data_lake(stringr::regex("^a"))
+#' search_datalake(stringr::regex("^a"))
 #' # search tidy datasets for atmosphere and climate 2020
-#' search_data_lake("tidy", "climate", "2020")
+#' search_datalake("tidy", "climate", "2020")
 #' }
 search_datalake <- function(...,
                             bucket_name = mfe_datalake_bucket,
