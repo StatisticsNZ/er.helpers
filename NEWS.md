@@ -1,3 +1,7 @@
+## er.helpers 1.2.4 
+
+* Bug fix: corrected ordering of y variable in ggplot hbar functions.
+
 ## er.helpers 1.2.3
 
 * New feature: added ggplot hbar functions that work with x_na_inf for APS data.
