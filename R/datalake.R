@@ -214,7 +214,7 @@ get_metadata <- function(..., from_datalake = T, data = NULL){
 
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
-#' @param x A data frame to write to the bucket
+#' @param x A data frame to write to the bucket using readr::write_excel_csv.
 #' @inheritParams read_csv_datalake
 #'
 #' @return TRUE if it succeeded and FALSE if it failed
@@ -238,7 +238,8 @@ write_csv_datalake <- function(x,
   connection <- rawConnection(raw(0), "w")
   on.exit(unlink(connection))
 
-  readr::write_csv(x, connection, ...)
+  readr::write_excel_csv(x, connection, ...)
+
   aws.s3::put_object(rawConnectionValue(connection),
                      object = s3_path,
                      bucket = bucket_name,

@@ -1,3 +1,12 @@
+## er.helpers 1.2.6
+
+* Updated read_csv_datalake to use readr::write_excel_csv, so that macrons are preserved.  
+
+## er.helpers 1.2.5 
+
+* Bug fix: updated ggplot functions per updates to simplevis.
+* New feature: added a4 dimensions. 
+
 ## er.helpers 1.2.4 
 
 * Bug fix: corrected ordering of y variable in ggplot hbar functions.

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Launch a shiny app in the background — launch_shiny_in_background • er.helpers</title>
+<title>A4 useable height. — a4_height_mm • er.helpers</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Launch a shiny app in the background — launch_shiny_in_background" />
-<meta property="og:description" content="Launch a shiny app in the background" />
+<meta property="og:title" content="A4 useable height. — a4_height_mm" />
+<meta property="og:description" content="The height of useable space within an a4 sheet." />
 
 
 
@@ -111,39 +111,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Launch a shiny app in the background</h1>
-    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/launch_shiny_in_background.R'><code>R/launch_shiny_in_background.R</code></a></small>
-    <div class="hidden name"><code>launch_shiny_in_background.Rd</code></div>
+    <h1>A4 useable height.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/statisticsNZ/er.helpers/blob/master/R/a4_dimensions.R'><code>R/a4_dimensions.R</code></a></small>
+    <div class="hidden name"><code>a4_height_mm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Launch a shiny app in the background</p>
+    <p>The height of useable space within an a4 sheet.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>launch_shiny_in_background</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='no'>a4_height_mm</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>path</th>
-      <td><p>Path of the shiny app, defaults to working directory</p></td>
-    </tr>
-    <tr>
-      <th>port</th>
-      <td><p>Port to be used for the connection. If NULL uses a randomly
-generated port between 1024 and 9999</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>numeric</code> of length 1.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The URL of the running app</p>
+    <p>A numeric value.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>launch_shiny_in_backrgound</span>(<span class='st'>"app/"</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>6589</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

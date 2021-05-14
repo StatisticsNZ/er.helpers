@@ -260,8 +260,8 @@ ggplot_hbar_x_na_inf <- function(data,
 #' @param y_title Y axis title string. Defaults to [Y title].
 #' @param y_title_wrap Number of characters to wrap the y title to. Defaults to 50. Not applicable where mobile equals TRUE.
 #' @param col_labels Adjust the  x scale labels through a vector.
-#' @param col_labels_ncol The number of columns in the legend. Defaults to 1.
-#' @param col_labels_nrow The number of rows in the legend.
+#' @param col_legend_ncol The number of columns in the legend. Defaults to 1.
+#' @param col_legend_nrow The number of rows in the legend.
 #' @param col_na TRUE or FALSE of whether to show NA values of the colour variable. Defaults to TRUE.
 #' @param col_rev TRUE or FALSE of whether bar fill order from left to right is reversed from default. Defaults to FALSE.
 #' @param col_title Colour title string for the legend. Defaults to NULL.
@@ -306,8 +306,8 @@ ggplot_hbar_col_x_na_inf <-
            y_title = "[Y title]",
            y_title_wrap = 50,
            col_labels = NULL,
-           col_labels_ncol = NULL,
-           col_labels_nrow = NULL,
+           col_legend_ncol = NULL,
+           col_legend_nrow = NULL,
            col_na = TRUE,
            col_rev = FALSE,
            col_title = "",
@@ -531,13 +531,13 @@ ggplot_hbar_col_x_na_inf <-
           caption = stringr::str_wrap(caption, caption_wrap)
         ) +
         guides(fill = guide_legend(
-          ncol = col_labels_ncol, nrow = col_labels_nrow,
+          ncol = col_legend_ncol, nrow = col_legend_nrow,
           byrow = TRUE,
           reverse = TRUE,
           title = stringr::str_wrap(col_title, col_title_wrap)
         ),
         col = guide_legend(
-          ncol = col_labels_ncol, nrow = col_labels_nrow,
+          ncol = col_legend_ncol, nrow = col_legend_nrow,
           byrow = TRUE,
           reverse = TRUE,
           title = stringr::str_wrap(col_title, col_title_wrap)

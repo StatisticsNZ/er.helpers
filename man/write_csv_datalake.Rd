@@ -7,7 +7,7 @@
 write_csv_datalake(x, s3_path, bucket_name = mfe_datalake_bucket, ...)
 }
 \arguments{
-\item{x}{A data frame to write to the bucket}
+\item{x}{A data frame to write to the bucket using readr::write_excel_csv.}
 
 \item{s3_path}{The filename of the desired CSV in the S3 bucket including the
 full path}
