@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.8</span>
       </span>
     </div>
 
@@ -167,7 +167,20 @@ missing values in x. If any number of missing values is allowed set to 1
 <span class='no'>temperature_frame</span> <span class='kw'>%&gt;%</span>
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>anomaly</span> <span class='kw'>=</span> <span class='fu'>calc_annual_anomaly</span>(<span class='no'>temperature</span>,
                                            <span class='no'>year</span>,
-                                           <span class='no'>reference_period</span>))</div><div class='output co'>#&gt; <span class='error'>Error in temperature_frame %&gt;% dplyr::mutate(anomaly = calc_annual_anomaly(temperature,     year, reference_period)): could not find function "%&gt;%"</span></div></pre>
+                                           <span class='no'>reference_period</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 100 x 3</span>
+#&gt;    temperature  year anomaly
+#&gt;          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span>        10.8  <span style='text-decoration: underline;'>1</span>901  -<span style='color: #BB0000;'>3.67</span> 
+#&gt; <span style='color: #BCBCBC;'> 2</span>        18.3  <span style='text-decoration: underline;'>1</span>902   3.87 
+#&gt; <span style='color: #BCBCBC;'> 3</span>        16.0  <span style='text-decoration: underline;'>1</span>903   1.53 
+#&gt; <span style='color: #BCBCBC;'> 4</span>        11.6  <span style='text-decoration: underline;'>1</span>904  -<span style='color: #BB0000;'>2.91</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span>        10.1  <span style='text-decoration: underline;'>1</span>905  -<span style='color: #BB0000;'>4.40</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span>        14.7  <span style='text-decoration: underline;'>1</span>906   0.187
+#&gt; <span style='color: #BCBCBC;'> 7</span>        15.0  <span style='text-decoration: underline;'>1</span>907   0.501
+#&gt; <span style='color: #BCBCBC;'> 8</span>        12.9  <span style='text-decoration: underline;'>1</span>908  -<span style='color: #BB0000;'>1.58</span> 
+#&gt; <span style='color: #BCBCBC;'> 9</span>        17.3  <span style='text-decoration: underline;'>1</span>909   2.85 
+#&gt; <span style='color: #BCBCBC;'>10</span>        17.7  <span style='text-decoration: underline;'>1</span>910   3.25 
+#&gt; <span style='color: #949494;'># … with 90 more rows</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

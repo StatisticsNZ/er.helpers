@@ -1,3 +1,7 @@
+## er.helpers 1.2.8
+
+* Added nz_region sf object
+
 ## er.heleprs 1.2.7
 
 * Removed _na_inf functions.

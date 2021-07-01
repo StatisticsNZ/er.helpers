@@ -7,8 +7,12 @@
 \format{An \code{sf} object.}
 \usage{
 nz_grid_hex_346
+
+nz_grid_hex_346
 }
 \description{
+Hexagonal grid sf object with hexagons of 346km2.
+
 Hexagonal grid sf object with hexagons of 346km2.
 }
 \keyword{datasets}

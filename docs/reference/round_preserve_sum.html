@@ -73,7 +73,7 @@ their totals still add to 100" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.8</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@ their totals still add to 100<!-- %. --></p>
 <span class='co'># These three values add to 100</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 100</div><div class='input'><span class='co'># But when rounded they do not add to 100</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] 99</div><div class='input'><span class='co'># Using round_preserve_sum ensures the rounded values add to 100</span>
-<span class='fu'>round_preserve_sum</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in round_preserve_sum(x): could not find function "round_preserve_sum"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>round_preserve_sum</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; <span class='error'>Error in round_preserve_sum(x): could not find function "round_preserve_sum"</span></div></pre>
+<span class='fu'>round_preserve_sum</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 10 20 70</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>round_preserve_sum</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] 100</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
