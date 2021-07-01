@@ -74,7 +74,7 @@ converted to sentence case" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.7</span>
       </span>
     </div>
 
@@ -152,8 +152,10 @@ converted to sentence case</p>
 <span class='co'># unordered ugly plot</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span>(<span class='no'>season</span>, <span class='no'>n</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>season</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>seasons</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"col"</span>)</div><div class='img'><img src='order_season_levels-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>ordered_seasons</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>seasons</span>,
-                                <span class='kw'>season</span> <span class='kw'>=</span> <span class='fu'>order_season_levels</span>(<span class='no'>season</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Autum not recognised as valid season name(s)</span></div><div class='input'><span class='co'># nice ordered plot</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span>(<span class='no'>season</span>, <span class='no'>n</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>season</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ordered_seasons</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"col"</span>)</div><div class='img'><img src='order_season_levels-2.png' alt='' width='700' height='433' /></div><div class='input'>
+                                <span class='kw'>season</span> <span class='kw'>=</span> <span class='fu'>order_season_levels</span>(<span class='no'>season</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` column `season`.</span>
+#&gt; <span class='error'><span style='color: #0000BB;'>ℹ</span> `season = order_season_levels(season)`.</span>
+#&gt; <span class='error'><span style='color: #BB0000;'>x</span> could not find function "order_season_levels"</span></div><div class='input'><span class='co'># nice ordered plot</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/qplot.html'>qplot</a></span>(<span class='no'>season</span>, <span class='no'>n</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>season</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ordered_seasons</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"col"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ggplot(data, mapping, environment = caller_env): object 'ordered_seasons' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

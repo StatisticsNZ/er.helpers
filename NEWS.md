@@ -1,3 +1,7 @@
+## er.heleprs 1.2.7
+
+* Removed _na_inf functions.
+
 ## er.helpers 1.2.6
 
 * Updated read_csv_datalake to use readr::write_excel_csv, so that macrons are preserved.  
