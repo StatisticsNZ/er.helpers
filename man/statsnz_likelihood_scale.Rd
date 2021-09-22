@@ -4,14 +4,16 @@
 \name{statsnz_likelihood_scale}
 \alias{statsnz_likelihood_scale}
 \title{Stats NZ likelihood scale}
-\format{A data frame with 9 rows and 5 variables:
+\format{
+A data frame with 9 rows and 5 variables:
 \describe{
   \item{term}{likelihood term}
   \item{left_break}{lower probability limit for the term}
   \item{right_break}{upper probability limit for the term}
   \item{left_open}{whether the lower limit is an open interval}
   \item{right_open}{whether the upper limit is an open interval}
-}}
+}
+}
 \source{
 http://archive.stats.govt.nz/browse_for_stats/environment/environmental-reporting-series/environmental-indicators/Home/About/trend-assessment-technical-information.aspx
 }

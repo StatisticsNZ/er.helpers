@@ -4,8 +4,10 @@
 \alias{setup_datalake_access}
 \title{Set up access to the data lake programatically.}
 \usage{
-setup_datalake_access(cred_csv = "~/credentials.csv",
-  bucket_name = mfe_datalake_bucket)
+setup_datalake_access(
+  cred_csv = "~/credentials.csv",
+  bucket_name = mfe_datalake_bucket
+)
 }
 \arguments{
 \item{cred_csv}{A csv file with the credentials information. At a minimum it

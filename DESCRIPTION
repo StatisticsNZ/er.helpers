@@ -1,7 +1,7 @@
 Package: er.helpers
 Type: Package
 Title: Helper functions commonly used in Environmental Reporting at Stats NZ
-Version: 1.2.8
+Version: 1.2.9
 Authors@R: c(
     person("Fernando", "Cagua", email = "fernando.cagua@stats.govt.nz", role = c("aut", "cre")), 
     person("David", "Hodge", email = "david.hodge@stats.govt.nz", role = c("aut")), 
@@ -42,7 +42,7 @@ URL: https://statisticsnz.github.io/er.helpers, https://github.com/statisticsnz/
 BugReports: https://github.com/statisticsNZ/er.helpers/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0),
     roxygen2 (>= 6.1.1)

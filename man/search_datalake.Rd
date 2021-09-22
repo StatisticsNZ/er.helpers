@@ -4,8 +4,11 @@
 \alias{search_datalake}
 \title{Search for keys in the data lake}
 \usage{
-search_datalake(..., bucket_name = mfe_datalake_bucket,
-  object_versions = FALSE)
+search_datalake(
+  ...,
+  bucket_name = mfe_datalake_bucket,
+  object_versions = FALSE
+)
 }
 \arguments{
 \item{...}{Patterns to look for. Each argument can be a character string or a

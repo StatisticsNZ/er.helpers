@@ -1,3 +1,7 @@
+## er.helpers 1.2.9
+
+* Added readr library to read_csv function in read_from_datalake.
+
 ## er.helpers 1.2.8
 
 * Added nz_region sf object

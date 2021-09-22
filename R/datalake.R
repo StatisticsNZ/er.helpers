@@ -126,7 +126,7 @@ read_from_datalake <- function(..., all_sheets = T){
                                 file = tmp)
 
     if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
-    else if(grepl(x = files, pattern = "csv")) return(data <- read_csv(data))
+    else if(grepl(x = files, pattern = "csv")) return(data <- readr::read_csv(data))
     else if(grepl(x = files, pattern = "xls")) read_excel_datalake(s3_path = files, all_sheets = all_sheets)
     else {
       message("file type not recognised, saved object into working directory")

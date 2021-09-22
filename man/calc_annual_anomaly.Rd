@@ -4,8 +4,13 @@
 \alias{calc_annual_anomaly}
 \title{Calculate annual anomaly}
 \usage{
-calc_annual_anomaly(x, year, period = NULL, max_missing = 0.2,
-  max_consecutive = NULL)
+calc_annual_anomaly(
+  x,
+  year,
+  period = NULL,
+  max_missing = 0.2,
+  max_consecutive = NULL
+)
 }
 \arguments{
 \item{x}{metric. A vector}
