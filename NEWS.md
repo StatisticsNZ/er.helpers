@@ -1,3 +1,7 @@
+## er.helpers 1.3.0
+
+* Added add_unused_levels function to assist with fixing a plotly legend bug.
+
 ## er.helpers 1.2.9
 
 * Added readr library to read_csv function in read_from_datalake.
