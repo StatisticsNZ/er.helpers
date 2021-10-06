@@ -1,3 +1,7 @@
+## er.helpers 1.3.1
+
+* Updated get_metadata function.
+
 ## er.helpers 1.3.0
 
 * Added add_unused_levels function to assist with fixing a plotly legend bug.

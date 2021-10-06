@@ -181,36 +181,34 @@ write_rds_datalake <- function(data, s3_path){
 #'
 #' @export
 #'
-
+#'
 get_metadata <- function(..., from_datalake = T, data = NULL){
 
   if(from_datalake == T){
-  data <- read_from_datalake(...)
-  if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
+    data <- read_from_datalake(...)
+    if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
   }
 
   else if(from_datalake == F){
     data <- data
   }
 
-    ## Placeholder
-    data_attributes <- attributes(data ) %>%
-      purrr::list_modify("row.names" = NULL)
-
-    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
-      plyr::compact()
-
-    l <- list()
-    all_attributes <- c(data_attributes, colname_attributes)
-
-    if(any(names(all_attributes) == "Metadata")){message("Created metadata found")}
-    if(!any(names(all_attributes) == "Metadata")){warning("No created metadata found")}
-
-    return(all_attributes)
+  data_attributes <- attributes(data) %>%
+    purrr::list_modify("row.names" = NULL, "class" = NULL)
 
 
+  #
+  # colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
+  # plyr::compact()
+  #
+  # l <- list()
+  # all_attributes <- c(data_attributes, colname_attributes)
+
+  if(any(names(data_attributes) == "Metadata")){message("Created metadata found")}
+  if(!any(names(data_attributes) == "Metadata")){warning("No created metadata found")}
+
+  return(data_attributes)
 }
-
 
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
