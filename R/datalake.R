@@ -106,11 +106,12 @@ read_csv_datalake <- function(s3_path,
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
-read_from_datalake <- function(..., all_sheets = T){
+read_from_datalake <- function(..., all_sheets = T, version = NULL){
 
   files <- er.helpers::search_datalake(...)$Key
 
   if(length(files) == 0){stop(errorCondition(message = "No match found."))}
+
 
   else if(length(files) > 1){
     stop(errorCondition(message = paste0("More than one file match the search terms: ",
@@ -121,9 +122,19 @@ read_from_datalake <- function(..., all_sheets = T){
     message(paste0(files), " matched")
 
     tmp <- tempfile()
-    data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
-                                object = files,
-                                file = tmp)
+
+    if(is.null(version)){
+
+      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                  object = files,
+                                  file = tmp)
+    } else {
+
+      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                  object = files,
+                                  file = tmp,
+                                  query = list(`versionId` = version))
+    }
 
     if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
     else if(grepl(x = files, pattern = "csv")) return(data <- readr::read_csv(data))

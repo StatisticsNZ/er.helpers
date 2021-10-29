@@ -4,9 +4,7 @@
 \name{mfe_datalake_bucket}
 \alias{mfe_datalake_bucket}
 \title{MfE Default bucket}
-\format{
-An object of class \code{character} of length 1.
-}
+\format{An object of class \code{character} of length 1.}
 \usage{
 mfe_datalake_bucket
 }

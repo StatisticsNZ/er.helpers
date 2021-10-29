@@ -8,7 +8,8 @@
 \alias{sum_with_criteria}
 \title{Calculate an aggregated value taking into account certain exclusion cirteria}
 \usage{
-aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0, fun = mean)
+aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0,
+  fun = mean)
 
 mean_with_criteria(x, max_missing = 0, max_consecutive = 0)
 

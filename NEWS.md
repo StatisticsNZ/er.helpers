@@ -1,3 +1,7 @@
+## er.helpers 1.3.2
+
+* Updated read_from_datalake for versioning.
+
 ## er.helpers 1.3.1
 
 * Updated get_metadata function.

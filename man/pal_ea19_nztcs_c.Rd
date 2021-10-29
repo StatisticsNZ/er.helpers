@@ -4,9 +4,7 @@
 \name{pal_ea19_nztcs_c}
 \alias{pal_ea19_nztcs_c}
 \title{Colour palette for a NZTCS category graph.}
-\format{
-An object of class \code{character} of length 4.
-}
+\format{An object of class \code{character} of length 4.}
 \usage{
 pal_ea19_nztcs_c
 }

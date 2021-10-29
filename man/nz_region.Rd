@@ -4,13 +4,11 @@
 \name{nz_region}
 \alias{nz_region}
 \title{New Zealand coastline intersected with regional bourndaries.}
-\format{
-An sf object with 3 columns and 16 rows:
+\format{An sf object with 3 columns and 16 rows:
 \describe{
   \item{region_code}{The code for each region}
   \item{region}{The name of each region}
-}
-}
+}}
 \usage{
 nz_region
 }

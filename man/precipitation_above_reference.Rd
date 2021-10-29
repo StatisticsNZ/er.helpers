@@ -4,11 +4,8 @@
 \alias{precipitation_above_reference}
 \title{Get proportion of rainfall above reference}
 \usage{
-precipitation_above_reference(
-  precipitation,
-  reference_precipitation,
-  wet_day_threshold = 1
-)
+precipitation_above_reference(precipitation, reference_precipitation,
+  wet_day_threshold = 1)
 }
 \arguments{
 \item{precipitation}{vector with rainfall values}
@@ -49,7 +46,6 @@ rain_data \%>\%
   summarise(prop_above = precipitation_above_reference(rainfall, ref))
 }
 \seealso{
-Other rainfall functions: 
-\code{\link{get_reference_precipitation}()}
+Other rainfall functions: \code{\link{get_reference_precipitation}}
 }
 \concept{rainfall functions}

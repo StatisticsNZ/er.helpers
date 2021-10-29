@@ -76,7 +76,7 @@ This function also uses key search terms and will throw an error if there is mor
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@ disk. If it is not a recognisable file type, it saves it to the working director
 This function also uses key search terms and will throw an error if there is more than one file with the search terms used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_from_datalake</span>(<span class='no'>...</span>, <span class='kw'>all_sheets</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>read_from_datalake</span>(<span class='no'>...</span>, <span class='kw'>all_sheets</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,11 @@ This function also uses key search terms and will throw an error if there is mor
     <tr>
       <th>all_sheets</th>
       <td><p>If more than one sheet is present, T = read all sheets into a list, F = default to sheet specified</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>VersionId of the object key desired. Can be retrieved using
+<code><a href='get_bucket_version_df.html'>get_bucket_version_df</a></code></p></td>
     </tr>
     </table>
 

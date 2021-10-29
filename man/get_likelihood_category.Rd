@@ -4,13 +4,10 @@
 \alias{get_likelihood_category}
 \title{Get likelihood category for a p-value}
 \usage{
-get_likelihood_category(
-  p,
-  scale = c("statsnz", "ipcc"),
-  term_type = c("worsening-improving", "improving-worsening", "increasing-decreasing",
-    "decreasing-increasing", "likely-unlikely"),
-  p_is = c("probability", "percentage")
-)
+get_likelihood_category(p, scale = c("statsnz", "ipcc"),
+  term_type = c("worsening-improving", "improving-worsening",
+  "increasing-decreasing", "decreasing-increasing", "likely-unlikely"),
+  p_is = c("probability", "percentage"))
 }
 \arguments{
 \item{p}{the probability (or percentage) used to caclulate the category}
@@ -67,8 +64,7 @@ get_likelihood_category(p, scale = "ipcc") \%>\%
   order_likelihood_levels()
 }
 \seealso{
-Other likelihood functions: 
-\code{\link{order_likelihood_levels}()},
-\code{\link{simplify_likelihood_levels}()}
+Other likelihood functions: \code{\link{order_likelihood_levels}},
+  \code{\link{simplify_likelihood_levels}}
 }
 \concept{likelihood functions}
