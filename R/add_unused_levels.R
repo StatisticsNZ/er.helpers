@@ -9,7 +9,6 @@
 #' @export
 #'
 #' @examples
-# library(simplevis)
 # library(palmerpenguins)
 # library(dplyr)
 #
