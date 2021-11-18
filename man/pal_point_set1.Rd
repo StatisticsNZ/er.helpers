@@ -4,7 +4,9 @@
 \name{pal_point_set1}
 \alias{pal_point_set1}
 \title{Colour palette for categorical variables for points on a map etc.}
-\format{An object of class \code{character} of length 9.}
+\format{
+An object of class \code{character} of length 9.
+}
 \usage{
 pal_point_set1
 }

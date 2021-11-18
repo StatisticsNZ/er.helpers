@@ -4,8 +4,11 @@
 \alias{get_likelihood_terms}
 \title{Translate likely-unlikely to a specified term scale}
 \usage{
-get_likelihood_terms(terms, term_type = c("worsening-improving",
-  "improving-worsening", "increasing-decreasing", "likely-unlikely"))
+get_likelihood_terms(
+  terms,
+  term_type = c("worsening-improving", "improving-worsening", "increasing-decreasing",
+    "likely-unlikely")
+)
 }
 \arguments{
 \item{terms}{terms to translate}

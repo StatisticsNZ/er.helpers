@@ -1,5 +1,9 @@
 ## simplevis 1.3.3
 
+* add gridify_mb_data functions, so that it can be installed.
+
+## simplevis 1.3.3
+
 * remove simplevis and gridify_mb_data functions, so that it can be installed.
 
 ## er.helpers 1.3.2
