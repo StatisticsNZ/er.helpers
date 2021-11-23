@@ -1,3 +1,7 @@
+## simplevis 1.3.4
+
+* add nz sf object.
+
 ## simplevis 1.3.3
 
 * add gridify_mb_data functions, so that it can be installed.
