@@ -53,7 +53,7 @@ gridify_mb_data <- function(data,
     dplyr::select(!!shp_id_var) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
-    sf::st_make_valid() %>%
+    lwgeom::lwgeom_make_valid() %>%
     dplyr::mutate(shp_area_m2 = as.numeric(sf::st_area(.)))
 
   grid <- grid  %>%
@@ -64,7 +64,7 @@ gridify_mb_data <- function(data,
     sf::st_intersection(shp_area) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
-    sf::st_make_valid() %>%
+    lwgeom::lwgeom_make_valid() %>%
     dplyr::mutate(area_m2 = as.numeric(sf::st_area(.))) %>%
     dplyr::mutate(prop_of_shp = area_m2 / shp_area_m2)
 
@@ -77,7 +77,7 @@ gridify_mb_data <- function(data,
     dplyr::mutate(dplyr::across(c(data_vars_vctr), ~(. * prop_of_shp))) %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
-    sf::st_make_valid()
+    lwgeom::lwgeom_make_valid()
 
   data_grid <- data_shp_grid %>%
     dplyr::group_by(grid_id, grid_area_m2) %>%
@@ -90,7 +90,7 @@ gridify_mb_data <- function(data,
     dplyr::ungroup() %>%
     sf::st_sf() %>%
     sf::st_cast("MULTIPOLYGON") %>%
-    sf::st_make_valid()
+    lwgeom::lwgeom_make_valid()
 
   return(data_grid)
 }
