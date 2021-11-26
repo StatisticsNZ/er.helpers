@@ -19,7 +19,6 @@ Imports:
     ggplot2 (>= 3.2.1),
     glue,
     lubridate (>= 1.7.4), 
-    lwgeom,
     magrittr (>= 1.5), 
     networkD3,
     purrr (>= 0.2.4), 
