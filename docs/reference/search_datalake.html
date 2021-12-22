@@ -77,7 +77,7 @@ results." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.6</span>
       </span>
     </div>
 
@@ -143,9 +143,9 @@ results.</p>
       <th>...</th>
       <td><p>Patterns to look for. Each argument can be a character string or a
 regex pattern. If multiple arguments are passed only Keys that match all
-patterns are returned. Strings are passed to <code><a href='https://rdrr.io/pkg/stringr/man/modifiers.html'>coll</a></code>
+patterns are returned. Strings are passed to <code><a href='https://stringr.tidyverse.org/reference/modifiers.html'>coll</a></code>
 and it ignores whether it is lower or upper case. If you want to search
-using regex construct the pattern using <code><a href='https://rdrr.io/pkg/stringr/man/modifiers.html'>regex</a></code> (see
+using regex construct the pattern using <code><a href='https://stringr.tidyverse.org/reference/modifiers.html'>regex</a></code> (see
 examples).</p></td>
     </tr>
     <tr>
@@ -171,7 +171,7 @@ Ministry for the Environment data lake for environmental reporting
 <span class='co'># search for a word</span>
 <span class='fu'>search_datalake</span>(<span class='st'>"temperature"</span>)
 <span class='co'># search using regex</span>
-<span class='fu'>search_datalake</span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/stringr/man/modifiers.html'>regex</a></span>(<span class='st'>"^a"</span>))
+<span class='fu'>search_datalake</span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/modifiers.html'>regex</a></span>(<span class='st'>"^a"</span>))
 <span class='co'># search tidy datasets for atmosphere and climate 2020</span>
 <span class='fu'>search_datalake</span>(<span class='st'>"tidy"</span>, <span class='st'>"climate"</span>, <span class='st'>"2020"</span>)
 }</div></pre>

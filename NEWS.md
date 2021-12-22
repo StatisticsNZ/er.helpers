@@ -1,3 +1,7 @@
+## simplevis 1.3.6
+
+* add shiny templates to er.helpers.
+
 ## simplevis 1.3.5
 
 * update gridify_mb_data fun.
