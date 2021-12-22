@@ -1,3 +1,7 @@
+## simplevis 1.3.7
+
+* minor tweak to shiny templates.
+
 ## simplevis 1.3.6
 
 * add shiny templates to er.helpers.

@@ -35,10 +35,9 @@ plot <- gg_hbar_col(plot_data, price, cut, clarity,
                     title = title,
                     x_title = x_title,
                     y_title = y_title,
-                    x_labels = scales::comma_format(),
                     col_labels = ggplot2::waiver(),
                     title_wrap = title_wrap,
-                    theme = plot_themes,
+                    theme = plot_theme,
                     mobile = T)
 
 plotly::ggplotly(plot, tooltip = "text") %>%
