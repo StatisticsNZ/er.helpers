@@ -6,6 +6,8 @@ library(dplyr)
 library(simplevis)
 
 # load data
+set.seed(123456789)
+
 data <- ggplot2::diamonds %>%
   slice_sample(prop = 0.1)
 
