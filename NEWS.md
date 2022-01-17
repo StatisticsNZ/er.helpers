@@ -1,24 +1,28 @@
-## simplevis 1.3.7
+## er.helpers 1.3.8 
+
+* Updated shiny templates.
+
+## er.helpers 1.3.7
 
 * minor tweak to shiny templates.
 
-## simplevis 1.3.6
+## er.helpers 1.3.6
 
 * add shiny templates to er.helpers.
 
-## simplevis 1.3.5
+## er.helpers 1.3.5
 
 * update gridify_mb_data fun.
 
-## simplevis 1.3.4
+## er.heleprs 1.3.4
 
 * add nz sf object.
 
-## simplevis 1.3.3
+## er.helpers 1.3.3
 
 * add gridify_mb_data functions, so that it can be installed.
 
-## simplevis 1.3.3
+## er.helpers 1.3.3
 
 * remove simplevis and gridify_mb_data functions, so that it can be installed.
 
