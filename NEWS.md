@@ -1,3 +1,7 @@
+## er.helpers 1.4.0
+
+* reversed pal_snz_alpha2 and pal_ea19_alpha2.
+
 ## er.helpers 1.3.8 
 
 * Updated shiny templates.

@@ -12,7 +12,7 @@ pal_snz <- c("#085c75", "#d2ac2f", "#ae4e51", "#35345d", "#76a93f", "#6f2e38", "
 #' @export
 #' @examples
 #' scales::show_col(pal_snz_alpha2)
-pal_snz_alpha2 <- c("#085c75", "#B4CED5")
+pal_snz_alpha2 <- c("#B4CED5", "#085c75")
 
 #' @title Colour palette for a graph of a ordinal categorical trend variable with 2 values.
 #' @description  Colour palette for a graph of a ordinal categorical trend variable with 2 values.
@@ -72,7 +72,7 @@ pal_ea19 <- c("#172a45", "#00b2c3", "#c04124", "#005c75", "#a2c62b", "#702e01", 
 #' @export
 #' @examples
 #' scales::show_col(pal_ea19_alpha2)
-pal_ea19_alpha2 <- c("#172a45", "#a2a9b4")
+pal_ea19_alpha2 <- c("#a2a9b4", "#172a45")
 
 #' @title Colour palette for a graph of a ordinal categorical trend variable with 2 values.
 #' @description  Colour palette for a graph of a ordinal categorical trend variable with 2 values.
