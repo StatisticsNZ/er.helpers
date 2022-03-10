@@ -1,3 +1,51 @@
+## er.helpers 1.4.1
+
+* Updated app templates.
+
+## er.helpers 1.4.0
+
+* reversed pal_snz_alpha2 and pal_ea19_alpha2.
+
+## er.helpers 1.3.8 
+
+* Updated shiny templates.
+
+## er.helpers 1.3.7
+
+* minor tweak to shiny templates.
+
+## er.helpers 1.3.6
+
+* add shiny templates to er.helpers.
+
+## er.helpers 1.3.5
+
+* update gridify_mb_data fun.
+
+## er.heleprs 1.3.4
+
+* add nz sf object.
+
+## er.helpers 1.3.3
+
+* add gridify_mb_data functions, so that it can be installed.
+
+## er.helpers 1.3.3
+
+* remove simplevis and gridify_mb_data functions, so that it can be installed.
+
+## er.helpers 1.3.2
+
+* Updated read_from_datalake for versioning.
+
+## er.helpers 1.3.1
+
+* Updated get_metadata function.
+
+## er.helpers 1.3.0
+
+* Added add_unused_levels function to assist with fixing a plotly legend bug.
+
 ## er.helpers 1.2.9
 
 * Added readr library to read_csv function in read_from_datalake.

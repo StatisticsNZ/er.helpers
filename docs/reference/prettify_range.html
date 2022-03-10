@@ -73,7 +73,7 @@ This function prints a nice range of dates or numbers easily" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">er.helpers</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
       </span>
     </div>
 
@@ -151,9 +151,9 @@ range by the maximum of y</p></td>
 <span class='fu'>prettify_range</span>(<span class='fl'>1</span>:<span class='fl'>100</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" to "</span>)</div><div class='output co'>#&gt; [1] "1 to 100"</div><div class='input'><span class='co'># Range using two numbers</span>
 <span class='fu'>prettify_range</span>(<span class='fl'>1</span>, <span class='fl'>100</span>)</div><div class='output co'>#&gt; [1] "1–100"</div><div class='input'><span class='co'># When two vectors are provided the minimum of the first and the maximum of the</span>
 <span class='co'># second is returned</span>
-<span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>period_start</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2020</span>,
+<span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tibble/man/tibble.html'>tibble</a></span>(<span class='kw'>period_start</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2020</span>,
                <span class='kw'>period_end</span> <span class='kw'>=</span> <span class='fl'>2020</span>:<span class='fl'>2030</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>pretty_range</span> <span class='kw'>=</span> <span class='fu'>prettify_range</span>(<span class='no'>period_start</span>, <span class='no'>period_end</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 × 3</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span>(<span class='kw'>pretty_range</span> <span class='kw'>=</span> <span class='fu'>prettify_range</span>(<span class='no'>period_start</span>, <span class='no'>period_end</span>))</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 × 3</span>
 #&gt;    period_start period_end pretty_range
 #&gt;           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       
 #&gt; <span style='color: #BCBCBC;'> 1</span>         <span style='text-decoration: underline;'>2</span>010       <span style='text-decoration: underline;'>2</span>020 2010–2030   
@@ -169,7 +169,7 @@ range by the maximum of y</p></td>
 #&gt; <span style='color: #BCBCBC;'>11</span>         <span style='text-decoration: underline;'>2</span>020       <span style='text-decoration: underline;'>2</span>030 2010–2030   </div><div class='input'><span class='co'># Also work with dates</span>
 <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() + <span class='fl'>100</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>prettify_range</span>(<span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" and "</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"between"</span>, <span class='no'>.</span>)</div><div class='output co'>#&gt; [1] "between 2021-09-22 and 2021-12-31"</div><div class='input'>
+  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"between"</span>, <span class='no'>.</span>)</div><div class='output co'>#&gt; [1] "between 2022-02-24 and 2022-06-04"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

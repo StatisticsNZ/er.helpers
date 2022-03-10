@@ -62,6 +62,11 @@
 "nz_grid_hex_346"
 
 
+#' @title New Zealand coastline.
+#' @description Simplified New Zealand coastline boundary, excluding the Chatham Islands.
+#' @format An \code{sf} object.
+"nz"
+
 #' New Zealand coastline intersected with regional bourndaries.
 #'
 #' An sf object of New Zealand coastline intersected with regional bourndaries.

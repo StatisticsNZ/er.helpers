@@ -106,11 +106,12 @@ read_csv_datalake <- function(s3_path,
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
-read_from_datalake <- function(..., all_sheets = T){
+read_from_datalake <- function(..., all_sheets = T, version = NULL){
 
   files <- er.helpers::search_datalake(...)$Key
 
   if(length(files) == 0){stop(errorCondition(message = "No match found."))}
+
 
   else if(length(files) > 1){
     stop(errorCondition(message = paste0("More than one file match the search terms: ",
@@ -121,9 +122,19 @@ read_from_datalake <- function(..., all_sheets = T){
     message(paste0(files), " matched")
 
     tmp <- tempfile()
-    data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
-                                object = files,
-                                file = tmp)
+
+    if(is.null(version)){
+
+      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                  object = files,
+                                  file = tmp)
+    } else {
+
+      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                  object = files,
+                                  file = tmp,
+                                  query = list(`versionId` = version))
+    }
 
     if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
     else if(grepl(x = files, pattern = "csv")) return(data <- readr::read_csv(data))
@@ -181,36 +192,34 @@ write_rds_datalake <- function(data, s3_path){
 #'
 #' @export
 #'
-
+#'
 get_metadata <- function(..., from_datalake = T, data = NULL){
 
   if(from_datalake == T){
-  data <- read_from_datalake(...)
-  if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
+    data <- read_from_datalake(...)
+    if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
   }
 
   else if(from_datalake == F){
     data <- data
   }
 
-    ## Placeholder
-    data_attributes <- attributes(data ) %>%
-      purrr::list_modify("row.names" = NULL)
-
-    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
-      plyr::compact()
-
-    l <- list()
-    all_attributes <- c(data_attributes, colname_attributes)
-
-    if(any(names(all_attributes) == "Metadata")){message("Created metadata found")}
-    if(!any(names(all_attributes) == "Metadata")){warning("No created metadata found")}
-
-    return(all_attributes)
+  data_attributes <- attributes(data) %>%
+    purrr::list_modify("row.names" = NULL, "class" = NULL)
 
 
+  #
+  # colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
+  # plyr::compact()
+  #
+  # l <- list()
+  # all_attributes <- c(data_attributes, colname_attributes)
+
+  if(any(names(data_attributes) == "Metadata")){message("Created metadata found")}
+  if(!any(names(data_attributes) == "Metadata")){warning("No created metadata found")}
+
+  return(data_attributes)
 }
-
 
 #' Write a CSV file as an object in an AWS S3 bucket.
 #'
