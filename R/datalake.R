@@ -106,12 +106,22 @@ read_csv_datalake <- function(s3_path,
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
-read_from_datalake <- function(..., all_sheets = T, version = NULL){
+read_from_datalake <- function(..., date = NULL, all_sheets = T){
 
-  files <- er.helpers::search_datalake(...)$Key
+  if(!is.null(date)){
+    date <- lubridate::as_datetime(date)
+
+    files <- er.helpers::search_data_lake(...) %>%
+      dplyr::mutate(LastModified = lubridate::as_datetime(LastModified)) %>%
+      dplyr::filter(abs(difftime(LastModified, date)) == min(abs(difftime(LastModified, date)))) %>%
+      .$Key
+  } else {
+    files <- er.helpers::search_data_lake(...)$Key
+  }
+
+
 
   if(length(files) == 0){stop(errorCondition(message = "No match found."))}
-
 
   else if(length(files) > 1){
     stop(errorCondition(message = paste0("More than one file match the search terms: ",
@@ -122,27 +132,26 @@ read_from_datalake <- function(..., all_sheets = T, version = NULL){
     message(paste0(files), " matched")
 
     tmp <- tempfile()
+    data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                object = files,
+                                file = tmp)
 
-    if(is.null(version)){
-
-      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
-                                  object = files,
-                                  file = tmp)
-    } else {
-
-      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
-                                  object = files,
-                                  file = tmp,
-                                  query = list(`versionId` = version))
+    if(grepl(x = files, pattern = "RDS")) {
+      results <- readRDS(data)
+    } else if(grepl(x = files, pattern = "csv")){
+      results <- readr::read_csv(data)
     }
-
-    if(grepl(x = files, pattern = "RDS")) return(readRDS(data))
-    else if(grepl(x = files, pattern = "csv")) return(data <- readr::read_csv(data))
-    else if(grepl(x = files, pattern = "xls")) read_excel_datalake(s3_path = files, all_sheets = all_sheets)
+    else if(grepl(x = files, pattern = "xls")){
+      results <- read_excel_datalake(s3_path = files, all_sheets = all_sheets)
+    }
     else {
       message("file type not recognised, saved object into working directory")
       aws.s3::save_object(object = files, bucket = mfe_datalake_bucket)
     }
+
+    if(!is.null(results)){print(get_metadata(from_datalake = F, data = results))}
+
+    return(results)
   }
 }
 
@@ -192,69 +201,35 @@ write_rds_datalake <- function(data, s3_path){
 #'
 #' @export
 #'
-#'
+
 get_metadata <- function(..., from_datalake = T, data = NULL){
 
   if(from_datalake == T){
-    data <- read_from_datalake(...)
+    return(data <- read_from_datalake(...))
     if(is.null(data)) stop(errorCondition(message = "Multiple files returned from search terms."))
   }
 
   else if(from_datalake == F){
     data <- data
+
+    ## Placeholder
+    data_attributes <- attributes(data ) %>%
+      purrr::list_modify("row.names" = NULL)
+
+    colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
+      plyr::compact()
+
+    l <- list()
+    all_attributes <- c(data_attributes, colname_attributes)
+
+    if(any(names(all_attributes) == "Metadata")){message("Created metadata found")}
+    if(!any(names(all_attributes) == "Metadata")){warning("No created metadata found")}
+
+    return(all_attributes)
   }
 
-  data_attributes <- attributes(data) %>%
-    purrr::list_modify("row.names" = NULL, "class" = NULL)
-
-
-  #
-  # colname_attributes <- purrr::map(data , ~ attributes(.x)) %>%
-  # plyr::compact()
-  #
-  # l <- list()
-  # all_attributes <- c(data_attributes, colname_attributes)
-
-  if(any(names(data_attributes) == "Metadata")){message("Created metadata found")}
-  if(!any(names(data_attributes) == "Metadata")){warning("No created metadata found")}
-
-  return(data_attributes)
 }
 
-#' Write a CSV file as an object in an AWS S3 bucket.
-#'
-#' @param x A data frame to write to the bucket using readr::write_excel_csv.
-#' @inheritParams read_csv_datalake
-#'
-#' @return TRUE if it succeeded and FALSE if it failed
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access()
-#' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
-#' write_csv_datalake(iris, csv_object_path)
-#' }
-write_csv_datalake <- function(x,
-                               s3_path,
-                               bucket_name = mfe_datalake_bucket,
-                               ...){
-
-  check_aws_access()
-
-  # Make sure the connection is clossed on exit
-  connection <- rawConnection(raw(0), "w")
-  on.exit(unlink(connection))
-
-  readr::write_excel_csv(x, connection, ...)
-
-  aws.s3::put_object(rawConnectionValue(connection),
-                     object = s3_path,
-                     bucket = bucket_name,
-                    multipart = T)
-
-}
 
 
 #' Read a excel file stored in an AWS S3 bucket.
@@ -280,7 +255,7 @@ write_csv_datalake <- function(x,
 #' @examples
 #' \dontrun{
 #' setup_datalake_access()
-#' files <- search_datalake(".x", "land", "2021")$Key
+#' files <- search_data_lake(".x", "land", "2021")$Key
 #' read_excel_datalake(files[2])
 #' read_excel_datalake(files[1], sheet = 2)
 #' }
@@ -321,18 +296,18 @@ read_excel_datalake <- function (s3_path,
 
   if(all_sheets == F){
 
-  d <- readxl::read_excel(path = data, sheet = sheet, ...)
+    d <- readxl::read_excel(path = data, sheet = sheet, ...)
 
-  if (length(readxl::excel_sheets(data)) > 1) {
+    if (length(readxl::excel_sheets(data)) > 1) {
 
-    suppressMessages({
-    all_sheets <- readxl::excel_sheets(data)
-    })
+      suppressMessages({
+        all_sheets <- readxl::excel_sheets(data)
+      })
 
-    message("Defaulting to the first spreadsheet: ", all_sheets[1],  ". Other sheets present in data:\n",
-            glue::glue_collapse(all_sheets[-1], "\n ", last = " and "))
-  }
-  return(d)
+      message("Defaulting to the first spreadsheet: ", all_sheets[1],  ". Other sheets present in data:\n",
+              glue::glue_collapse(all_sheets[-1], "\n ", last = " and "))
+    }
+    return(d)
   }
 
   else NULL
@@ -399,10 +374,10 @@ You need to setup access manually if this function fails.")
 #' get_bucket_version_df()
 #' }
 #'
-get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
+get_bucket_version_df <- function(bucket_name, key_marker = "", prefix = ""){
 
   check_aws_access()
-  get_versions_list(bucket_name) %>%
+  get_versions_list(bucket_name, key_marker, prefix) %>%
     purrr::map(version_list_as_df) %>%
     dplyr::bind_rows()
 }
@@ -411,20 +386,22 @@ get_bucket_version_df <- function(bucket_name = mfe_datalake_bucket){
 #'
 #' @inheritParams setup_datalake_access
 #' @param key_marker The key marker from which to download the object metadata.
+#' @param prefix The prefix from which to download the object metadata.
 #'   Empty string download all metadata
 #'
 #' @return a list with metadata
-get_versions_list <- function(bucket_name, key_marker = ""){
+get_versions_list <- function(bucket_name, key_marker = "", prefix = ""){
   versions <- aws.s3::s3HTTP(verb = "GET",
                              bucket = bucket_name,
                              query = list(versions = "",
-                                          "key-marker" = key_marker))
+                                          "key-marker" = key_marker,
+                                          prefix = prefix))
 
   out <- list()
   out[[1]] <- versions
 
   if (versions$IsTruncated) {
-    more_versions <- get_versions_list(bucket_name, versions$NextKeyMarker)
+    more_versions <- get_versions_list(bucket_name, key_marker = versions$NextKeyMarker, prefix = prefix)
     return(c(out, more_versions))
   } else {
     return(out)
@@ -481,34 +458,44 @@ version_list_as_df <- function(versions){
 #' search_datalake(stringr::regex("^a"))
 #' # search tidy datasets for atmosphere and climate 2020
 #' search_datalake("tidy", "climate", "2020")
+#' # search tidy datasets with versions for atmosphere and climate 2020
+#' search_datalake("tidy", "climate", "2020", object_versions = TRUE, ncores = 4)
+#'
 #' }
 search_datalake <- function(...,
                             bucket_name = mfe_datalake_bucket,
-                            object_versions = FALSE){
+                            object_versions = FALSE,
+                            ncores = 1){
 
   patterns <- list(...) %>%
     prepare_pattern()
 
   check_aws_access()
 
-  if (object_versions) {
-    all_keys <- get_bucket_version_df(bucket_name = bucket_name)
-  } else {
-    all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
-  }
-
+  all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
   if (any(patterns == "")) {
-    return(all_keys)
+    key_results <- all_keys
+  } else{
+    key_results <- all_keys
+    for (pattern in patterns) {
+      key_results <- key_results %>%
+        dplyr::filter(stringr::str_detect(.data$Key, pattern))
+    }
   }
 
-  search_results <- all_keys
-  for (pattern in patterns) {
-    search_results <- search_results %>%
-      dplyr::filter(stringr::str_detect(.data$Key, pattern))
-  }
-
-  search_results %>%
+  key_results <- key_results %>%
     tibble::as_tibble()
+
+  if (object_versions) {
+    fn <- function(key){rbind(data.frame(), get_bucket_version_df(bucket_name = mfe_datalake_bucket, prefix = key))}
+    object_version_df <- parallel::mclapply(key_results$Key, fn, mc.cores=ncores) # Default ncores = 1 as multi-cores not successful in our system
+    search_results <- dplyr::bind_rows(object_version_df) %>% dplyr::distinct() %>% tibble::as_tibble()
+
+  } else {
+    search_results <- key_results
+  }
+
+  return(search_results)
 }
 
 # Prepare a pattern for look in the data lake and use with str_detect
@@ -520,3 +507,32 @@ prepare_pattern <- function(pattern){
       purrr::map(stringr::coll, ignore_case = TRUE)
   }
 }
+
+
+
+# Table to metadata
+table_to_metadata <- function(df, metadata){
+
+  for(i in 1:nrow(metadata)){
+    attr(df, metadata[i, 1]) <- metadata[i, 2]
+
+  }
+
+  print(attributes(df))
+}
+
+
+## Metadata to table
+metadata_to_table <- function(df){
+
+  metadata <- attributes(df)
+
+  if(any(names(metadata) == "row.names")){
+    metadata$row.names <- NULL
+  }
+
+  tibble::enframe(metadata)
+}
+
+
+
