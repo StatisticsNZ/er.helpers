@@ -4,9 +4,7 @@
 \name{pal_ea19_trend2}
 \alias{pal_ea19_trend2}
 \title{Colour palette for a graph of a ordinal categorical trend variable with 2 values.}
-\format{
-An object of class \code{character} of length 2.
-}
+\format{An object of class \code{character} of length 2.}
 \usage{
 pal_ea19_trend2
 }

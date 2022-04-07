@@ -4,9 +4,7 @@
 \name{a4_width_mm}
 \alias{a4_width_mm}
 \title{A4 useable width.}
-\format{
-An object of class \code{numeric} of length 1.
-}
+\format{An object of class \code{numeric} of length 1.}
 \usage{
 a4_width_mm
 }

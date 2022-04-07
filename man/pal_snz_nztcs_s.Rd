@@ -4,9 +4,7 @@
 \name{pal_snz_nztcs_s}
 \alias{pal_snz_nztcs_s}
 \title{Colour palette for a NZTCS subcategory graph.}
-\format{
-An object of class \code{character} of length 9.
-}
+\format{An object of class \code{character} of length 9.}
 \usage{
 pal_snz_nztcs_s
 }

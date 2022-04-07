@@ -4,9 +4,7 @@
 \name{pal_point_trend5}
 \alias{pal_point_trend5}
 \title{Colour palette for a map of a ordinal categorical trend variable with 5 values.}
-\format{
-An object of class \code{character} of length 5.
-}
+\format{An object of class \code{character} of length 5.}
 \usage{
 pal_point_trend5
 }

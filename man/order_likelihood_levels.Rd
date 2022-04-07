@@ -35,8 +35,7 @@ qplot(trend, n, fill = trend,  data = ordered_trends, geom = "col")
 }
 }
 \seealso{
-Other likelihood functions: 
-\code{\link{get_likelihood_category}()},
-\code{\link{simplify_likelihood_levels}()}
+Other likelihood functions: \code{\link{get_likelihood_category}},
+  \code{\link{simplify_likelihood_levels}}
 }
 \concept{likelihood functions}

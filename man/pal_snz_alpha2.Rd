@@ -4,9 +4,7 @@
 \name{pal_snz_alpha2}
 \alias{pal_snz_alpha2}
 \title{Colour palette for a graph that compares a current year to 1 past year.}
-\format{
-An object of class \code{character} of length 2.
-}
+\format{An object of class \code{character} of length 2.}
 \usage{
 pal_snz_alpha2
 }

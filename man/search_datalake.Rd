@@ -4,11 +4,8 @@
 \alias{search_datalake}
 \title{Search for keys in the data lake}
 \usage{
-search_datalake(
-  ...,
-  bucket_name = mfe_datalake_bucket,
-  object_versions = FALSE
-)
+search_datalake(..., bucket_name = mfe_datalake_bucket,
+  object_versions = FALSE, ncores = 1)
 }
 \arguments{
 \item{...}{Patterns to look for. Each argument can be a character string or a
@@ -45,5 +42,8 @@ search_datalake("temperature")
 search_datalake(stringr::regex("^a"))
 # search tidy datasets for atmosphere and climate 2020
 search_datalake("tidy", "climate", "2020")
+# search tidy datasets with versions for atmosphere and climate 2020
+search_datalake("tidy", "climate", "2020", object_versions = TRUE, ncores = 4)
+
 }
 }

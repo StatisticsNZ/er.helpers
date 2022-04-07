@@ -4,7 +4,7 @@
 \alias{get_bucket_version_df}
 \title{List bucket contents with versions}
 \usage{
-get_bucket_version_df(bucket_name = mfe_datalake_bucket)
+get_bucket_version_df(bucket_name, key_marker = "", prefix = "")
 }
 \arguments{
 \item{bucket_name}{Name of the bucket to connect. By default, it uses the

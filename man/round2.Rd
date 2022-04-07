@@ -11,9 +11,6 @@ round2(x, n)
 
 \item{n}{digits to round to}
 }
-\value{
-
-}
 \description{
 Round using conventional rounding, where .5 always gets rounded up.
 }

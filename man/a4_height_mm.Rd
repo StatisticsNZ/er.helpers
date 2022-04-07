@@ -4,9 +4,7 @@
 \name{a4_height_mm}
 \alias{a4_height_mm}
 \title{A4 useable height.}
-\format{
-An object of class \code{numeric} of length 1.
-}
+\format{An object of class \code{numeric} of length 1.}
 \usage{
 a4_height_mm
 }
