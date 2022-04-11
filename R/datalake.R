@@ -106,7 +106,7 @@ read_csv_datalake <- function(s3_path,
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
-read_from_datalake <- function(..., date = NULL, all_sheets = T){
+read_from_datalake <- function(..., date = NULL, all_sheets = T, version = NULL){
 
   if(!is.null(date)){
     date <- lubridate::as_datetime(date)
@@ -120,7 +120,6 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T){
   }
 
 
-
   if(length(files) == 0){stop(errorCondition(message = "No match found."))}
 
   else if(length(files) > 1){
@@ -132,9 +131,18 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T){
     message(paste0(files), " matched")
 
     tmp <- tempfile()
-    data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+    
+    if(is.null(version)){
+      data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
                                 object = files,
                                 file = tmp)
+      } else {
+      
+       data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
+                                object = files,
+                                file = tmp,
+                                query = list(`versionId` = version))
+      }
 
     if(grepl(x = files, pattern = "RDS")) {
       results <- readRDS(data)
