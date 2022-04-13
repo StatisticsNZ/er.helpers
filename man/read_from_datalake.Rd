@@ -4,12 +4,15 @@
 \alias{read_from_datalake}
 \title{Read any type file stored in an AWS S3 bucket.}
 \usage{
-read_from_datalake(..., date = NULL, all_sheets = T)
+read_from_datalake(..., date = NULL, all_sheets = T, version = NULL)
 }
 \arguments{
 \item{...}{Key terms to search for in the AWS S3 bucket}
 
 \item{all_sheets}{If more than one sheet is present, T = read all sheets into a list, F = default to sheet specified}
+
+\item{version}{VersionId of the object key desired. Can be retrieved using
+\code{\link{get_bucket_version_df}}}
 }
 \description{
 This function get the specified object from an AWS S3 bucket and reads it

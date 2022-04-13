@@ -131,13 +131,13 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T, version = NULL)
     message(paste0(files), " matched")
 
     tmp <- tempfile()
-    
+
     if(is.null(version)){
       data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
                                 object = files,
                                 file = tmp)
       } else {
-      
+
        data <- aws.s3::save_object(bucket = er.helpers::mfe_datalake_bucket,
                                 object = files,
                                 file = tmp,
@@ -506,9 +506,16 @@ search_datalake <- function(...,
   return(search_results)
 }
 
-# Prepare a pattern for look in the data lake and use with str_detect
+#' Prepare a pattern for look in the data lake and use with str_detect
+#'
+#' @param pattern - list of patterns from search datalake
+#'
+#' @return list of patterns using standard unicode collation rules
+#' @export
+#'
+#' @examples
 prepare_pattern <- function(pattern){
-  # If the pattern is a plain character then ignore case as this is ussually
+  # If the pattern is a plain character then ignore case as this is usually
   # what we want
   if (is.null(attr(pattern, "class"))) {
     pattern <- pattern %>%
@@ -518,25 +525,51 @@ prepare_pattern <- function(pattern){
 
 
 
-# Table to metadata
-table_to_metadata <- function(df, metadata){
+#' Table to metadata
+#' Adds attributes to df object and returns and prints list of attributes
+#'
+#' @param df dataframe object
+#' @param metadata attribute names and values to be added to df object
+#' @param retain_row_names Logical. defaults to FALSE (row.names attribute will be removed), set to TRUE if row.names attribute to be retained
+#'
+#' @return list of attribute names and values
+#' @export
+#'
+#' @examples
+table_to_metadata <- function(df, metadata, retain_row_names = F){
 
   for(i in 1:nrow(metadata)){
-    attr(df, metadata[i, 1]) <- metadata[i, 2]
 
+    attr(df, as.character(metadata[i, 1])) <- as.character(metadata[i, 2])
+
+    if(retain_row_names == F){
+      if(any(names(attributes(df)) == "row.names")){
+        attributes(df)$row.names <- NULL
+      }
+    }
   }
 
   print(attributes(df))
 }
 
 
-## Metadata to table
-metadata_to_table <- function(df){
+#' Metadata to table
+#'
+#' @param df - df object with attributes
+#' @param retain_row_names Logical. defaults to FALSE (row.names attribute will be removed), set to TRUE if row.names attribute to be retained
+#'
+#' @return tibble with name and values of attributes extracted from df
+#' @export
+#'
+#' @examples
+metadata_to_table <- function(df, retain_row_names = F){
 
   metadata <- attributes(df)
 
-  if(any(names(metadata) == "row.names")){
-    metadata$row.names <- NULL
+  if(retain_row_names == F){
+    if(any(names(metadata) == "row.names")){
+     metadata$row.names <- NULL
+    }
   }
 
   tibble::enframe(metadata)
