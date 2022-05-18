@@ -556,24 +556,33 @@ table_to_metadata <- function(df, metadata, retain_row_names = F){
 #' Metadata to table
 #'
 #' @param df - df object with attributes
-#' @param retain_row_names Logical. defaults to FALSE (row.names attribute will be removed), set to TRUE if row.names attribute to be retained
+#' @param remove_names - Remove names e.g. row.names or groups
 #'
 #' @return tibble with name and values of attributes extracted from df
 #' @export
 #'
 #' @examples
-metadata_to_table <- function(df, retain_row_names = F){
-
+metadata_to_table <- function (df, remove_names = c("row.names")){
+  
   metadata <- attributes(df)
-
-  if(retain_row_names == F){
-    if(any(names(metadata) == "row.names")){
-     metadata$row.names <- NULL
+  
+  if(!is.null(remove_names)){
+  
+    for(i in remove_names){
+     metadata[[i]] <- NULL
     }
   }
-
-  tibble::enframe(metadata)
+  metadata <- tibble::enframe(metadata)
+  
+  if(is.list(test$value)) {
+    
+    metadata <- metadata %>% 
+      mutate(value= purrr::map_chr(value, ~glue::glue_collapse(.x, sep = ", ", last = " and ")))
+  }
+  
+  return(metadata)
 }
+
 
 
 
