@@ -574,7 +574,7 @@ metadata_to_table <- function (df, remove_names = c("row.names")){
   }
   metadata <- tibble::enframe(metadata)
   
-  if(is.list(test$value)) {
+  if(is.list(metadata$value)) {
     
     metadata <- metadata %>% 
       mutate(value= purrr::map_chr(value, ~glue::glue_collapse(.x, sep = ", ", last = " and ")))
