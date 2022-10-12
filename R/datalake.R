@@ -577,7 +577,7 @@ metadata_to_table <- function (df, remove_names = c("row.names")){
   if(is.list(metadata$value)) {
     
     metadata <- metadata %>% 
-      mutate(value= purrr::map_chr(value, ~glue::glue_collapse(.x, sep = ", ", last = " and ")))
+      dplyr::mutate(value= purrr::map_chr(value, ~glue::glue_collapse(.x, sep = ", ", last = " and ")))
   }
   
   return(metadata)
