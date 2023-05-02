@@ -487,7 +487,7 @@ search_datalake <- function(...,
     key_results <- all_keys
     for (pattern in patterns) {
       key_results <- key_results %>%
-        dplyr::filter(stringr::str_detect(.data$Key, pattern))
+        dplyr::filter(grepl(pattern = pattern, .data$Key))
     }
   }
 
