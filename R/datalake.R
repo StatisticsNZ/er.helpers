@@ -536,21 +536,18 @@ prepare_pattern <- function(pattern){
 #' @export
 #'
 #' @examples
-table_to_metadata <- function(df, metadata, retain_row_names = F){
-
-  for(i in 1:nrow(metadata)){
-
-    attr(df, as.character(metadata[i, 1])) <- as.character(metadata[i, 2])
-
-    if(retain_row_names == F){
-      if(any(names(attributes(df)) == "row.names")){
-        attributes(df)$row.names <- NULL
-      }
-    }
+table_to_metadata <- function(df, metadata){
+  
+  df_name <- deparse(substitute(df))
+  
+  for (i in 1:nrow(metadata)){
+    
+    attr(df, as.character(metadata[i, 1])) <- as.character(metadata[i, 
+                                                                    2])
   }
-
-  print(attributes(df))
+  assign(df_name, df, envir= .GlobalEnv)
 }
+
 
 
 #' Metadata to table
