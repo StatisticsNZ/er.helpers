@@ -128,7 +128,7 @@ pal_point_trend2 <- c("#4575B4", "#D73027")
 #' @export
 #' @examples
 #' scales::show_col(pal_point_trend3)
-pal_point_trend3 <- c("#4575B4", "#BDBDBD", "#D73027")
+pal_point_trend3 <- c("#4575B4", "#8e8e8e", "#D73027")
 
 #' @title Colour palette for a map of a ordinal categorical trend variable with 5 values.
 #' @description Colour palette for a map of a ordinal categorical trend variable with 5 values.
@@ -136,7 +136,7 @@ pal_point_trend3 <- c("#4575B4", "#BDBDBD", "#D73027")
 #' @export
 #' @examples
 #' scales::show_col(pal_point_trend5)
-pal_point_trend5 <- c("#4575B4", "#90C3DD", "#BDBDBD", "#F98E52", "#D73027")
+pal_point_trend5 <- c("#4575B4", "#90C3DD", "#8e8e8e", "#F98E52", "#D73027")
 
 #' @title Signed square root ggplot scale transformation.
 #' @description A signed square root ggplot scale transformation.
