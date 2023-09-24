@@ -4,12 +4,12 @@
 \alias{metadata_to_table}
 \title{Metadata to table}
 \usage{
-metadata_to_table(df, retain_row_names = F)
+metadata_to_table(df, remove_names = c("row.names"))
 }
 \arguments{
 \item{df}{- df object with attributes}
 
-\item{retain_row_names}{Logical. defaults to FALSE (row.names attribute will be removed), set to TRUE if row.names attribute to be retained}
+\item{remove_names}{- Remove names e.g. row.names or groups}
 }
 \value{
 tibble with name and values of attributes extracted from df

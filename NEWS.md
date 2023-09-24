@@ -1,3 +1,7 @@
+## er.helpers 1.4.2
+
+* Removed search_data_lake() function. Added separate round() function to overwrite base round as doesn't behave how expected. 
+
 ## er.helpers 1.4.1
 
 * Updated app templates.

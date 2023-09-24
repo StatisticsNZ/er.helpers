@@ -111,12 +111,12 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T, version = NULL)
   if(!is.null(date)){
     date <- lubridate::as_datetime(date)
 
-    files <- er.helpers::search_data_lake(...) %>%
+    files <- er.helpers::search_datalake(...) %>%
       dplyr::mutate(LastModified = lubridate::as_datetime(LastModified)) %>%
       dplyr::filter(abs(difftime(LastModified, date)) == min(abs(difftime(LastModified, date)))) %>%
       .$Key
   } else {
-    files <- er.helpers::search_data_lake(...)$Key
+    files <- er.helpers::search_datalake(...)$Key
   }
 
 
@@ -153,7 +153,7 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T, version = NULL)
       results <- read_excel_datalake(s3_path = files, all_sheets = all_sheets)
     }
     else {
-      message("file type not recognised, saved object into working directory")
+      message("file type not recognised, saved object into working directory. Versioning will not be applied. Try base aws.s3.")
       aws.s3::save_object(object = files, bucket = mfe_datalake_bucket)
     }
 
@@ -263,7 +263,7 @@ get_metadata <- function(..., from_datalake = T, data = NULL){
 #' @examples
 #' \dontrun{
 #' setup_datalake_access()
-#' files <- search_data_lake(".x", "land", "2021")$Key
+#' files <- search_datalake(".x", "land", "2021")$Key
 #' read_excel_datalake(files[2])
 #' read_excel_datalake(files[1], sheet = 2)
 #' }
@@ -537,12 +537,12 @@ prepare_pattern <- function(pattern){
 #'
 #' @examples
 table_to_metadata <- function(df, metadata){
-  
+
   df_name <- deparse(substitute(df))
-  
+
   for (i in 1:nrow(metadata)){
-    
-    attr(df, as.character(metadata[i, 1])) <- as.character(metadata[i, 
+
+    attr(df, as.character(metadata[i, 1])) <- as.character(metadata[i,
                                                                     2])
   }
   assign(df_name, df, envir= .GlobalEnv)
@@ -560,23 +560,23 @@ table_to_metadata <- function(df, metadata){
 #'
 #' @examples
 metadata_to_table <- function (df, remove_names = c("row.names")){
-  
+
   metadata <- attributes(df)
-  
+
   if(!is.null(remove_names)){
-  
+
     for(i in remove_names){
      metadata[[i]] <- NULL
     }
   }
   metadata <- tibble::enframe(metadata)
-  
+
   if(is.list(metadata$value)) {
-    
-    metadata <- metadata %>% 
+
+    metadata <- metadata %>%
       dplyr::mutate(value= purrr::map_chr(value, ~glue::glue_collapse(.x, sep = ", ", last = " and ")))
   }
-  
+
   return(metadata)
 }
 

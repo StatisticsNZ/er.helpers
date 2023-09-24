@@ -5,7 +5,7 @@
 \title{Table to metadata
 Adds attributes to df object and returns and prints list of attributes}
 \usage{
-table_to_metadata(df, metadata, retain_row_names = F)
+table_to_metadata(df, metadata)
 }
 \arguments{
 \item{df}{dataframe object}
