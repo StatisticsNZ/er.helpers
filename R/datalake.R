@@ -61,6 +61,7 @@ read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
 
+  ## Check acess
   check_aws_access()
 
   if (is.null(version)) {
