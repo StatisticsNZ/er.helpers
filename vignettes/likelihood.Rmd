@@ -1,0 +1,201 @@
+---
+title: "Likelihood Estimation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Likelihood Estimation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, warning=FALSE}
+library(er.helpers)
+library(dplyr)
+library(tibble)
+library(ggplot2)
+```
+
+## Overview
+
+When communicating the results of statistical trend tests to a non-technical
+audience, plain p-values are rarely helpful. `er.helpers` provides functions
+to translate p-values into plain-language likelihood categories that align with
+two established frameworks:
+
+- **Statistics New Zealand** (`scale = "statsnz"`) — five categories with
+  directional wording suited to environmental improvement/worsening language.
+- **IPCC** (`scale = "ipcc"`) — nine categories aligned with Intergovernmental
+  Panel on Climate Change reporting conventions.
+
+The key functions are:
+
+| Function | Purpose |
+|---|---|
+| `get_likelihood_category()` | Classify a p-value into a likelihood term |
+| `order_likelihood_levels()` | Return a correctly ordered factor of likelihood terms |
+| `simplify_likelihood_levels()` | Collapse detailed categories into broader ones |
+
+The built-in datasets `statsnz_likelihood_scale` and `ipcc_likelihood_scale`
+contain the interval boundaries used by each scale.
+
+---
+
+## The likelihood scales
+
+```{r scales}
+# Statistics NZ scale
+statsnz_likelihood_scale
+
+# IPCC scale
+ipcc_likelihood_scale
+```
+
+---
+
+## Classifying p-values
+
+`get_likelihood_category()` maps a numeric probability to a category string.
+The `term_type` argument controls the directional wording:
+
+| `term_type` | Use case |
+|---|---|
+| `"worsening-improving"` (default) | High p → worsening (e.g. water quality metrics) |
+| `"improving-worsening"` | High p → improving |
+| `"increasing-decreasing"` | For climate variables with no value judgement |
+| `"likely-unlikely"` | Neutral language |
+
+```{r classify, warning=FALSE}
+p_values <- seq(0, 1, length.out = 11)
+
+# Water quality example: large p → worsening
+get_likelihood_category(p_values, term_type = "worsening-improving")
+
+# Climate variable: direction without value judgement
+get_likelihood_category(p_values, term_type = "increasing-decreasing")
+
+# Neutral language
+get_likelihood_category(p_values, term_type = "likely-unlikely")
+```
+
+### IPCC scale
+
+```{r ipcc}
+get_likelihood_category(p_values, scale = "ipcc")
+```
+
+### Using percentage p-values
+
+If your p-values are expressed as percentages (0–100) rather than probabilities
+(0–1), use `p_is = "percentage"`:
+
+```{r percentage}
+p_percent <- p_values * 100
+get_likelihood_category(p_percent, p_is = "percentage")
+```
+
+---
+
+## Ordering factors for plotting
+
+Likelihood categories returned by `get_likelihood_category()` are character
+vectors. Use `order_likelihood_levels()` to convert them to an ordered factor
+that displays correctly in plots:
+
+```{r order}
+categories <- get_likelihood_category(p_values, 
+term_type = "increasing-decreasing")
+
+# As unordered character — levels appear alphabetically
+factor(categories) |> levels()
+
+# Ordered factor — levels follow the scale from least to most likely
+order_likelihood_levels(categories) |> levels()
+```
+
+### Complete trend-analysis workflow
+
+```{r workflow}
+set.seed(42)
+
+# Simulate annual data for 10 indicator time series
+indicator_df <- tibble(
+  indicator = rep(paste0("I", 1:10), each = 30),
+  year      = rep(1991:2020, times = 10),
+  value     = rnorm(300, mean = rep(runif(10, -0.1, 0.1), each = 30),
+                    sd   = 0.5)
+)
+
+# Run Mann-Kendall test for each indicator
+trend_results <- indicator_df |>
+  group_by(indicator) |>
+  summarise(
+    mann_kendall(value, alternative = "two.sided"),
+    .groups = "drop"
+  )
+
+# Classify p-values and order the factor
+trend_results <- trend_results |>
+  mutate(
+    likelihood = get_likelihood_category(p_value,
+                                         term_type = "increasing-decreasing") |>
+      order_likelihood_levels()
+  )
+
+trend_results |> select(indicator, p_value, likelihood)
+```
+
+```{r workflow-plot, fig.width=6, fig.height=4}
+trend_counts <- trend_results |>
+  count(likelihood)
+
+ggplot(trend_counts, aes(x = likelihood, y = n, fill = likelihood)) +
+  geom_col(show.legend = FALSE) +
+  scale_fill_manual(values = pal_snz_trend5) +
+  labs(title = "Distribution of trend likelihoods",
+       x = NULL, y = "Number of indicators") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+---
+
+## Simplifying categories
+
+When the full five-category scale is too granular for a summary, use
+`simplify_likelihood_levels()` to collapse "Likely X" and "Very likely X"
+into a single "Likely or very likely X" bucket:
+
+```{r simplify, warning=FALSE}
+detailed <- get_likelihood_category(p_values,
+ term_type = "increasing-decreasing") |>
+  order_likelihood_levels()
+
+levels(detailed)
+
+simplified <- simplify_likelihood_levels(detailed)
+levels(simplified)
+```
+
+---
+
+## Adding likelihood categories to a combined trend table
+
+A typical reporting workflow chains trend testing, likelihood classification,
+and ordering in a single `mutate()` call:
+
+```{r full-table}
+trend_results |>
+  mutate(
+    direction  = get_likelihood_category(p_value,
+                                         term_type = "increasing-decreasing"),
+    direction  = order_likelihood_levels(direction),
+    simplified = simplify_likelihood_levels(direction)
+  ) |>
+  select(indicator, p_value, direction, simplified)
+```

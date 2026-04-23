@@ -7,9 +7,9 @@
 get_season(x, with_year = TRUE)
 }
 \arguments{
-\item{x}{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon,
-yearqtr, zoo, zooreg, timeDate, xts, its, ti, jul, timeSeries, fts or
-anything else that can be converted with as.POSIXlt}
+\item{x}{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr,
+zoo, zooreg, timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can
+be converted with as.POSIXlt}
 
 \item{with_year}{logical indicating whether or not to include the season's year/}
 }

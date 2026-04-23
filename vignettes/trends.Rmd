@@ -1,0 +1,222 @@
+---
+title: "Trend Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Trend Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, warning=FALSE}
+library(er.helpers)
+library(dplyr)
+library(tibble)
+library(ggplot2)
+```
+
+## Overview
+
+`er.helpers` provides three tidy wrappers for common environmental trend tests.
+Each function returns a one-row `tibble` so results integrate naturally with
+`group_by()` / `summarise()` workflows.
+
+| Function | Method | Best for |
+|---|---|---|
+| `mann_kendall()` | Mann-Kendall test | Non-parametric monotonic trend detection |
+| `sen_slope()` | Sen's slope | Non-parametric slope estimation with CI |
+| `linear_model()` | OLS linear regression | Parametric slope with $R^2$ |
+
+All three:
+- Accept a numeric vector `x` and an optional time variable `y`.
+- Return `NA` results and a warning when `x` contains missing values.
+- Include a `note` column that records non-fatal conditions (e.g. < 10
+  observations).
+
+---
+
+## Simulating example data
+
+```{r sim-data}
+set.seed(42)
+n <- 40
+
+# A series with a real upward trend
+trend_data <- tibble(
+  year  = 1981:(1980 + n),
+  value = 10 + 0.15 * (1:n) + rnorm(n, sd = 1.2)
+)
+
+# A flat series (no trend)
+flat_data <- tibble(
+  year  = 1981:(1980 + n),
+  value = 10 + rnorm(n, sd = 1.2)
+)
+```
+
+---
+
+## Mann-Kendall trend test
+
+The Mann-Kendall test is non-parametric and robust to non-normal distributions
+and outliers. It tests the null hypothesis of **no monotonic trend**.
+
+```{r mann-kendall}
+mk_result <- mann_kendall(trend_data$value, alternative = "greater")
+mk_result
+```
+
+Key columns in the output:
+
+| Column | Description |
+|---|---|
+| `p_value` | p-value for the chosen alternative |
+| `tau` | Kendall's τ (strength and direction of trend) |
+| `s` | Mann-Kendall S statistic |
+| `z` | Standardised test statistic |
+| `alternative` | The hypothesis tested |
+| `note` | Any non-fatal diagnostic messages |
+
+The `alternative` argument follows the same convention as `trend::mk.test`:
+
+- `"greater"` — test for an upward trend (most common for worsening indicators).
+- `"less"` — test for a downward trend.
+- `"two.sided"` — test for any monotonic trend.
+
+```{r mk-flat}
+# No trend expected
+mann_kendall(flat_data$value, alternative = "two.sided")
+```
+
+---
+
+## Sen's slope
+
+Sen's slope is the median slope across all pairs of observations. It is more
+robust to outliers than OLS regression and is typically reported alongside
+Mann-Kendall:
+
+```{r sen-slope}
+ss_result <- sen_slope(trend_data$value)
+ss_result
+```
+
+Key columns:
+
+| Column | Description |
+|---|---|
+| `slope` | Sen's slope estimate (change per time step) |
+| `conf_low` / `conf_high` | Confidence interval for the slope |
+| `conf_level` | Confidence level used |
+| `p_value` | p-value from the associated Kendall test |
+
+---
+
+## Linear model
+
+`linear_model()` fits OLS regression and returns a tidy summary including the
+slope, confidence interval, $R^2$, and residual standard error. It optionally
+accepts a `y` argument for the time axis:
+
+```{r linear-model}
+lm_result <- linear_model(trend_data$value, y = trend_data$year)
+lm_result
+```
+
+When `y` is omitted, observations are assumed to be equally spaced (index 1, 2,
+3, …). Passing `Date` or `POSIXct` vectors is also supported:
+
+```{r linear-model-dates}
+date_series <- tibble(
+  date  = seq.Date(as.Date("2000-01-01"), by = "year", length.out = 20),
+  value = cumsum(rnorm(20, mean = 0.5))
+)
+
+linear_model(date_series$value, y = date_series$date)
+```
+
+---
+
+## Running multiple trend tests at once
+
+The one-row-tibble design makes it easy to apply all three methods to many
+groups with `group_by()` + `summarise()`:
+
+```{r multi-group}
+set.seed(99)
+
+many_series <- tibble(
+  region = rep(c("North", "South", "East", "West"), each = 30),
+  year   = rep(2000:2029, times = 4),
+  value  = c(
+    5  + 0.20 * (1:30) + rnorm(30),   # North: increasing
+    8  - 0.10 * (1:30) + rnorm(30),   # South: decreasing
+    12 + rnorm(30),                    # East: flat
+    6  + 0.05 * (1:30) + rnorm(30)    # West: weak increase
+  )
+)
+
+trend_summary <- many_series |>
+  group_by(region) |>
+  summarise(
+    sen_slope(value),
+    .groups = "drop"
+  ) |>
+  mutate(
+    likelihood = get_likelihood_category(p_value, term_type = "increasing-decreasing") |>
+      order_likelihood_levels()
+  )
+
+trend_summary |> select(region, p_value, slope, conf_low, conf_high, likelihood)
+```
+
+---
+
+## Handling missing data
+
+All three functions return `NA` results with a warning when the input contains
+`NA` values; the `note` column records this:
+
+```{r missing}
+x_with_na <- trend_data$value
+x_with_na[c(5, 10, 15)] <- NA
+
+mann_kendall(x_with_na)
+```
+
+Remove missing values before calling the trend functions, or impute them using
+the aggregation tools in the `anomaly-and-aggregation` vignette.
+
+---
+
+## Comparing all three methods
+
+```{r compare, fig.width=7, fig.height=4}
+results <- bind_rows(
+  mann_kendall(trend_data$value) |> mutate(slope = tau) |> select(p_value, slope, method),
+  sen_slope(trend_data$value)    |> select(p_value, slope, method),
+  linear_model(trend_data$value) |> select(p_value, slope, method)
+)
+
+results
+
+# Plot the trend line from the linear model
+lm_fit <- linear_model(trend_data$value, y = trend_data$year)
+
+ggplot(trend_data, aes(x = year, y = value)) +
+  geom_point(colour = "#085c75") +
+  geom_abline(intercept = lm_fit$intercept,
+              slope     = lm_fit$slope,
+              colour    = "#AE4E51", linewidth = 0.8) +
+  labs(title    = "Annual values with fitted linear trend",
+       subtitle = paste0("slope = ", round(lm_fit$slope, 3),
+                         ", p = ", signif(lm_fit$p_value, 3)),
+       x = NULL, y = "Value") +
+  theme_minimal()
+```

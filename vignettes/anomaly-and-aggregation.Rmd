@@ -1,0 +1,189 @@
+---
+title: "Anomaly Calculation and Data Aggregation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Anomaly Calculation and Data Aggregation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(er.helpers)
+library(dplyr)
+library(tibble)
+```
+
+## Overview
+
+Environmental time series frequently contain missing values, and international
+standards from organisations like the World Meteorological Organisation (WMO)
+specify exactly how much missing data is acceptable before an aggregated value
+should not be reported. `er.helpers` provides two complementary sets of tools
+for these situations:
+
+- **Aggregation with criteria** — compute a summary statistic (mean, min, max,
+  sum) only when a dataset meets user-defined missing-data thresholds.
+- **Annual anomaly** — express each year's value relative to a reference period
+  mean, with the same missing-data safeguards applied to the baseline.
+
+---
+
+## Aggregating data with missing-value criteria
+
+`aggregate_with_criteria()` returns the requested aggregate, or `NA` if either
+the total number of missing values or the length of the longest consecutive run
+of missing values exceeds the specified thresholds.
+
+Thresholds can be expressed as **counts** (integers ≥ 1) or **proportions**
+(0 < value ≤ 1):
+
+```{r aggregate-basics}
+# A month of daily temperatures with a few missing days
+# randomize sequence of daily temperatures and missing values to demonstrate consecutive-missing criteria
+set.seed(42)
+daily_temp <- sample(c(15:25, NA, NA, NA), size = 30, replace = TRUE)
+
+# Allow up to 3 missing days and no more than 2 consecutive missing days
+aggregate_with_criteria(daily_temp, max_missing = 3, max_consecutive = 2)
+
+# Tigthen the criteria: allow at most 2 missing days and no more than 1 consecutive missing day
+aggregate_with_criteria(daily_temp, max_missing = 2, max_consecutive = 1)
+```
+
+### Convenience wrappers
+
+`mean_with_criteria()`, `min_with_criteria()`, `max_with_criteria()`, and
+`sum_with_criteria()` call `aggregate_with_criteria()` with the appropriate
+`fun` argument pre-set:
+
+```{r convenience-wrappers}
+mean_with_criteria(daily_temp, max_missing = 3, max_consecutive = 2)
+min_with_criteria(daily_temp,  max_missing = 3, max_consecutive = 2)
+max_with_criteria(daily_temp,  max_missing = 3, max_consecutive = 2)
+sum_with_criteria(daily_temp,  max_missing = 3, max_consecutive = 2)
+```
+
+### Applying criteria across groups with `dplyr`
+
+A common workflow is to compute a monthly aggregate from daily data:
+
+```{r dplyr-workflow}
+set.seed(42)
+
+daily_data <- tibble(
+    date = seq.Date(as.Date("2020-01-01"),
+    as.Date("2020-12-31"), by = "day"),
+    temperature = runif(366, min = 5, max = 25)) |>
+  # Introduce ~8 % random missing values
+  mutate(temperature = ifelse(runif(n()) < 0.08, NA, temperature))
+
+monthly_means <- daily_data |>
+  mutate(year  = format(date, "%Y"),
+         month = format(date, "%m")) |>
+  group_by(year, month) |>
+  summarise(mean_temp = mean_with_criteria(
+    temperature, max_missing = 3, max_consecutive = 2),
+    .groups = "drop")
+
+monthly_means
+```
+
+Months where the missing-data criteria are exceeded will show `NA`, making it
+easy to flag them downstream.
+
+---
+
+## Calculating annual anomalies
+
+`calc_annual_anomaly()` subtracts the mean of a reference period from every
+observation. The reference period mean is itself computed with
+`mean_with_criteria()`, so the same missing-data safeguards apply.
+
+```{r anomaly-setup}
+set.seed(7)
+
+# Simulate 50 years of annual mean temperatures
+temp_series <- tibble(
+    year = 1971:2020,
+    temperature = 12 + cumsum(rnorm(50, mean = 0.03, sd = 0.4)))
+
+# Define the WMO 1981–2010 climate normal as the reference period
+reference_period <- c(1981, 2010)
+```
+
+```{r anomaly-calc}
+temp_series <- temp_series |>
+  mutate(anomaly = calc_annual_anomaly(temperature,
+   year, period = reference_period))
+
+head(temp_series)
+```
+
+### Visualising anomalies
+
+```{r anomaly-plot, fig.width=7, fig.height=4}
+library(ggplot2)
+
+ggplot(temp_series, aes(x = year, y = anomaly, fill = anomaly > 0)) +
+  geom_col(show.legend = FALSE) +
+  geom_hline(yintercept = 0, linewidth = 0.4) +
+  scale_fill_manual(values = c("#0D94A3", "#AE4E51")) +
+  labs(title    = "Annual temperature anomaly",
+       subtitle = paste0("Relative to ", reference_period[1], "\u2013",
+                         reference_period[2], " mean"),
+       x = NULL, y = "\u00b0C") +
+  theme_minimal()
+```
+
+### Handling missing data in the reference period
+
+If observations are missing inside the reference period, `calc_annual_anomaly()`
+passes `max_missing` and `max_consecutive` to `mean_with_criteria()`. If the
+reference mean cannot be calculated the function returns `NA` for every year
+and issues a warning:
+
+```{r anomaly-missing, warning=TRUE}
+# Introduce missing values in the reference period
+temp_with_gaps <- temp_series$temperature
+temp_with_gaps[11:15] <- NA  # years 1981–1985 are missing
+
+anomalies_strict <- calc_annual_anomaly(
+    x = temp_with_gaps,
+    year = temp_series$year,
+    period = reference_period,
+    max_missing = 0,   # zero tolerance for missing baseline data
+    max_consecutive = 0)
+
+head(anomalies_strict)
+
+# Relax the constraint: allow up to 20 % missing in the reference period
+anomalies_relaxed <- calc_annual_anomaly(
+    x = temp_with_gaps,
+    year = temp_series$year,
+    period = reference_period,
+    max_missing = 0.20,
+    max_consecutive = NULL  # no consecutive-missing constraint
+)
+
+head(anomalies_relaxed)
+```
+
+---
+
+## Summary of key arguments
+
+| Argument | Description | Accepts |
+|---|---|---|
+| `max_missing` | Maximum allowable missing values | Count (integer) or proportion (0–1) |
+| `max_consecutive` | Maximum allowable consecutive missing values | Count (integer) or proportion (0–1) |
+| `fun` | Aggregation function (`aggregate_with_criteria` only) | Any function, e.g. `mean`, `sum` |
+| `period` | Start and end year of the anomaly baseline | `c(start, end)` or `NULL` for full range |
+
+Setting a threshold to `NULL` or `1` disables that constraint entirely.

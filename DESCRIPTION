@@ -6,6 +6,7 @@ Authors@R: c(
     person("Fernando", "Cagua", email = "fernando.cagua@stats.govt.nz", role = c("aut", "cre")), 
     person("David", "Hodge", email = "david.hodge@stats.govt.nz", role = c("aut")), 
     person("Bonnie", "Farant", email = "bonnie.farant@stats.govt.nz", role = c("aut")), 
+    person("Nestor", "Robinson", email = "nrob536@aucklanduni.ac.nz", role = c("aut")),
     person("Statistics New Zealand", role = c("cph")))
 Description: Helper functions commonly used in Environmental Reporting at 
     Statistics New Zealand. It includes utility functions to connect to the
@@ -41,7 +42,14 @@ URL: https://statisticsnz.github.io/er.helpers, https://github.com/statisticsnz/
 BugReports: https://github.com/statisticsNZ/er.helpers/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3
 Suggests: 
     testthat (>= 2.1.0),
-    roxygen2 (>= 6.1.1)
+    roxygen2 (>= 6.1.1),
+    knitr,
+    rmarkdown,
+    ggplot2,
+    tibble,
+    dplyr,
+    pkgdown
+VignetteBuilder: knitr

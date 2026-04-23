@@ -27,7 +27,8 @@ get_likelihood_category(p) \%>\%
 
 }
 \seealso{
-Other likelihood functions: \code{\link{get_likelihood_category}},
-  \code{\link{order_likelihood_levels}}
+Other likelihood functions: 
+\code{\link{get_likelihood_category}()},
+\code{\link{order_likelihood_levels}()}
 }
 \concept{likelihood functions}

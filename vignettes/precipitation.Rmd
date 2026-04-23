@@ -1,0 +1,204 @@
+---
+title: "Precipitation Indices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Precipitation Indices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, warning=FALSE}
+library(er.helpers)
+library(dplyr)
+library(tibble)
+library(ggplot2)
+```
+
+## Overview
+
+Heavy rainfall events are often characterised by the proportion of total annual
+rainfall that falls on the most extreme days. `er.helpers` provides two
+functions to calculate this index:
+
+| Function | Purpose |
+|---|---|
+| `get_reference_precipitation()` | Compute a percentile threshold from a reference period |
+| `precipitation_above_reference()` | Compute the proportion of annual rainfall above that threshold |
+
+Together they implement the precipitation index commonly reported by the
+Intergovernmental Panel on Climate Change (IPCC) and the Expert Team on Climate
+Change Detection and Indices (ETCCDI).
+
+---
+
+## Core concepts
+
+**Reference precipitation** — typically the 95th or 99th percentile of daily
+rainfall on wet days during a climate normal (e.g. 1981–2010). Only days
+where precipitation ≥ `wet_day_threshold` (default 1 mm) are included.
+
+**Proportion above reference** — the fraction of total annual wet-day
+rainfall that falls on days exceeding the reference threshold. An increase in
+this proportion over time indicates that intense rainfall events are becoming
+more dominant.
+
+---
+
+## Step 1 — Compute the reference threshold
+
+`get_reference_precipitation()` returns a single percentile value calculated
+from the rainfall data within a specified reference period:
+
+```{r reference}
+set.seed(101)
+
+# Simulate 20 years of daily rainfall (log-normal, approx. 2 mm/day)
+n_days      <- 20 * 365
+rainfall    <- rlnorm(n_days, meanlog = 0.5, sdlog = 1.0)
+years       <- rep(2001:2020, each = 365)
+
+rain_data <- tibble(rainfall = rainfall, year = years)
+
+# Climate normal: 2001–2010
+climate_normal <- c(2001, 2010)
+
+# 95th percentile of wet days during the climate normal
+ref_95 <- get_reference_precipitation(
+  precipitation = rain_data$rainfall,
+  date = rain_data$year,
+  reference_period = climate_normal,
+  percentile = 95)
+
+ref_95
+```
+
+When `reference_period = NULL` the entire series is used as the reference.
+You can also request a different percentile, such as the 99th:
+
+```{r reference-99}
+ref_99 <- get_reference_precipitation(
+  precipitation = rain_data$rainfall,
+  date = rain_data$year,
+  reference_period = climate_normal,
+  percentile = 99
+)
+
+ref_99
+```
+
+### Using date objects as the period
+
+The `date` and `reference_period` arguments can be any comparable type. Numeric
+years (as above), `Date`, or `POSIXct` objects all work — just ensure both are
+the same type:
+
+```{r reference-dates, eval=FALSE}
+rain_data_dates <- rain_data |>
+  mutate(date = seq.Date(as.Date("2001-01-01"),
+  by = "day",
+  length.out = n()))
+
+ref_dates <- get_reference_precipitation(
+  precipitation = rain_data_dates$rainfall,
+  date = rain_data_dates$date,
+  reference_period = as.Date(c("2001-01-01", "2010-12-31"))
+)
+```
+
+---
+
+## Step 2 — Compute the annual proportion above reference
+
+After calculating the reference threshold, use `precipitation_above_reference()`
+within a grouped summary to obtain the annual index:
+
+```{r proportion}
+annual_index <- rain_data |>
+  mutate(ref = get_reference_precipitation(
+  rainfall, year, climate_normal, percentile = 95)) |>
+  group_by(year) |>
+  summarise(
+    prop_above = precipitation_above_reference(rainfall, ref),
+    .groups    = "drop")
+
+annual_index
+```
+
+---
+
+## Step 3 — Visualise and assess trends
+
+```{r plot, fig.width=7, fig.height=4}
+ggplot(annual_index, aes(x = year, y = prop_above)) +
+  geom_line(colour = "#085c75") +
+  geom_point(colour = "#085c75") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#AE4E51",
+              linewidth = 0.7, linetype = "dashed") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title    = "Proportion of annual rainfall from very wet days",
+       subtitle = "95th percentile threshold from 2001\u20132010 climate normal",
+       x = NULL, y = "Proportion of total rainfall") +
+  theme_minimal()
+```
+
+Combine with the trend functions from the `trends` vignette to test whether
+the index is changing significantly over time:
+
+```{r trend-test}
+annual_index |>
+  summarise(
+    mann_kendall(prop_above, alternative = "greater"),
+    .groups = "drop"
+  )
+```
+
+---
+
+## Adjusting the wet-day threshold
+
+By default, a wet day is defined as any day receiving ≥ 1 mm. You can change
+this to match a different standard:
+
+```{r wet-day}
+# Different wet-day thresholds
+propn_1mm  <- rain_data |>
+  group_by(year) |>
+  summarise(
+    prop = precipitation_above_reference(
+      rainfall,
+      get_reference_precipitation(rainfall, year, climate_normal),
+      wet_day_threshold = 1),
+    .groups = "drop")
+
+propn_0mm  <- rain_data |>
+  group_by(year) |>
+  summarise(
+    prop = precipitation_above_reference(
+      rainfall,
+      get_reference_precipitation(rainfall, year, climate_normal,
+      wet_day_threshold = 0),
+      wet_day_threshold = 0),
+    .groups = "drop")
+```
+
+Set `wet_day_threshold = 0` to include all days (including dry days) in the
+denominator — equivalent to treating all days as wet.
+
+---
+
+## Summary of key arguments
+
+| Argument | Default | Description |
+|---|---|---|
+| `precipitation` | — | Numeric vector of daily rainfall values |
+| `date` | `NULL` | Corresponding dates or years |
+| `reference_period` | `NULL` | Two-element vector defining the climate normal |
+| `percentile` | `95L` | Threshold percentile (0–100) |
+| `wet_day_threshold` | `1` | Minimum rainfall to count a day as wet (mm) |

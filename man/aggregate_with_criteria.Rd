@@ -8,8 +8,7 @@
 \alias{sum_with_criteria}
 \title{Calculate an aggregated value taking into account certain exclusion cirteria}
 \usage{
-aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0,
-  fun = mean)
+aggregate_with_criteria(x, max_missing = 0, max_consecutive = 0, fun = mean)
 
 mean_with_criteria(x, max_missing = 0, max_consecutive = 0)
 
@@ -44,12 +43,12 @@ monthly value by specifing these thresholds
 }
 \section{Functions}{
 \itemize{
-\item \code{mean_with_criteria}: Mean with criteria
+\item \code{mean_with_criteria()}: Mean with criteria
 
-\item \code{min_with_criteria}: Minimum with criteria
+\item \code{min_with_criteria()}: Minimum with criteria
 
-\item \code{max_with_criteria}: Maximum with criteria
+\item \code{max_with_criteria()}: Maximum with criteria
 
-\item \code{sum_with_criteria}: Sum with criteria
+\item \code{sum_with_criteria()}: Sum with criteria
+
 }}
-
