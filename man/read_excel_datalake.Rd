@@ -4,8 +4,14 @@
 \alias{read_excel_datalake}
 \title{Read a excel file stored in an AWS S3 bucket.}
 \usage{
-read_excel_datalake(s3_path, bucket_name = mfe_datalake_bucket,
-  version = NULL, all_sheets = T, sheet = 1, ...)
+read_excel_datalake(
+  s3_path,
+  bucket_name = mfe_datalake_bucket,
+  version = NULL,
+  all_sheets = T,
+  sheet = 1,
+  ...
+)
 }
 \arguments{
 \item{s3_path}{The filename of the desired excel in the S3 bucket including the

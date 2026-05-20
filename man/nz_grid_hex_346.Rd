@@ -4,7 +4,11 @@
 \name{nz_grid_hex_346}
 \alias{nz_grid_hex_346}
 \title{Hexagonal grid sf object with hexagons of 346km2.}
-\format{An \code{sf} object.}
+\format{
+An \code{sf} object.
+
+An \code{sf} object.
+}
 \usage{
 nz_grid_hex_346
 
