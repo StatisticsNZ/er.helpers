@@ -32,6 +32,60 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
              AWS_DEFAULT_REGION = "ap-southeast-2")
 }
 
+#' Set up access to the data lake using an AWS CLI v2 profile
+#'
+#' This function configures the current R session to use an AWS profile that
+#' has been configured via AWS CLI v2.
+#'
+#' Users must authenticate beforehand using:
+#'
+#' aws sso login --profile <profile_name>
+#'
+#' @param profile_name AWS profile name from ~/.aws/config
+#' @param bucket_name S3 bucket name
+#' @param region AWS region
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' aws sso login --profile my_profile
+#'
+#' setup_sso_access(
+#'   profile_name = "my_profile"
+#' )
+#' }
+setup_sso_access <- function(
+    profile_name,
+    region = "ap-southeast-2"
+) {
+
+  json_txt <- system2(
+    command = "aws",
+    args = c(
+      "configure",
+      "export-credentials",
+      "--profile",
+      profile_name,
+      "--format",
+      "process"
+    ),
+    stdout = TRUE
+  )
+
+  creds <- jsonlite::fromJSON(
+    paste(json_txt, collapse = "\n")
+  )
+
+  Sys.setenv(
+    AWS_ACCESS_KEY_ID = creds$AccessKeyId,
+    AWS_SECRET_ACCESS_KEY = creds$SecretAccessKey,
+    AWS_SESSION_TOKEN = creds$SessionToken,
+    AWS_DEFAULT_REGION = region
+  )
+
+  invisible(TRUE)
+}
 
 #' Read a CSV file stored in an AWS S3 bucket.
 #'
@@ -61,7 +115,7 @@ read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
 
-  check_aws_access()
+  check_sso_access()
 
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
@@ -74,7 +128,13 @@ read_csv_datalake <- function(s3_path,
 
   connection <- rawConnection(obj)
   # Make sure the connection is clossed on exit
-  on.exit(close(connection))
+  on.exit({
+    try(
+      if (inherits(connection, "connection") && isOpen(connection))
+        close(connection),
+      silent = TRUE
+    )
+  }, add = TRUE)
 
   data <- readr::read_csv(file = connection, ...)
 
@@ -238,8 +298,6 @@ get_metadata <- function(..., from_datalake = T, data = NULL){
 
 }
 
-
-
 #' Read a excel file stored in an AWS S3 bucket.
 #'
 #' This function get the specified object from an AWS S3 bucket and reads it
@@ -274,7 +332,7 @@ read_excel_datalake <- function (s3_path,
                                  sheet = 1,
                                  ...) {
 
-  #check_aws_access()
+  check_sso_access()
 
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
@@ -362,6 +420,42 @@ You need to setup access manually if this function fails.")
   }
 }
 
+#' Check AWS authentication
+#'
+#' Validates that the configured AWS profile can access the specified bucket.
+#'
+#' @param bucket_name AWS S3 bucket
+#'
+#' @return TRUE if authentication succeeds
+#'
+#' @keywords internal
+#'
+#' @export
+check_sso_access <- function() {
+
+  required <- c(
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_SESSION_TOKEN"
+  )
+
+  missing <- required[
+    Sys.getenv(required) == ""
+  ]
+
+  if (length(missing) > 0) {
+
+    stop(
+      paste(
+        "AWS credentials not configured.",
+        "Run setup_datalake_access(profile_name)."
+      ),
+      call. = FALSE
+    )
+  }
+
+  invisible(TRUE)
+}
 
 #' List bucket contents with versions
 #'
@@ -384,7 +478,7 @@ You need to setup access manually if this function fails.")
 #'
 get_bucket_version_df <- function(bucket_name, key_marker = "", prefix = ""){
 
-  check_aws_access()
+  check_sso_access()
   get_versions_list(bucket_name, key_marker, prefix) %>%
     purrr::map(version_list_as_df) %>%
     dplyr::bind_rows()
@@ -478,7 +572,7 @@ search_datalake <- function(...,
   patterns <- list(...) %>%
     prepare_pattern()
 
-  check_aws_access()
+  check_sso_access()
 
   all_keys <- aws.s3::get_bucket_df(bucket = bucket_name, max = Inf)
   if (any(patterns == "")) {
@@ -580,6 +674,39 @@ metadata_to_table <- function (df, remove_names = c("row.names")){
   return(metadata)
 }
 
+#' Get configured AWS profile
+#'
+#' @return Character scalar
+#'
+#' @keywords internal
+get_aws_profile <- function() {
+
+  Sys.getenv("AWS_PROFILE")
+}
+
+
+#' Get configured AWS region
+#'
+#' @return Character scalar
+#'
+#' @export
+#'
+#' @keywords internal
+get_aws_region <- function() {
+
+  Sys.getenv("AWS_DEFAULT_REGION")
+}
+
+
+#' Test whether an AWS profile is configured
+#'
+#' @return Logical scalar
+#'
+#' @keywords internal
+aws_profile_configured <- function() {
+
+  nzchar(Sys.getenv("AWS_PROFILE"))
+}
 
 
 
