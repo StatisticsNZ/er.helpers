@@ -5,27 +5,18 @@
 \alias{pal_snz}
 \title{Colour palette for a graph with a nominal categorical variable.}
 \format{
-An object of class \code{character} of length 6.
-
-An object of class \code{character} of length 6.
+An object of class \code{character} of length 9.
 }
 \usage{
-pal_snz
-
 pal_snz
 }
 \value{
 A vector of hex codes.
-
-A vector of hex codes.
 }
 \description{
 Colour palette for a graph with a nominal categorical variable.
-
-Colour palette for a graph with a continuous variable.
 }
 \examples{
-scales::show_col(pal_snz)
 scales::show_col(pal_snz)
 }
 \keyword{datasets}

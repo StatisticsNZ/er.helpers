@@ -12,7 +12,7 @@ pal_snz <- c("#085c75", "#d2ac2f", "#ae4e51", "#35345d", "#76a93f", "#6f2e38", "
 #' @export
 #' @examples
 #' scales::show_col(pal_snz)
-pal_snz <- c("#172a45", "#005c75", "#0d94a3","#d0cdbb", "#dd6829", "#b85913")
+pal_snz_continuous <- c("#172a45", "#005c75", "#0d94a3","#d0cdbb", "#dd6829", "#b85913")
 
 #' @title Colour palette for a graph that compares a current year to 1 past year.
 #' @description  Colour palette for a graph that compares a current year to 1 past year.
