@@ -6,6 +6,14 @@
 #' scales::show_col(pal_snz)
 pal_snz <- c("#085c75", "#d2ac2f", "#ae4e51", "#35345d", "#76a93f", "#6f2e38", "#0d94a3", "#dd6829", "#1a6e5b")
 
+#' @title Colour palette for a graph with a continuous variable.
+#' @description  Colour palette for a graph with a continuous variable.
+#' @return A vector of hex codes.
+#' @export
+#' @examples
+#' scales::show_col(pal_snz)
+pal_snz <- c("#172a45", "#005c75", "#0d94a3","#d0cdbb", "#dd6829", "#b85913")
+
 #' @title Colour palette for a graph that compares a current year to 1 past year.
 #' @description  Colour palette for a graph that compares a current year to 1 past year.
 #' @return A vector of hex codes. Uses the first colour and a 30% tint.
@@ -120,7 +128,7 @@ pal_point_set1 <- c("#377EB8", "#A65628", "#F781BF", "#4DAF4A", "#FF7F00", "#984
 #' @export
 #' @examples
 #' scales::show_col(pal_point_trend2)
-pal_point_trend2 <- c("#4575B4", "#D73027")
+pal_point_trend2 <- c("#4575B4", "#B2182B")
 
 #' @title Colour palette for a map of a ordinal categorical trend variable with 3 values.
 #' @description Colour palette for a map of a ordinal categorical trend variable with 3 values.
@@ -128,7 +136,7 @@ pal_point_trend2 <- c("#4575B4", "#D73027")
 #' @export
 #' @examples
 #' scales::show_col(pal_point_trend3)
-pal_point_trend3 <- c("#4575B4", "#8e8e8e", "#D73027")
+pal_point_trend3 <- c("#4575B4", "#8e8e8e", "#B2182B")
 
 #' @title Colour palette for a map of a ordinal categorical trend variable with 5 values.
 #' @description Colour palette for a map of a ordinal categorical trend variable with 5 values.
@@ -136,7 +144,16 @@ pal_point_trend3 <- c("#4575B4", "#8e8e8e", "#D73027")
 #' @export
 #' @examples
 #' scales::show_col(pal_point_trend5)
-pal_point_trend5 <- c("#4575B4", "#90C3DD", "#8e8e8e", "#F98E52", "#D73027")
+pal_point_trend5 <- c("#2166AC", "#67A9CF", "#8e8e8e", "#EF6548", "#B2182B")
+
+#' @title Colour palette for a map of continuous diverging pal
+#' @description Colour palette for a map of continuous diverging pal for rate of change. Best used in scale_x_gradient...
+#' @return A vector of hex codes.
+#' @export
+#' @examples
+#' scales::show_col(pal_point_trend5)
+pal_continuous_trend <- c( "#7F0000", "#B2182B", "#D6604D", "#FDB863",
+                           "#D9D9D9", "#92C5DE", "#4393C3", "#2166AC", "#053061")
 
 #' @title Signed square root ggplot scale transformation.
 #' @description A signed square root ggplot scale transformation.

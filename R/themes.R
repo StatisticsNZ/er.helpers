@@ -6,6 +6,8 @@
 stats_theme_plot <-function() {
   ggplot2::theme_classic() +
   ggplot2::theme(
+    # Remove facet borders
+    strip.background = ggplot2::element_blank(),
     axis.line.x = ggplot2::element_line(colour = "#CCCCCC"),
     line = ggplot2::element_line(colour = "#CCCCCC"),
     axis.line.y = ggplot2::element_line(colour = "#CCCCCC"),
@@ -14,8 +16,7 @@ stats_theme_plot <-function() {
     axis.text.y = ggplot2::element_text(family = "Arial"),
     axis.text.x = ggplot2::element_text(family = "Arial"),
     text = ggplot2::element_text(family = "Arial"),
-    strip.background = ggplot2::element_blank(),
-    plot.caption = ggplot2::element_text(hjust = 0),
+    plot.caption = ggplot2::element_text(hjust = 1),
     axis.title.x = ggplot2::element_text(
       face = "bold",
       hjust = 0.5
