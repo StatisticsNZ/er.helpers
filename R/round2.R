@@ -5,7 +5,6 @@
 #' @param x vector
 #' @param n digits to round to
 #'
-#' @return
 #' @export
 #'
 #' @examples

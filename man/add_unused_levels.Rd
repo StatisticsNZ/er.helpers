@@ -17,3 +17,6 @@ A tibble, dataframe or sf object. Required input.
 \description{
 Add a row for each unused factor level to ensure plotly displays all levels in the legend.
 }
+\examples{
+library(palmerpenguins)
+}

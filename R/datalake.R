@@ -203,7 +203,7 @@ write_rds_datalake <- function(data, s3_path){
 #' Retrieve metadata from an object in the data lake. This function is designed to retrieve the attribute information that is attatched to .RDS file types in the write_to_datalake() function.
 #'
 #' @param ... Key words for an object in the lake
-#' @inheritParams read_from_lake
+#' @inheritParams read_from_datalake
 #'
 #' @return TRUE if it succeeded and FALSE if it failed
 #'
@@ -513,7 +513,6 @@ search_datalake <- function(...,
 #' @return list of patterns using standard unicode collation rules
 #' @export
 #'
-#' @examples
 prepare_pattern <- function(pattern){
   # If the pattern is a plain character then ignore case as this is usually
   # what we want
@@ -535,7 +534,6 @@ prepare_pattern <- function(pattern){
 #' @return list of attribute names and values
 #' @export
 #'
-#' @examples
 table_to_metadata <- function(df, metadata){
 
   df_name <- deparse(substitute(df))
@@ -558,7 +556,6 @@ table_to_metadata <- function(df, metadata){
 #' @return tibble with name and values of attributes extracted from df
 #' @export
 #'
-#' @examples
 metadata_to_table <- function (df, remove_names = c("row.names")){
 
   metadata <- attributes(df)

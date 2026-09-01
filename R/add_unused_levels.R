@@ -1,15 +1,12 @@
 #' Add a row for each unused factor level to ensure plotly displays all levels in the legend.
 #'
-#' Add a row for each unused factor level to ensure plotly displays all levels in the legend.
-#'
 #' @param data A tibble, dataframe or sf object. Required input.
 #' @param var A variable of class factor.
 #'
 #' @return A tibble, dataframe or sf object. Required input.
 #' @export
 #'
-#' @examples
-# library(palmerpenguins)
+#' @examples library(palmerpenguins)
 # library(dplyr)
 #
 # penguins %>%
