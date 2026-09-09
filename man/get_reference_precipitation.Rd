@@ -57,7 +57,7 @@ rain_data \%>\%
   summarise(prop_above = precipitation_above_reference(rainfall, ref))
 }
 \seealso{
-Other rainfall functions: 
-\code{\link{precipitation_above_reference}()}
+Other rainfall functions:
+\code{\link[=precipitation_above_reference]{precipitation_above_reference()}}
 }
 \concept{rainfall functions}

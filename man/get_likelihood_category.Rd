@@ -67,8 +67,8 @@ get_likelihood_category(p, scale = "ipcc") \%>\%
   order_likelihood_levels()
 }
 \seealso{
-Other likelihood functions: 
-\code{\link{order_likelihood_levels}()},
-\code{\link{simplify_likelihood_levels}()}
+Other likelihood functions:
+\code{\link[=order_likelihood_levels]{order_likelihood_levels()}},
+\code{\link[=simplify_likelihood_levels]{simplify_likelihood_levels()}}
 }
 \concept{likelihood functions}

@@ -1,6 +1,5 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
-<url><loc>/CHANGELOG.html</loc></url>
 <url><loc>/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>/CONTRIBUTING.html</loc></url>
 <url><loc>/LICENSE-text.html</loc></url>
@@ -16,6 +15,7 @@
 <url><loc>/reference/are_all_the_same.html</loc></url>
 <url><loc>/reference/calc_annual_anomaly.html</loc></url>
 <url><loc>/reference/check_aws_access.html</loc></url>
+<url><loc>/reference/check_aws_mfa_access.html</loc></url>
 <url><loc>/reference/er.helpers-deprecated.html</loc></url>
 <url><loc>/reference/get_bucket_version_df.html</loc></url>
 <url><loc>/reference/get_likelihood_category.html</loc></url>
@@ -24,9 +24,6 @@
 <url><loc>/reference/get_reference_precipitation.html</loc></url>
 <url><loc>/reference/get_season.html</loc></url>
 <url><loc>/reference/get_versions_list.html</loc></url>
-<url><loc>/reference/ggplot_hbar_col_x_na_inf.html</loc></url>
-<url><loc>/reference/ggplot_hbar_facet_x_na_inf.html</loc></url>
-<url><loc>/reference/ggplot_hbar_x_na_inf.html</loc></url>
 <url><loc>/reference/gridify_mb_data.html</loc></url>
 <url><loc>/reference/in_interval.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
@@ -44,9 +41,6 @@
 <url><loc>/reference/pal_continuous_trend.html</loc></url>
 <url><loc>/reference/pal_ea19.html</loc></url>
 <url><loc>/reference/pal_ea19_alpha2.html</loc></url>
-<url><loc>/reference/pal_ea19_compare2.html</loc></url>
-<url><loc>/reference/pal_ea19_nof4.html</loc></url>
-<url><loc>/reference/pal_ea19_nof5.html</loc></url>
 <url><loc>/reference/pal_ea19_nztcs_c.html</loc></url>
 <url><loc>/reference/pal_ea19_trend2.html</loc></url>
 <url><loc>/reference/pal_ea19_trend3.html</loc></url>
@@ -57,10 +51,7 @@
 <url><loc>/reference/pal_point_trend5.html</loc></url>
 <url><loc>/reference/pal_snz.html</loc></url>
 <url><loc>/reference/pal_snz_alpha2.html</loc></url>
-<url><loc>/reference/pal_snz_compare2.html</loc></url>
 <url><loc>/reference/pal_snz_continuous.html</loc></url>
-<url><loc>/reference/pal_snz_nof4.html</loc></url>
-<url><loc>/reference/pal_snz_nof5.html</loc></url>
 <url><loc>/reference/pal_snz_nztcs_c.html</loc></url>
 <url><loc>/reference/pal_snz_nztcs_s.html</loc></url>
 <url><loc>/reference/pal_snz_trend2.html</loc></url>
@@ -70,8 +61,8 @@
 <url><loc>/reference/precipitation_above_reference.html</loc></url>
 <url><loc>/reference/prepare_pattern.html</loc></url>
 <url><loc>/reference/prettify_range.html</loc></url>
+<url><loc>/reference/read_aws_csv.html</loc></url>
 <url><loc>/reference/read_csv_datalake.html</loc></url>
-<url><loc>/reference/read_excel.html</loc></url>
 <url><loc>/reference/read_excel_datalake.html</loc></url>
 <url><loc>/reference/read_from_datalake.html</loc></url>
 <url><loc>/reference/rearrange_geometries.html</loc></url>
@@ -81,6 +72,7 @@
 <url><loc>/reference/sankey_build_data.html</loc></url>
 <url><loc>/reference/search_datalake.html</loc></url>
 <url><loc>/reference/sen_slope.html</loc></url>
+<url><loc>/reference/setup_aws_access.html</loc></url>
 <url><loc>/reference/setup_datalake_access.html</loc></url>
 <url><loc>/reference/shiny_template.html</loc></url>
 <url><loc>/reference/signed_sqrt_trans.html</loc></url>
@@ -90,11 +82,8 @@
 <url><loc>/reference/stats_theme_plot.html</loc></url>
 <url><loc>/reference/statsnz_likelihood_scale.html</loc></url>
 <url><loc>/reference/table_to_metadata.html</loc></url>
-<url><loc>/reference/theme_hbar.html</loc></url>
 <url><loc>/reference/tidyeval.html</loc></url>
 <url><loc>/reference/version_list_as_df.html</loc></url>
-<url><loc>/reference/write_csv_datalake.html</loc></url>
-<url><loc>/reference/write_excel_datalake.html</loc></url>
 <url><loc>/reference/write_rds_datalake.html</loc></url>
 </urlset>
 

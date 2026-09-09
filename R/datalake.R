@@ -32,6 +32,60 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
              AWS_DEFAULT_REGION = "ap-southeast-2")
 }
 
+#' Set up access to the data lake using an AWS CLI v2 profile
+#'
+#' This function configures the current R session to use an AWS profile that
+#' has been configured via AWS CLI v2.
+#'
+#' Users must authenticate beforehand using:
+#'
+#' aws sso login --profile <profile_name>
+#'
+#' @param profile_name AWS profile name from ~/.aws/config
+#' @param bucket_name S3 bucket name
+#' @param region AWS region
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' awslogin
+#'
+#' setup_sso_access(
+#'   profile_name = "my_profile"
+#' )
+#' }
+setup_aws_access <- function(
+    profile_name,
+    region = "ap-southeast-2"
+) {
+  
+  json_txt <- system2(
+    command = "aws",
+    args = c(
+      "configure",
+      "export-credentials",
+      "--profile",
+      profile_name,
+      "--format",
+      "process"
+    ),
+    stdout = TRUE
+  )
+  
+  creds <- jsonlite::fromJSON(
+    paste(json_txt, collapse = "\n")
+  )
+  
+  Sys.setenv(
+    AWS_ACCESS_KEY_ID = creds$AccessKeyId,
+    AWS_SECRET_ACCESS_KEY = creds$SecretAccessKey,
+    AWS_SESSION_TOKEN = creds$SessionToken,
+    AWS_DEFAULT_REGION = region
+  )
+  
+  invisible(TRUE)
+}
 
 #' Read a CSV file stored in an AWS S3 bucket.
 #'
@@ -78,6 +132,65 @@ read_csv_datalake <- function(s3_path,
 
   data <- readr::read_csv(file = connection, ...)
 
+  if (names(data)[1] == "X1") {
+    data %>%
+      dplyr::select(-"X1")
+  } else {
+    data
+  }
+}
+
+#' Read a CSV file stored in an AWS S3 bucket with enabled MFA authentication.
+#'
+#' This function get the specified object from an AWS S3 bucket and reads it
+#' using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and,
+#' therefore, it avoids the unintended consequences of saving the file in the
+#' disk.
+#'
+#' @param s3_path The filename of the desired CSV in the S3 bucket including the
+#'   full path
+#' @inheritParams setup_aws_access
+#' @param version VersionId of the object key desired. Can be retrieved using
+#'   \code{\link{get_bucket_version_df}}
+#' @param ... Other arguments passed to the reading_function
+#'
+#' @return A `\code{\link[tibble]{tibble}}
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' setup_aws_access()
+#' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
+#' read_aws_csv(csv_object_path)
+#' }
+read_aws_csv <- function(s3_path,
+                              bucket_name = mfe_datalake_bucket,
+                              version = NULL, ...){
+  
+  check_aws_access()
+  
+  if (is.null(version)) {
+    obj <- aws.s3::get_object(object = s3_path,
+                              bucket = bucket_name)
+  } else {
+    obj <- aws.s3::get_object(object = s3_path,
+                              bucket = bucket_name,
+                              query = list(`versionId` = version))
+  }
+  
+  connection <- rawConnection(obj)
+  # in older R versions rawConnections needed to be closed, adding a silent close statement in case connection remains open
+  on.exit({
+    try(
+      if (inherits(connection, "connection") && isOpen(connection))
+        close(connection),
+      silent = TRUE
+    )
+  }, add = TRUE)
+  
+  data <- readr::read_csv(file = connection, ...)
+  
   if (names(data)[1] == "X1") {
     data %>%
       dplyr::select(-"X1")
@@ -274,7 +387,7 @@ read_excel_datalake <- function (s3_path,
                                  sheet = 1,
                                  ...) {
 
-  #check_aws_access()
+  check_aws_access()
 
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
@@ -344,6 +457,7 @@ all_columns_to_snakecase <- function(x){
 
 #' Check if aws credentials have been configured and attempt default
 #' configuration otherwise
+#' @export
 #'
 check_aws_access <- function() {
   aws_credentials_configured <- c("AWS_ACCESS_KEY_ID",
@@ -361,6 +475,47 @@ You need to setup access manually if this function fails.")
     setup_datalake_access()
   }
 }
+
+#' Check AWS authentication
+#'
+#' Validates that the configured AWS profile can access the specified bucket.
+#'
+#' @param bucket_name AWS S3 bucket
+#'
+#' @return TRUE if authentication succeeds
+#'
+#' @keywords internal
+#'
+#' @export
+check_aws_mfa_access <- function() {
+  
+  required <- c(
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_SESSION_TOKEN"
+  )
+  
+  missing <- required[
+    Sys.getenv(required) == ""
+  ]
+  
+  if (length(missing) > 0) {
+    
+    stop(
+      paste(
+        "AWS credentials not configured.",
+        "Run setup_aws_access(profile_name)."
+      ),
+      call. = FALSE
+    )
+  }
+  
+  invisible(TRUE)
+}
+
+
+
+
 
 
 #' List bucket contents with versions
@@ -396,6 +551,7 @@ get_bucket_version_df <- function(bucket_name, key_marker = "", prefix = ""){
 #' @param key_marker The key marker from which to download the object metadata.
 #' @param prefix The prefix from which to download the object metadata.
 #'   Empty string download all metadata
+#' @export
 #'
 #' @return a list with metadata
 get_versions_list <- function(bucket_name, key_marker = "", prefix = ""){
@@ -421,6 +577,8 @@ get_versions_list <- function(bucket_name, key_marker = "", prefix = ""){
 #'
 #' @param versions list item as returned by `get_versions_list`
 #'
+#' @export
+#' 
 #' @return A data frame
 version_list_as_df <- function(versions){
 
@@ -576,7 +734,3 @@ metadata_to_table <- function (df, remove_names = c("row.names")){
 
   return(metadata)
 }
-
-
-
-
