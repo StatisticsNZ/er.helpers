@@ -10,8 +10,6 @@ read_aws_csv(s3_path, bucket_name = mfe_datalake_bucket, version = NULL, ...)
 \item{s3_path}{The filename of the desired CSV in the S3 bucket including the
 full path}
 
-\item{bucket_name}{S3 bucket name}
-
 \item{version}{VersionId of the object key desired. Can be retrieved using
 \code{\link{get_bucket_version_df}}}
 

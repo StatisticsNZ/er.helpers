@@ -4,14 +4,12 @@
 \alias{setup_aws_access}
 \title{Set up access to the data lake using an AWS CLI v2 profile}
 \usage{
-setup_aws_access(profile_name, region = "ap-southeast-2")
+setup_aws_access(profile_name = "my_mfe_profile", region = "ap-southeast-2")
 }
 \arguments{
-\item{profile_name}{AWS profile name from ~/.aws/config}
+\item{profile_name}{AWS profile name from ~/.aws/config. my_mfe_profile is the default}
 
 \item{region}{AWS region}
-
-\item{bucket_name}{S3 bucket name}
 }
 \description{
 This function configures the current R session to use an AWS profile that
@@ -26,7 +24,7 @@ aws sso login --profile <profile_name>
 \dontrun{
 awslogin
 
-setup_sso_access(
+setup_aws_access(
   profile_name = "my_profile"
 )
 }

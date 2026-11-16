@@ -9,6 +9,11 @@ mfe_datalake_bucket <- "mfedlkinput"
 #' programatically. By default it connects to the Environmental Reporting Data
 #' Lake.
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Use [setup_aws_access()] instead.
+#'
 #' @param cred_csv A csv file with the credentials information. At a minimum it
 #'   should have two columns: "Access key ID" and "Secret access key". By
 #'   default \code{\link{setup_datalake_access}} looks for this file in the user
@@ -41,8 +46,7 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #'
 #' aws sso login --profile <profile_name>
 #'
-#' @param profile_name AWS profile name from ~/.aws/config
-#' @param bucket_name S3 bucket name
+#' @param profile_name AWS profile name from ~/.aws/config. my_mfe_profile is the default
 #' @param region AWS region
 #'
 #' @export
@@ -51,42 +55,101 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' \dontrun{
 #' awslogin
 #'
-#' setup_sso_access(
+#' setup_aws_access(
 #'   profile_name = "my_profile"
 #' )
 #' }
 setup_aws_access <- function(
-    profile_name,
+    profile_name = "my_mfe_profile",
     region = "ap-southeast-2"
 ) {
-  
+
+  # Check whether current credentials are valid
+  status <- suppressWarnings(
+    system2(
+      "aws",
+      c("sts", "get-caller-identity", "--profile", profile_name),
+      stdout = FALSE,
+      stderr = FALSE
+    )
+  )
+
+  logged_in <- identical(status, 0L)
+
+  # If not logged in, start browser-based SSO login
+  if (!logged_in) {
+
+    message("Launching AWS SSO login...")
+
+    system2(
+      "aws",
+      c("sso", "login", "--profile", profile_name, " --use-device-code"),
+      wait = FALSE
+    )
+
+    message("Waiting for login to complete...")
+
+    repeat {
+
+      Sys.sleep(2)
+
+      creds_test <- tryCatch(
+        system2(
+          "aws",
+          c(
+            "configure",
+            "export-credentials",
+            "--profile", profile_name,
+            "--format", "process"
+          ),
+          stdout = TRUE,
+          stderr = TRUE
+        ),
+        error = function(e) character()
+      )
+
+      if (
+        length(creds_test) > 0 &&
+        !any(
+          grepl(
+            "expired|login|required|error|unauthorized",
+            creds_test,
+            ignore.case = TRUE
+          )
+        )
+      ) {
+        break
+      }
+    }
+
+    message("AWS login successful.")
+  }
+
+  # Export credentials
   json_txt <- system2(
-    command = "aws",
-    args = c(
+    "aws",
+    c(
       "configure",
       "export-credentials",
-      "--profile",
-      profile_name,
-      "--format",
-      "process"
+      "--profile", profile_name,
+      "--format", "process"
     ),
     stdout = TRUE
   )
-  
+
   creds <- jsonlite::fromJSON(
     paste(json_txt, collapse = "\n")
   )
-  
+
   Sys.setenv(
     AWS_ACCESS_KEY_ID = creds$AccessKeyId,
     AWS_SECRET_ACCESS_KEY = creds$SecretAccessKey,
     AWS_SESSION_TOKEN = creds$SessionToken,
     AWS_DEFAULT_REGION = region
   )
-  
+
   invisible(TRUE)
 }
-
 #' Read a CSV file stored in an AWS S3 bucket.
 #'
 #' This function get the specified object from an AWS S3 bucket and reads it
@@ -167,9 +230,9 @@ read_csv_datalake <- function(s3_path,
 read_aws_csv <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
-  
+
   check_aws_access()
-  
+
   if (is.null(version)) {
     obj <- aws.s3::get_object(object = s3_path,
                               bucket = bucket_name)
@@ -178,7 +241,7 @@ read_aws_csv <- function(s3_path,
                               bucket = bucket_name,
                               query = list(`versionId` = version))
   }
-  
+
   connection <- rawConnection(obj)
   # in older R versions rawConnections needed to be closed, adding a silent close statement in case connection remains open
   on.exit({
@@ -188,9 +251,9 @@ read_aws_csv <- function(s3_path,
       silent = TRUE
     )
   }, add = TRUE)
-  
+
   data <- readr::read_csv(file = connection, ...)
-  
+
   if (names(data)[1] == "X1") {
     data %>%
       dplyr::select(-"X1")
@@ -488,19 +551,19 @@ You need to setup access manually if this function fails.")
 #'
 #' @export
 check_aws_mfa_access <- function() {
-  
+
   required <- c(
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
     "AWS_SESSION_TOKEN"
   )
-  
+
   missing <- required[
     Sys.getenv(required) == ""
   ]
-  
+
   if (length(missing) > 0) {
-    
+
     stop(
       paste(
         "AWS credentials not configured.",
@@ -509,7 +572,7 @@ check_aws_mfa_access <- function() {
       call. = FALSE
     )
   }
-  
+
   invisible(TRUE)
 }
 
@@ -578,7 +641,7 @@ get_versions_list <- function(bucket_name, key_marker = "", prefix = ""){
 #' @param versions list item as returned by `get_versions_list`
 #'
 #' @export
-#' 
+#'
 #' @return A data frame
 version_list_as_df <- function(versions){
 

@@ -20,6 +20,11 @@ Ministry for the Environment data lake for environmental reporting
 "mfedlkinput".}
 }
 \description{
+`r lifecycle::badge("deprecated")`
+
+Use [setup_aws_access()] instead.
+}
+\details{
 This function set ups the credentials required to access an AWS S3 bucket
 programatically. By default it connects to the Environmental Reporting Data
 Lake.
