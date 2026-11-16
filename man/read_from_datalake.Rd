@@ -23,7 +23,7 @@ This function also uses key search terms and will throw an error if there is mor
 }
 \examples{
 \dontrun{
-setup_datalake_access()
+setup_aws_access()
 read_from_datalake("landcover", "concordance", "lcdb4")
 }
 }

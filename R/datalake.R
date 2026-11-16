@@ -3,40 +3,6 @@
 #' @export
 mfe_datalake_bucket <- "mfedlkinput"
 
-#' Set up access to the data lake programatically.
-#'
-#' This function set ups the credentials required to access an AWS S3 bucket
-#' programatically. By default it connects to the Environmental Reporting Data
-#' Lake.
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' Use [setup_aws_access()] instead.
-#'
-#' @param cred_csv A csv file with the credentials information. At a minimum it
-#'   should have two columns: "Access key ID" and "Secret access key". By
-#'   default \code{\link{setup_datalake_access}} looks for this file in the user
-#'   directory "~/credentials.csv".
-#' @param bucket_name Name of the bucket to connect. By default, it uses the
-#'   Ministry for the Environment data lake for environmental reporting
-#'   "mfedlkinput".
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access(cred_csv = "~/credentials.csv", bucket_name = "mfedlkinput")
-#' }
-setup_datalake_access <- function(cred_csv = "~/credentials.csv",
-                                  bucket_name = mfe_datalake_bucket){
-
-  creds <- readr::read_csv(cred_csv, col_types = "ccccc")
-  Sys.setenv(AWS_ACCESS_KEY_ID = creds["Access key ID"],
-             AWS_SECRET_ACCESS_KEY = creds["Secret access key"],
-             AWS_DEFAULT_REGION = "ap-southeast-2")
-}
-
 #' Set up access to the data lake using an AWS CLI v2 profile
 #'
 #' This function configures the current R session to use an AWS profile that
@@ -156,59 +122,6 @@ setup_aws_access <- function(
 #'
 #' @param s3_path The filename of the desired CSV in the S3 bucket including the
 #'   full path
-#' @inheritParams setup_datalake_access
-#' @param version VersionId of the object key desired. Can be retrieved using
-#'   \code{\link{get_bucket_version_df}}
-#' @param ... Other arguments passed to the reading_function
-#'
-#' @return A `\code{\link[tibble]{tibble}}
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' setup_datalake_access()
-#' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
-#' read_csv_datalake(csv_object_path)
-#' }
-read_csv_datalake <- function(s3_path,
-                              bucket_name = mfe_datalake_bucket,
-                              version = NULL, ...){
-
-  check_aws_access()
-
-  if (is.null(version)) {
-    obj <- aws.s3::get_object(object = s3_path,
-                              bucket = bucket_name)
-  } else {
-    obj <- aws.s3::get_object(object = s3_path,
-                              bucket = bucket_name,
-                              query = list(`versionId` = version))
-  }
-
-  connection <- rawConnection(obj)
-  # Make sure the connection is clossed on exit
-  on.exit(close(connection))
-
-  data <- readr::read_csv(file = connection, ...)
-
-  if (names(data)[1] == "X1") {
-    data %>%
-      dplyr::select(-"X1")
-  } else {
-    data
-  }
-}
-
-#' Read a CSV file stored in an AWS S3 bucket with enabled MFA authentication.
-#'
-#' This function get the specified object from an AWS S3 bucket and reads it
-#' using \code{\link[readr]{read_csv}}. It keeps the CSV in memory and,
-#' therefore, it avoids the unintended consequences of saving the file in the
-#' disk.
-#'
-#' @param s3_path The filename of the desired CSV in the S3 bucket including the
-#'   full path
 #' @inheritParams setup_aws_access
 #' @param version VersionId of the object key desired. Can be retrieved using
 #'   \code{\link{get_bucket_version_df}}
@@ -222,9 +135,9 @@ read_csv_datalake <- function(s3_path,
 #' \dontrun{
 #' setup_aws_access()
 #' csv_object_path <- "freshwater/2020/raw/urban_stream_water_quality_state.csv"
-#' read_aws_csv(csv_object_path)
+#' read_csv_datalake(csv_object_path)
 #' }
-read_aws_csv <- function(s3_path,
+read_csv_datalake <- function(s3_path,
                               bucket_name = mfe_datalake_bucket,
                               version = NULL, ...){
 
@@ -268,14 +181,14 @@ read_aws_csv <- function(s3_path,
 #' This function also uses key search terms and will throw an error if there is more than one file with the search terms used.
 #'
 #' @param ... Key terms to search for in the AWS S3 bucket
-#' @inheritParams setup_datalake_access
+#' @inheritParams setup_aws_access
 #' @inheritParams read_excel_datalake
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' setup_datalake_access()
+#' setup_aws_access()
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
@@ -349,7 +262,7 @@ read_from_datalake <- function(..., date = NULL, all_sheets = T, version = NULL)
 #'
 #' @examples
 #' \dontrun{
-#' setup_datalake_access()
+#' setup_aws_access()
 #' read_from_datalake("landcover", "concordance", "lcdb4")
 #' }
 
@@ -424,7 +337,7 @@ get_metadata <- function(..., from_datalake = T, data = NULL){
 #'   full path
 #' @param sheet The sheet number to extract. Defaults to 1.
 #' @param all_sheets If more than one sheet is present, T = read all sheets into a list, F = default to sheet specified
-#' @inheritParams setup_datalake_access
+#' @inheritParams setup_aws_access
 #' @param version VersionId of the object key desired. Can be retrieved using
 #'   \code{\link{get_bucket_version_df}}
 #' @param ... Other arguments passed to the reading_function
@@ -435,7 +348,7 @@ get_metadata <- function(..., from_datalake = T, data = NULL){
 #'
 #' @examples
 #' \dontrun{
-#' setup_datalake_access()
+#' setup_aws_access()
 #' files <- search_datalake(".x", "land", "2021")$Key
 #' read_excel_datalake(files[2])
 #' read_excel_datalake(files[1], sheet = 2)
@@ -530,52 +443,11 @@ check_aws_access <- function() {
 
   if (!aws_credentials_configured) {
     message("AWS credentials not configured in this session.
-Attempting setup with `setup_datalake_access()` and default settings
+Attempting setup with `setup_aws_access()` and default settings
 You need to setup access manually if this function fails.")
-    setup_datalake_access()
+    setup_aws_access()
   }
 }
-
-#' Check AWS authentication
-#'
-#' Validates that the configured AWS profile can access the specified bucket.
-#'
-#' @param bucket_name AWS S3 bucket
-#'
-#' @return TRUE if authentication succeeds
-#'
-#' @keywords internal
-#'
-#' @export
-check_aws_mfa_access <- function() {
-
-  required <- c(
-    "AWS_ACCESS_KEY_ID",
-    "AWS_SECRET_ACCESS_KEY",
-    "AWS_SESSION_TOKEN"
-  )
-
-  missing <- required[
-    Sys.getenv(required) == ""
-  ]
-
-  if (length(missing) > 0) {
-
-    stop(
-      paste(
-        "AWS credentials not configured.",
-        "Run setup_aws_access(profile_name)."
-      ),
-      call. = FALSE
-    )
-  }
-
-  invisible(TRUE)
-}
-
-
-
-
 
 
 #' List bucket contents with versions
@@ -586,7 +458,7 @@ check_aws_mfa_access <- function() {
 #' than 1000 object versions, it makes iterative calls to the AWS S3 API to
 #' retrieve the metadata for all versions
 #'
-#' @inheritParams setup_datalake_access
+#' @inheritParams setup_aws_access
 #'
 #' @return A data frame with metadata about all of the versions of objects in a
 #'   bucket.
@@ -607,7 +479,7 @@ get_bucket_version_df <- function(bucket_name, key_marker = "", prefix = ""){
 
 #' Get object versions from an aws s3 bucket recursively
 #'
-#' @inheritParams setup_datalake_access
+#' @inheritParams setup_aws_access
 #' @param key_marker The key marker from which to download the object metadata.
 #' @param prefix The prefix from which to download the object metadata.
 #'   Empty string download all metadata
@@ -660,7 +532,7 @@ version_list_as_df <- function(versions){
 #' session, it invokes a data viewer (\code{\link[utils]{View}}) with the search
 #' results.
 #'
-#' @inheritParams setup_datalake_access
+#' @inheritParams setup_aws_access
 #' @param ... Patterns to look for. Each argument can be a character string or a
 #'   regex pattern. If multiple arguments are passed only Keys that match all
 #'   patterns are returned. Strings are passed to \code{\link[stringr]{coll}}

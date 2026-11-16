@@ -15,11 +15,6 @@ setup_aws_access(profile_name = "my_mfe_profile", region = "ap-southeast-2")
 This function configures the current R session to use an AWS profile that
 has been configured via AWS CLI v2.
 }
-\details{
-Users must authenticate beforehand using:
-
-aws sso login --profile <profile_name>
-}
 \examples{
 \dontrun{
 awslogin

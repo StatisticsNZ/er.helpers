@@ -19,10 +19,6 @@ and it ignores whether it is lower or upper case. If you want to search
 using regex construct the pattern using \code{\link[stringr]{regex}} (see
 examples).}
 
-\item{bucket_name}{Name of the bucket to connect. By default, it uses the
-Ministry for the Environment data lake for environmental reporting
-"mfedlkinput".}
-
 \item{object_versions}{Logical. Whether to include object version IDs in the search}
 }
 \value{

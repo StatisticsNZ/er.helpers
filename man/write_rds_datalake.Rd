@@ -24,7 +24,7 @@ disk.
 }
 \examples{
 \dontrun{
-setup_datalake_access()
+setup_aws_access()
 read_from_datalake("landcover", "concordance", "lcdb4")
 }
 }

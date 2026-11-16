@@ -6,11 +6,6 @@
 \usage{
 get_bucket_version_df(bucket_name, key_marker = "", prefix = "")
 }
-\arguments{
-\item{bucket_name}{Name of the bucket to connect. By default, it uses the
-Ministry for the Environment data lake for environmental reporting
-"mfedlkinput".}
-}
 \value{
 A data frame with metadata about all of the versions of objects in a
   bucket.

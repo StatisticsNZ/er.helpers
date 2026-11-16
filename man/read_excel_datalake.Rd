@@ -17,10 +17,6 @@ read_excel_datalake(
 \item{s3_path}{The filename of the desired excel in the S3 bucket including the
 full path}
 
-\item{bucket_name}{Name of the bucket to connect. By default, it uses the
-Ministry for the Environment data lake for environmental reporting
-"mfedlkinput".}
-
 \item{version}{VersionId of the object key desired. Can be retrieved using
 \code{\link{get_bucket_version_df}}}
 
@@ -41,7 +37,7 @@ disk.
 }
 \examples{
 \dontrun{
-setup_datalake_access()
+setup_aws_access()
 files <- search_datalake(".x", "land", "2021")$Key
 read_excel_datalake(files[2])
 read_excel_datalake(files[1], sheet = 2)
