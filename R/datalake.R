@@ -42,9 +42,6 @@ setup_datalake_access <- function(cred_csv = "~/credentials.csv",
 #' This function configures the current R session to use an AWS profile that
 #' has been configured via AWS CLI v2.
 #'
-#' Users must authenticate beforehand using:
-#'
-#' aws sso login --profile <profile_name>
 #'
 #' @param profile_name AWS profile name from ~/.aws/config. my_mfe_profile is the default
 #' @param region AWS region
